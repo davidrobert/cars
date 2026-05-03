@@ -593,6 +593,130 @@
   .legend .sw.good { background: color-mix(in srgb, var(--good) 30%, transparent); }
   .legend .sw.power{ background: var(--brand); }
 
+  /* ============ MOBILE RESPONSIVE ============ */
+  @media (max-width: 760px) {
+    .wrap { padding: 0 14px; }
+
+    /* Topbar */
+    .topbar-inner { padding: 10px 14px; }
+    .brand { gap: 8px; font-size: 14px; }
+    .brand-logo { width: 30px; height: 30px; }
+    .brand-logo svg { width: 17px; height: 17px; }
+    .brand > div > div:last-child { display: none; }
+
+    /* Hero */
+    .hero { padding: 26px 0 14px; }
+    h1 { font-size: clamp(24px, 7.2vw, 36px); margin: 14px 0 10px; }
+    .lede { font-size: 14.5px; line-height: 1.5; margin-bottom: 18px; }
+    .hero-meta { gap: 6px; font-size: 12px; flex-direction: column; align-items: flex-start; }
+    .eyebrow { font-size: 11.5px; padding: 5px 10px; }
+
+    /* Sections */
+    section { padding: 24px 0; }
+    .section-head { gap: 6px; margin-bottom: 14px; }
+    .section-head h2 { font-size: 22px; }
+    .section-head p { font-size: 13.5px; }
+
+    /* Filtros */
+    .filters { padding: 5px; gap: 5px; }
+    .chip { padding: 7px 11px; font-size: 12.5px; }
+    .chip svg { width: 13px; height: 13px; }
+
+    /* Legend acima dos cards */
+    .legend { font-size: 11.5px; gap: 8px 12px; line-height: 1.4; }
+
+    /* Cards: 1 coluna */
+    .cars { gap: 12px; grid-template-columns: 1fr; margin-top: 14px; }
+    .card-img { aspect-ratio: 16/10; }
+    .card-body { padding: 14px 14px 16px; gap: 10px; }
+    .card-title h3 { font-size: 16.5px; }
+    .card-title .sub { font-size: 12px; }
+
+    /* Specs row: 3+2 grid em mobile */
+    .specs-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      row-gap: 10px; padding: 10px 6px;
+    }
+    .specs-row .s {
+      border-right: 1px solid var(--line);
+      border-bottom: 1px dashed var(--line);
+      padding-bottom: 8px;
+    }
+    .specs-row .s:nth-child(3),
+    .specs-row .s:nth-child(5) { border-right: none; }
+    .specs-row .s:nth-child(n+4) { border-bottom: none; padding-bottom: 2px; }
+    .specs-row .s .v { font-size: 13px; }
+
+    /* Pills do card */
+    .pills { gap: 5px; }
+    .pill { font-size: 11px; padding: 4px 8px; }
+
+    /* Meter rows */
+    .meter .row { grid-template-columns: 80px 1fr 24px; font-size: 11.5px; }
+
+    /* Tabela: cabeçalho fica óbvio que rola */
+    table.cmp { min-width: 980px; font-size: 12.5px; }
+    table.cmp th, table.cmp td { padding: 10px 10px; }
+    table.cmp .sticky-col { min-width: 180px; max-width: 200px; }
+    table.cmp thead th { font-size: 10.5px; padding: 10px 10px; }
+    .car-cell { gap: 8px; }
+    .car-cell-img { width: 36px; height: 36px; flex: 0 0 36px; border-radius: 7px; }
+    .car-cell strong { font-size: 12.5px; }
+    .car-cell .sub { font-size: 11px; max-width: 130px; }
+    .score-bar { width: 38px; }
+    .score-num { font-size: 13px; }
+
+    /* Cenários */
+    .scenes { grid-template-columns: 1fr; gap: 10px; }
+    .scene { padding: 14px; }
+    .scene .ico { width: 32px; height: 32px; }
+    .scene h4 { font-size: 15px; }
+    .scene p { font-size: 13px; }
+
+    /* Pros & Contras */
+    .pc-grid { grid-template-columns: 1fr; gap: 10px; }
+    .pc { padding: 14px; }
+    .pc h4 { font-size: 14.5px; }
+    .pc li { font-size: 13px; }
+
+    /* Discussão / Decisão */
+    .discuss { padding: 18px 14px; }
+    .quest-grid { grid-template-columns: 1fr; gap: 10px; }
+    .quest { padding: 12px; }
+    .quest .q { font-size: 13.5px; }
+    .quest .a { font-size: 13px; }
+
+    /* Alert pills */
+    .alert-pill { font-size: 10.5px; padding: 3px 7px; }
+
+    /* Footer */
+    footer { padding: 28px 0 40px; }
+    .disclaimer { padding: 12px 14px; font-size: 12.5px; }
+  }
+
+  @media (max-width: 420px) {
+    /* Hero ainda menor */
+    h1 { font-size: clamp(22px, 7.5vw, 28px); }
+    .lede { font-size: 13.5px; }
+
+    /* Tabela ultra compacta */
+    table.cmp { min-width: 880px; font-size: 11.5px; }
+    table.cmp th, table.cmp td { padding: 8px 8px; }
+    table.cmp .sticky-col { min-width: 158px; max-width: 175px; }
+    .car-cell-img { width: 32px; height: 32px; flex: 0 0 32px; }
+    .car-cell strong { font-size: 12px; }
+    .car-cell .sub { font-size: 10.5px; max-width: 110px; }
+
+    /* Scroll hint mais visível */
+    .scroll-hint { padding: 10px 14px; font-size: 12px; }
+
+    /* Filter chips ainda menores */
+    .chip { padding: 6px 9px; font-size: 12px; }
+
+    /* Disclaimer */
+    .disclaimer { padding: 10px 12px; font-size: 12px; }
+  }
+
   /* ---------- Print ---------- */
   @media print {
     body { background: #fff; color: #000; }
@@ -714,6 +838,7 @@
           <tbody><!-- preenchido por JS --></tbody>
         </table>
       </div>
+      <div class="scroll-hint">👆 Arraste pro lado pra ver mais colunas · toque no cabeçalho pra ordenar</div>
     </div>
   </div>
 </section>
