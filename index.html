@@ -1362,7 +1362,9 @@ function carIMG(c) {
 /* ====== Render dos cards ====== */
 function renderCards(filter = "all") {
   const grid = document.getElementById("cars-grid");
-  grid.innerHTML = cars.map(c => {
+  // Ordena por nota geral decrescente
+  const sortedCars = [...cars].sort((a, b) => b.score - a.score);
+  grid.innerHTML = sortedCars.map(c => {
     const matches = filter === "all" || c.cenarios.includes(filter);
     return `
       <article class="card ${matches ? "" : "dim"}" data-id="${c.id}">
@@ -1570,7 +1572,9 @@ function renderTable() {
 /* ====== Pros & Contras ====== */
 function renderProsCons() {
   const grid = document.getElementById("pc-grid");
-  grid.innerHTML = cars.map(c => `
+  // Ordena por nota geral decrescente
+  const sortedCars = [...cars].sort((a, b) => b.score - a.score);
+  grid.innerHTML = sortedCars.map(c => `
     <div class="pc">
       <h4><span class="c"></span>${c.nome}</h4>
       <ul>
