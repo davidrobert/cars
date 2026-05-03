@@ -448,6 +448,34 @@
     border-radius: 999px;
   }
 
+  /* Célula de segurança */
+  .seg-cell {
+    display: inline-flex; flex-direction: column; align-items: flex-end;
+    gap: 3px; min-width: 92px;
+  }
+  .seg-num {
+    font-weight: 800; font-size: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+  .seg-num.seg-high { color: #b6f0c6; }
+  .seg-num.seg-mid  { color: #ffe5a8; }
+  .seg-num.seg-low  { color: #ffc4c4; }
+  .seg-bar {
+    width: 80px; height: 4px; border-radius: 999px;
+    background: var(--surface-2); border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .seg-bar > i {
+    display: block; height: 100%; border-radius: 999px;
+  }
+  .seg-bar > i.seg-high { background: linear-gradient(90deg, var(--good), #65d896); }
+  .seg-bar > i.seg-mid  { background: linear-gradient(90deg, var(--warn), var(--brand)); }
+  .seg-bar > i.seg-low  { background: linear-gradient(90deg, var(--bad), #c9525e); }
+  .seg-meta {
+    font-size: 10.5px; color: var(--dim);
+    white-space: nowrap;
+  }
+
   /* Pills compactas dentro da tabela */
   table.cmp td .alert-pill {
     font-size: 9.5px; padding: 2px 6px; margin: 1px;
@@ -756,7 +784,7 @@
 <!-- ========== Hero ========== -->
 <section class="hero">
   <div class="wrap">
-    <span class="eyebrow"><span class="dot"></span> Comparativo · 8 modelos · maio 2026</span>
+    <span class="eyebrow"><span class="dot"></span> Comparativo · 8 modelos · com nota de segurança · maio 2026</span>
     <h1>Comparativo de carros</h1>
     <p class="lede">
       Comparativo direto entre oito candidatos atualmente à venda no mercado brasileiro: <b>Fiat Toro Ranch Diesel</b>, <b>Jeep Commander Blackhawk</b>, <b>Jeep Wrangler Rubicon</b>, <b>Caoa Chery Tiggo 8 Pro PHEV</b>, <b>GWM Tank 300 Hi4-T</b>, <b>Ram Rampage R/T</b>, <b>Jetour T2 Advance</b> e <b>GWM Haval H6 GT</b>.
@@ -959,10 +987,10 @@
 <footer>
   <div class="wrap">
     <div class="disclaimer">
-      <b>⚠️ Disclaimer importante.</b> Os preços, consumos e fichas técnicas são <b>aproximações de mercado em maio/2026</b>
+      <b>⚠️ Disclaimer importante.</b> Os preços, consumos, fichas técnicas e <b>notas de segurança</b> são <b>aproximações em maio/2026</b>
       e podem variar conforme versão, ano-modelo, região, condições de pagamento e atualizações dos fabricantes.
       Antes de fechar negócio, confirme tudo direto na concessionária e faça um <b>test drive</b> de cada finalista.
-      Esta página é uma ferramenta de discussão — não um documento técnico oficial.
+      Esta página é uma ferramenta de comparação — não um documento técnico oficial. A nota de segurança (0-100) é uma síntese qualitativa baseada em: rating NCAP onde disponível (Latin NCAP, Euro NCAP, ANCAP), número de airbags, pacote ADAS de fábrica e robustez estrutural.
     </div>
     <div style="margin-top:14px;">
       Feito com ☕ para uma decisão importante. Pressione <kbd>Ctrl/⌘ + P</kbd> para gerar um PDF.
@@ -997,6 +1025,7 @@ const cars = [
     bagagemNota: "caçamba",
     comprimento: 5045,
     peso: 2030,
+    seguranca: { nota: 72, airbags: 4, ncap: "4★ Latin NCAP (2018)", adas: ["ABS+EBD","ESP","Hill Assist","Câmera de ré","6 airbags na 2026"], destaques: "Picape reforçada, mas ADAS L2 só na geração 2026" },
     garantia: "3 anos",
     tanque: "60 L",
     autonomiaKm: 660,
@@ -1037,6 +1066,7 @@ const cars = [
     bagagemNota: "porta-malas (5 lug.)",
     comprimento: 4764,
     peso: 1900,
+    seguranca: { nota: 88, airbags: 7, ncap: "5★ (derivado Compass)", adas: ["AEB","ACC","LKA","BSM","RCTA","360°","TSR","Hill Hold"], destaques: "Pacote ADAS L2+ completo, plataforma Stellantis testada" },
     garantia: "3 anos",
     tanque: "60 L",
     autonomiaKm: 540,
@@ -1077,6 +1107,7 @@ const cars = [
     bagagemNota: "porta-malas",
     comprimento: 4785,
     peso: 2031,
+    seguranca: { nota: 55, airbags: 4, ncap: "1★ Euro NCAP (2018)", adas: ["ABS","ESP","Câmera de ré","Roll cage"], destaques: "Robustez off-road, mas crash test fraco e SEM ADAS L2" },
     garantia: "3 anos",
     tanque: "81 L",
     autonomiaKm: 620,
@@ -1117,6 +1148,7 @@ const cars = [
     bagagemNota: "porta-malas (5 lug.)",
     comprimento: 4722,
     peso: 1829,
+    seguranca: { nota: 88, airbags: 8, ncap: "—", adas: ["AEB","ACC","LKA","BSM","RCTA","360°","DAA","TSR"], destaques: "8 airbags (inclui joelho), ADAS L2+ completo" },
     garantia: "7 anos / bateria 8 anos",
     tanque: "60 L + 18,3 kWh",
     autonomiaKm: 1000,
@@ -1157,6 +1189,7 @@ const cars = [
     bagagemNota: "porta-malas",
     comprimento: 4760,
     peso: 2630,
+    seguranca: { nota: 84, airbags: 7, ncap: "5★ ANCAP (2024)", adas: ["AEB","ACC","LKA","BSM","RCTA","360°","TSR"], destaques: "Estrutura body-on-frame + ADAS L2 completo" },
     garantia: "5 anos / bateria 8 anos",
     tanque: "75 L + 37,1 kWh",
     autonomiaKm: 900,
@@ -1197,6 +1230,7 @@ const cars = [
     bagagemNota: "caçamba",
     comprimento: 4778,
     peso: 1830,
+    seguranca: { nota: 82, airbags: 6, ncap: "—", adas: ["AEB","ACC","LKA","BSM","RCTA","360°","Highway Assist"], destaques: "ADAS L2+ Highway Assist e câmera 360° de série na R/T" },
     garantia: "3 anos",
     tanque: "60 L",
     autonomiaKm: 540,
@@ -1237,6 +1271,7 @@ const cars = [
     bagagemNota: "porta-malas (5 lug.)",
     comprimento: 4785,
     peso: 2090,
+    seguranca: { nota: 82, airbags: 6, ncap: "—", adas: ["AEB","ACC","LKA","BSM","RCTA","360°"], destaques: "6 airbags, ADAS completo (ACC/LKA/AEB) — sem teste NCAP ainda" },
     garantia: "6 anos",
     tanque: "70 L + 26,7 kWh",
     autonomiaKm: 950,
@@ -1277,6 +1312,7 @@ const cars = [
     bagagemNota: "porta-malas",
     comprimento: 4727,
     peso: 2025,
+    seguranca: { nota: 92, airbags: 7, ncap: "5★ ANCAP & Euro NCAP (2022)", adas: ["AEB","ACC","LKA","BSM","RCTA","360°","DAA","TSR","Auto Park","Coffee Pilot"], destaques: "Estrutura premiada + ADAS L2+ Coffee Pilot mais avançado do grupo" },
     garantia: "5 anos / bateria 8 anos",
     tanque: "55 L + 35 kWh",
     autonomiaKm: 1000,
@@ -1360,6 +1396,7 @@ function renderCards(filter = "all") {
           </div>
 
           <div class="meter">
+            ${meterRow("Segurança",  c.seguranca.nota)}
             ${meterRow("Economia",    c.notas.economia)}
             ${meterRow("Conforto",    c.notas.conforto)}
             ${meterRow("Off-road",    c.notas.offroad)}
@@ -1414,6 +1451,17 @@ const TABLE_COLS = [
   { id: "peso", label: "Peso", numeric: true, sortable: true, lowIsBest: true,
     sortVal: c => c.peso,
     render: c => `${c.peso}<span class="unit">kg</span>` },
+  { id: "seguranca", label: "Segurança", numeric: true, sortable: true,
+    sortVal: c => c.seguranca.nota,
+    render: c => {
+      const s = c.seguranca;
+      const cls = s.nota >= 85 ? "seg-high" : s.nota >= 70 ? "seg-mid" : "seg-low";
+      return `<div class="seg-cell" title="${s.destaques}">
+        <div class="seg-num ${cls}">${s.nota}</div>
+        <div class="seg-bar"><i class="${cls}" style="width:${s.nota}%"></i></div>
+        <div class="seg-meta">${s.airbags} airbags · ${s.ncap}</div>
+      </div>`;
+    } },
   { id: "consumo", label: "Consumo", sortable: false,
     render: c => c.consumo },
   { id: "autonomia", label: "Autonomia", numeric: true, sortable: true,
