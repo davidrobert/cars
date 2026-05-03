@@ -1,0 +1,9 @@
+# Imagens originais (já estão inline em base64 no index.html)
+img/
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
