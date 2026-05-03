@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Comparativo de carros</title>
-<meta name="description" content="Comparativo entre Fiat Toro Ranch, GWM Tank 300 Hi4-T, Ram Rampage R/T, GWM Haval H6 GT, Jetour T2 Advance, Jeep Commander Blackhawk, Jeep Wrangler Rubicon e Caoa Chery Tiggo 8 Pro PHEV para decisão familiar." />
+<meta name="description" content="Comparativo entre Fiat Toro Ranch, GWM Tank 300 Hi4-T, Ram Rampage R/T, GWM Haval H6 GT, Jetour T2 Advance, Jeep Commander Blackhawk, Jeep Wrangler Rubicon e Caoa Chery Tiggo 8 Pro PHEV para apoiar a decisão de compra." />
 <style>
   /* ---------- Tokens ---------- */
   :root {
@@ -287,37 +287,184 @@
   }
   .btn.primary:hover { color: #1a1404; filter: brightness(1.05); }
 
-  /* ---------- Tabela comparativa ---------- */
+  /* ---------- Tabela comparativa (transposta + sortable) ---------- */
   .table-wrap {
     background: var(--surface); border: 1px solid var(--line);
     border-radius: var(--radius); overflow: hidden;
     box-shadow: var(--shadow-md);
   }
-  .scroll { overflow-x: auto; }
-  table.cmp { width: 100%; border-collapse: collapse; min-width: 760px; }
+  .scroll {
+    overflow-x: auto; overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    /* sombra sutil indicando que ha scroll horizontal */
+    background:
+      linear-gradient(90deg, var(--surface) 30%, transparent) 0 0/40px 100% no-repeat,
+      linear-gradient(-90deg, var(--surface) 30%, transparent) 100% 0/40px 100% no-repeat,
+      radial-gradient(farthest-side at 0 50%, rgba(0,0,0,.35), transparent) 0 0/14px 100% no-repeat,
+      radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.35), transparent) 100% 0/14px 100% no-repeat;
+    background-attachment: local, local, scroll, scroll;
+  }
+  table.cmp {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    min-width: 1180px;
+    font-size: 13.5px;
+  }
   table.cmp th, table.cmp td {
-    padding: 14px 16px; text-align: left; font-size: 14px;
+    padding: 12px 14px; text-align: left;
     border-bottom: 1px solid var(--line);
     vertical-align: middle;
+    white-space: nowrap;
   }
+  table.cmp th.num, table.cmp td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  /* Header sticky no topo */
   table.cmp thead th {
     background: var(--surface-2);
-    color: var(--muted); font-weight: 600; font-size: 12.5px;
-    text-transform: uppercase; letter-spacing: .5px;
-    position: sticky; top: 0;
+    color: var(--muted); font-weight: 700; font-size: 11.5px;
+    text-transform: uppercase; letter-spacing: .6px;
+    position: sticky; top: 0; z-index: 2;
+    border-bottom: 2px solid var(--line-2);
+    user-select: none;
+    transition: background .15s, color .15s;
   }
-  table.cmp thead th:first-child { background: var(--surface-2); }
-  table.cmp tbody th {
-    color: var(--muted); font-weight: 600; font-size: 13px;
+  table.cmp thead th .th-content {
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  table.cmp thead th.sortable { cursor: pointer; }
+  table.cmp thead th.sortable:hover {
+    color: var(--text);
+    background: color-mix(in srgb, var(--brand) 12%, var(--surface-2));
+  }
+  table.cmp thead th.sort-active {
+    color: var(--brand);
+    background: color-mix(in srgb, var(--brand) 14%, var(--surface-2));
+  }
+  table.cmp .sort-arrow {
+    font-size: 10px; opacity: .55;
+    transition: opacity .15s, transform .2s;
+    display: inline-block;
+  }
+  table.cmp thead th.sort-active .sort-arrow {
+    opacity: 1; color: var(--brand);
+  }
+
+  /* Primeira coluna sticky (Carro) */
+  table.cmp .sticky-col {
+    position: sticky; left: 0;
+    background: var(--surface);
+    min-width: 250px; max-width: 280px;
+    border-right: 1px solid var(--line-2);
+    white-space: normal;
+    box-shadow: 4px 0 8px -6px rgba(0,0,0,.45);
+    z-index: 1;
+  }
+  table.cmp thead th.sticky-col {
+    z-index: 3;
     background: var(--surface-2);
-    width: 200px;
   }
-  table.cmp tbody tr:hover td { background: color-mix(in srgb, var(--brand) 6%, transparent); }
-  table.cmp .best { color: var(--good); font-weight: 800; }
-  table.cmp .worst { color: var(--bad); }
-  table.cmp .group-head th {
-    background: var(--bg-2); color: var(--brand); font-size: 12px;
-    text-transform: uppercase; letter-spacing: .8px; padding: 12px 16px;
+  table.cmp tbody tr:hover .sticky-col {
+    background: color-mix(in srgb, var(--brand) 8%, var(--surface));
+  }
+
+  /* Célula com nome do carro + miniatura */
+  .car-cell {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .car-cell-img {
+    flex: 0 0 48px; width: 48px; height: 48px;
+    border-radius: 9px;
+    background-color: var(--surface-2);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 1px solid var(--line);
+  }
+  .car-cell-text { min-width: 0; }
+  .car-cell strong {
+    font-size: 13.5px; color: var(--text); display: block;
+    letter-spacing: -.01em;
+  }
+  .car-cell .sub {
+    font-size: 11.5px; color: var(--dim); margin-top: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 200px;
+  }
+
+  /* Linhas */
+  table.cmp tbody tr { transition: background .15s; }
+  table.cmp tbody tr:hover td {
+    background: color-mix(in srgb, var(--brand) 5%, transparent);
+  }
+  table.cmp tbody tr:nth-child(even) td:not(.sticky-col):not(.cell-best):not(.cell-worst) {
+    background: color-mix(in srgb, var(--surface-2) 30%, transparent);
+  }
+
+  /* Highlights por coluna numérica — melhor / pior */
+  table.cmp td.cell-best {
+    background: color-mix(in srgb, var(--good) 12%, transparent) !important;
+    color: #c8f5d4; font-weight: 700;
+    box-shadow: inset 3px 0 0 var(--good);
+  }
+  table.cmp td.cell-worst {
+    background: color-mix(in srgb, var(--bad) 9%, transparent) !important;
+    color: #ffc4c4;
+    box-shadow: inset 3px 0 0 var(--bad);
+  }
+
+  /* Detalhes de células */
+  table.cmp .unit {
+    color: var(--dim); font-weight: 500; font-size: 11.5px;
+    margin-left: 1px;
+  }
+  table.cmp .sub2 {
+    color: var(--dim); font-size: 11.5px;
+  }
+  table.cmp .price-val {
+    color: var(--brand); font-weight: 800;
+  }
+  table.cmp td.alert-bad,
+  table.cmp .alert-bad { color: var(--bad) !important; font-weight: 800; }
+  table.cmp .alert-good { color: var(--good) !important; font-weight: 700; }
+
+  /* Score: número + mini barra */
+  .score-cell {
+    display: inline-flex; align-items: center; gap: 8px;
+    justify-content: flex-end;
+  }
+  .score-num {
+    font-weight: 800; font-size: 14px; color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+  .score-bar {
+    width: 56px; height: 5px; border-radius: 999px;
+    background: var(--surface-2); border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .score-bar > i {
+    display: block; height: 100%;
+    background: linear-gradient(90deg, var(--info), var(--brand));
+    border-radius: 999px;
+  }
+
+  /* Pills compactas dentro da tabela */
+  table.cmp td .alert-pill {
+    font-size: 9.5px; padding: 2px 6px; margin: 1px;
+  }
+  table.cmp td .alert-strip {
+    display: inline-flex; flex-wrap: wrap; gap: 2px; max-width: 200px;
+  }
+
+  /* Hint de scroll horizontal em mobile */
+  .scroll-hint {
+    display: none;
+    padding: 8px 16px; text-align: center;
+    background: var(--bg-2); color: var(--dim);
+    font-size: 12px; border-top: 1px dashed var(--line);
+  }
+  @media (max-width: 900px) {
+    .scroll-hint { display: block; }
   }
 
   /* ---------- Cenários / recomendações ---------- */
@@ -345,7 +492,7 @@
   }
   .scene .alt { color: var(--dim); font-size: 12.5px; margin-top: 8px; }
 
-  /* ---------- Discussão familiar ---------- */
+  /* ---------- Discussão / Decisão ---------- */
   .discuss {
     background: linear-gradient(180deg, var(--surface), var(--surface-2));
     border: 1px solid var(--line);
@@ -364,45 +511,6 @@
     display: grid; place-items: center; font-size: 12px; font-weight: 800;
   }
   .quest .a { color: var(--muted); font-size: 13.5px; }
-
-  /* ---------- Voto familiar (interativo, salvo em localStorage) ---------- */
-  .votes { margin-top: 18px; }
-  .vote-row {
-    display: grid; grid-template-columns: 1.4fr repeat(var(--ncars,5), 1fr); gap: 8px;
-    align-items: center; padding: 10px;
-    border-radius: 10px;
-  }
-  .vote-row + .vote-row { border-top: 1px dashed var(--line); }
-  .vote-row.head { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .5px; }
-  .vote-input {
-    width: 100%; padding: 8px 10px; border-radius: 8px;
-    background: var(--bg-2); border: 1px solid var(--line); color: var(--text);
-    font: 600 13px/1 inherit;
-  }
-  .vote-input:focus { outline: 2px solid var(--brand); }
-  .vote-cell {
-    display: flex; gap: 4px; flex-wrap: wrap; justify-content: center;
-  }
-  .star {
-    cursor: pointer; padding: 4px; border-radius: 6px;
-    color: var(--dim); transition: color .1s ease;
-  }
-  .star.active { color: var(--brand); }
-  .star:hover { color: var(--brand-2); }
-  .totals { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
-  .totals .t {
-    padding: 8px 12px; border-radius: 10px;
-    background: var(--surface-2); border: 1px solid var(--line);
-    font-size: 13px;
-  }
-  .totals .t b { color: var(--brand); margin-left: 6px; }
-  .vote-actions { display: flex; gap: 8px; margin-top: 16px; }
-  @media (max-width: 720px) {
-    .vote-row { grid-template-columns: 1fr; }
-    .vote-row.head { display: none; }
-    .vote-cell::before { content: attr(data-label); margin-right: auto; color: var(--muted); font-size: 12px; }
-    .vote-cell { justify-content: space-between; }
-  }
 
   /* ---------- Pros e contras ---------- */
   .pc-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
@@ -508,7 +616,7 @@
       </span>
       <div>
         <div>Comparativo de Carros</div>
-        <div style="font-weight:400;color:var(--dim);font-size:12px;">Decisão em família · 2025</div>
+        <div style="font-weight:400;color:var(--dim);font-size:12px;">Comparativo · 2026</div>
       </div>
     </div>
     <nav class="nav">
@@ -516,7 +624,7 @@
       <a href="#tabela">Tabela</a>
       <a href="#cenarios">Cenários</a>
       <a href="#proscons">Prós & Contras</a>
-      <a href="#familia">Decisão</a>
+      <a href="#decisao">Decisão</a>
     </nav>
   </div>
 </header>
@@ -524,12 +632,12 @@
 <!-- ========== Hero ========== -->
 <section class="hero">
   <div class="wrap">
-    <span class="eyebrow"><span class="dot"></span> Análise comparativa · maio 2026</span>
+    <span class="eyebrow"><span class="dot"></span> Comparativo · 8 modelos · maio 2026</span>
     <h1>Comparativo de carros</h1>
     <p class="lede">
       Comparativo direto entre oito candidatos atualmente à venda no mercado brasileiro: <b>Fiat Toro Ranch Diesel</b>, <b>Jeep Commander Blackhawk</b>, <b>Jeep Wrangler Rubicon</b>, <b>Caoa Chery Tiggo 8 Pro PHEV</b>, <b>GWM Tank 300 Hi4-T</b>, <b>Ram Rampage R/T</b>, <b>Jetour T2 Advance</b> e <b>GWM Haval H6 GT</b>.
       Cada carro tem uma vocação diferente — o objetivo dessa página é deixar isso óbvio
-      e ajudar a família a chegar num "sim" tranquilo.
+      e ajudar a chegar a uma decisão objetiva e bem fundamentada.
     </p>
     <div class="hero-meta">
       <span>📅 <b>Última atualização:</b> 03/05/2025</span>
@@ -554,9 +662,9 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         Todos
       </button>
-      <button class="chip" data-filter="familia">
+      <button class="chip" data-filter="diario">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M15 20c0-2 2-3 4-3"/></svg>
-        Família
+        Diário
       </button>
       <button class="chip" data-filter="economia">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 7c0-2 2-3 7-3s7 1 7 3-2 3-7 3-7 1-7 3 2 3 7 3 7 1 7 3-2 3-7 3-7-1-7-3"/></svg>
@@ -595,19 +703,14 @@
     <div class="section-head">
       <div>
         <h2>Tabela comparativa completa</h2>
-        <p>Verde = melhor da categoria. Vermelho = pior. Os números são aproximados (vide disclaimer).</p>
+        <p>Cada linha é um carro. <b>Clique nos cabeçalhos</b> pra ordenar. Verde = melhor da coluna · Vermelho = pior · Vermelho forte = passou do limite (preço &gt; R$ 350k ou comprimento &gt; 5,10 m).</p>
       </div>
     </div>
 
     <div class="table-wrap">
       <div class="scroll">
         <table class="cmp" id="cmp-table">
-          <thead>
-            <tr id="cmp-thead-row">
-              <th>Critério</th>
-              <!-- preenchido por JS -->
-            </tr>
-          </thead>
+          <thead><!-- preenchido por JS --></thead>
           <tbody><!-- preenchido por JS --></tbody>
         </table>
       </div>
@@ -621,14 +724,14 @@
     <div class="section-head">
       <div>
         <h2>Qual ganha em cada cenário?</h2>
-        <p>Recomendações por uso real. Útil pra quando alguém na família discordar.</p>
+        <p>Recomendações por uso real. Útil quando há divergência sobre prioridades.</p>
       </div>
     </div>
 
     <div class="scenes">
       <div class="scene">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/></svg></div>
-        <h4>Família com crianças, uso diário</h4>
+        <h4>Diário com vários passageiros</h4>
         <p>Espaço atrás, conforto, baixa manutenção, segurança, ar-condicionado eficiente.</p>
         <span class="winner">🏆 Caoa Chery Tiggo 8 Pro PHEV</span>
         <div class="alt">7 lugares + R$ 270k. Vice: Jeep Commander Blackhawk (Jeep + 7 lug.)</div>
@@ -699,8 +802,8 @@
   </div>
 </section>
 
-<!-- ========== Decisão familiar ========== -->
-<section id="familia">
+<!-- ========== Decisão ========== -->
+<section id="decisao">
   <div class="wrap">
     <div class="discuss">
       <h2 style="margin-top:0;">🗳️ Para ajudar na decisão</h2>
@@ -712,12 +815,12 @@
       <div class="quest-grid" style="margin-top:18px;">
         <div class="quest"><div class="q"><span class="n">1</span>Quantos km vamos rodar por mês?</div><div class="a">Acima de 2.000 km/mês muda tudo: diesel ou híbrido se pagam. Abaixo disso, gasolina é viável.</div></div>
         <div class="quest"><div class="q"><span class="n">2</span>Quem dirige no dia a dia?</div><div class="a">Picape grande em garagem pequena ou estacionamento de shopping vira pesadelo.</div></div>
-        <div class="quest"><div class="q"><span class="n">3</span>Vamos viajar com a família toda?</div><div class="a">Bancos traseiros amplos e bagageiro grande pesam mais do que aparentam.</div></div>
+        <div class="quest"><div class="q"><span class="n">3</span>Vamos rodar com vários passageiros?</div><div class="a">Bancos traseiros amplos e bagageiro grande pesam mais do que aparentam.</div></div>
         <div class="quest"><div class="q"><span class="n">4</span>Vamos para trilha / sítio / praia?</div><div class="a">Se a resposta é "duas vezes por ano", não compre 4x4 reduzido só por isso.</div></div>
         <div class="quest"><div class="q"><span class="n">5</span>Importa rede de assistência?</div><div class="a">Marcas chinesas crescem rápido, mas concessionária no interior ainda é limitada.</div></div>
         <div class="quest"><div class="q"><span class="n">6</span>Importa revenda em 4-5 anos?</div><div class="a">Toro e Ram têm histórico. GWM e Jetour ainda estão precificando depreciação.</div></div>
         <div class="quest"><div class="q"><span class="n">7</span>Qual o teto de orçamento "real"?</div><div class="a">Inclua IPVA, seguro, primeira revisão e pneus — não só a parcela.</div></div>
-        <div class="quest"><div class="q"><span class="n">8</span>O que ninguém abre mão?</div><div class="a">Cada um diz <b>uma</b> coisa inegociável. Aí dá pra cortar opções rápido.</div></div>
+        <div class="quest"><div class="q"><span class="n">8</span>O que ninguém abre mão?</div><div class="a">Cada decisor define <b>uma</b> coisa inegociável. Aí dá pra cortar opções rápido.</div></div>
       </div>
 
       <div style="margin-top: 22px;">
@@ -768,6 +871,7 @@ const cars = [
     bagagem: "937 L",
     bagagemNota: "caçamba",
     comprimento: 5045,
+    peso: 2030,
     garantia: "3 anos",
     tanque: "60 L",
     autonomiaKm: 660,
@@ -807,11 +911,12 @@ const cars = [
     bagagem: "661 L",
     bagagemNota: "porta-malas (5 lug.)",
     comprimento: 4764,
+    peso: 1900,
     garantia: "3 anos",
     tanque: "60 L",
     autonomiaKm: 540,
     autonomia: "≈ 540 km",
-    cenarios: ["familia","viagem","urbano"],
+    cenarios: ["diario","viagem","urbano"],
     score: 8.4,
     phev: false,
     notas: { economia: 50, conforto: 88, espaco: 95, offroad: 60, performance: 78, urbano: 60, tecnologia: 88 },
@@ -846,6 +951,7 @@ const cars = [
     bagagem: "548 L",
     bagagemNota: "porta-malas",
     comprimento: 4785,
+    peso: 2031,
     garantia: "3 anos",
     tanque: "81 L",
     autonomiaKm: 620,
@@ -885,11 +991,12 @@ const cars = [
     bagagem: "889 L",
     bagagemNota: "porta-malas (5 lug.)",
     comprimento: 4722,
+    peso: 1829,
     garantia: "7 anos / bateria 8 anos",
     tanque: "60 L + 18,3 kWh",
     autonomiaKm: 1000,
     autonomia: "≈ 1.000 km (80 km elétr.)",
-    cenarios: ["familia","economia","viagem"],
+    cenarios: ["diario","economia","viagem"],
     score: 8.5,
     phev: true,
     notas: { economia: 88, conforto: 85, espaco: 92, offroad: 30, performance: 84, urbano: 75, tecnologia: 90 },
@@ -924,6 +1031,7 @@ const cars = [
     bagagem: "400 L",
     bagagemNota: "porta-malas",
     comprimento: 4760,
+    peso: 2630,
     garantia: "5 anos / bateria 8 anos",
     tanque: "75 L + 37,1 kWh",
     autonomiaKm: 900,
@@ -963,6 +1071,7 @@ const cars = [
     bagagem: "525 L",
     bagagemNota: "caçamba",
     comprimento: 4778,
+    peso: 1830,
     garantia: "3 anos",
     tanque: "60 L",
     autonomiaKm: 540,
@@ -1002,11 +1111,12 @@ const cars = [
     bagagem: "889 L",
     bagagemNota: "porta-malas (5 lug.)",
     comprimento: 4785,
+    peso: 2090,
     garantia: "6 anos",
     tanque: "70 L + 26,7 kWh",
     autonomiaKm: 950,
     autonomia: "≈ 950 km (75 km elétr.)",
-    cenarios: ["familia","economia","viagem","offroad"],
+    cenarios: ["diario","economia","viagem","offroad"],
     score: 8.5,
     phev: true,
     notas: { economia: 88, conforto: 82, espaco: 88, offroad: 50, performance: 86, urbano: 65, tecnologia: 88 },
@@ -1041,11 +1151,12 @@ const cars = [
     bagagem: "485 L",
     bagagemNota: "porta-malas",
     comprimento: 4727,
+    peso: 2025,
     garantia: "5 anos / bateria 8 anos",
     tanque: "55 L + 35 kWh",
     autonomiaKm: 1000,
     autonomia: "≈ 1.000 km (119 km elétr.)",
-    cenarios: ["viagem","economia","familia"],
+    cenarios: ["viagem","economia","diario"],
     score: 8.8,
     phev: true,
     notas: { economia: 85, conforto: 88, espaco: 70, offroad: 60, performance: 96, urbano: 78, tecnologia: 95 },
@@ -1143,77 +1254,144 @@ function meterRow(lab, v) {
   return `<div class="row"><div class="lab">${lab}</div><div class="bar"><i style="width:${v}%"></i></div><div class="val">${v}</div></div>`;
 }
 
-/* ====== Tabela comparativa ====== */
+/* ====== Tabela comparativa (transposta + sortable) ====== */
+
+// Definição de colunas
+const TABLE_COLS = [
+  { id: "nome", label: "Carro", sortable: true,
+    sortVal: c => c.nome,
+    render: c => `<div class="car-cell">
+        <div class="car-cell-img" style="background-image:url('${c.img}')"></div>
+        <div class="car-cell-text">
+          <strong>${c.nome}</strong>
+          <div class="sub">${c.versao}</div>
+        </div>
+      </div>` },
+  { id: "tipo", label: "Tipo", sortable: true,
+    sortVal: c => c.tipo,
+    render: c => `<span class="badge ${c.badge}">${c.tipo}</span>` },
+  { id: "preco", label: "Preço", numeric: true, sortable: true, lowIsBest: true,
+    sortVal: c => c.preco,
+    render: c => `<span class="${c.preco > PRICE_LIMIT ? 'alert-bad' : 'price-val'}">${c.precoFmt}</span>` },
+  { id: "cv", label: "Potência", numeric: true, sortable: true,
+    sortVal: c => c.cv,
+    render: c => `${c.cv}<span class="unit">cv</span>` },
+  { id: "torque", label: "Torque", sortable: false,
+    render: c => c.torque },
+  { id: "tracao", label: "Tração", sortable: true,
+    sortVal: c => c.tracao,
+    render: c => c.tracao },
+  { id: "comprimento", label: "Comprim.", numeric: true, sortable: true, lowIsBest: true,
+    sortVal: c => c.comprimento,
+    render: c => `<span class="${c.comprimento > LENGTH_LIMIT ? 'alert-bad' : ''}">${(c.comprimento/1000).toFixed(2)}<span class="unit">m</span></span>` },
+  { id: "bagagem", label: "P-malas", sortable: false,
+    render: c => `${c.bagagem} <span class="sub2">${c.bagagemNota}</span>` },
+  { id: "peso", label: "Peso", numeric: true, sortable: true, lowIsBest: true,
+    sortVal: c => c.peso,
+    render: c => `${c.peso}<span class="unit">kg</span>` },
+  { id: "consumo", label: "Consumo", sortable: false,
+    render: c => c.consumo },
+  { id: "autonomia", label: "Autonomia", numeric: true, sortable: true,
+    sortVal: c => c.autonomiaKm,
+    render: c => `${c.autonomiaKm}<span class="unit">km</span>` },
+  { id: "garantia", label: "Garantia", sortable: false,
+    render: c => c.garantia },
+  { id: "score", label: "Nota", numeric: true, sortable: true,
+    sortVal: c => c.score,
+    render: c => `<div class="score-cell">
+        <span class="score-num">${c.score.toFixed(1)}</span>
+        <div class="score-bar"><i style="width:${c.score*10}%"></i></div>
+      </div>` },
+  { id: "flags", label: "Sinais", sortable: false,
+    render: c => `<span class="alert-strip">${flagPills(c) || '<span style="color:var(--dim);">—</span>'}</span>` },
+];
+
+// Estado de ordenação (default: melhor nota geral primeiro)
+let tableSort = { col: "score", dir: "desc" };
+
 function renderTable() {
-  // header dinâmico
-  const tr = document.getElementById("cmp-thead-row");
-  tr.innerHTML = `<th>Critério</th>` + cars.map(c => `<th>${c.nome.replace("GWM ","").replace("Fiat ","")}</th>`).join("");
+  const table = document.getElementById("cmp-table");
+  const thead = table.querySelector("thead");
+  const tbody = table.querySelector("tbody");
 
-  const tbody = document.querySelector("#cmp-table tbody");
-  const rows = [
-    { group: "Destaques" },
-    { lab: "Sinais", pick: c => flagPills(c) || '<span style="color:var(--dim);">—</span>', isHTML: true },
-    { group: "Identidade" },
-    { lab: "Tipo",           pick: c => c.tipo },
-    { lab: "Versão analisada", pick: c => c.versao },
-    { lab: "Preço (≈)",      pick: c => c.preco, fmt: v => "R$ " + v.toLocaleString("pt-BR"), bestLow: true },
+  // ---------- Header ----------
+  thead.innerHTML = "<tr>" + TABLE_COLS.map(col => {
+    const isActive = tableSort.col === col.id;
+    const arrow = isActive ? (tableSort.dir === "asc" ? "▲" : "▼") : "↕";
+    const classes = [
+      col.sortable ? "sortable" : "",
+      isActive ? "sort-active" : "",
+      col.numeric ? "num" : "",
+      col.id === "nome" ? "sticky-col" : "",
+    ].filter(Boolean).join(" ");
+    const arrowHtml = col.sortable ? `<span class="sort-arrow">${arrow}</span>` : "";
+    return `<th class="${classes}" data-col="${col.id}">
+      <span class="th-content">${col.label}${arrowHtml}</span>
+    </th>`;
+  }).join("") + "</tr>";
 
-    { group: "Dimensões" },
-    { lab: "Comprimento",    pick: c => c.comprimento, fmt: v => v.toLocaleString("pt-BR") + " mm" },
+  // ---------- Sort cars ----------
+  const activeCol = TABLE_COLS.find(c => c.id === tableSort.col);
+  const sortedCars = [...cars];
+  if (activeCol && activeCol.sortable) {
+    const dir = tableSort.dir === "asc" ? 1 : -1;
+    sortedCars.sort((a, b) => {
+      const va = activeCol.sortVal(a);
+      const vb = activeCol.sortVal(b);
+      if (typeof va === "number" && typeof vb === "number") return (va - vb) * dir;
+      return String(va).localeCompare(String(vb), "pt-BR") * dir;
+    });
+  }
 
-    { group: "Motorização" },
-    { lab: "Motor",          pick: c => c.motor },
-    { lab: "Potência (cv)",  pick: c => c.cv,     fmt: v => v + " cv",   bestHigh: true },
-    { lab: "Torque",         pick: c => c.torque },
-    { lab: "Câmbio",         pick: c => c.cambio },
-    { lab: "Tração",         pick: c => c.tracao },
-
-    { group: "Eficiência & autonomia" },
-    { lab: "Consumo (cidade/estrada)", pick: c => c.consumo },
-    { lab: "Tanque",         pick: c => c.tanque },
-    { lab: "Autonomia est. (km)", pick: c => c.autonomiaKm, fmt: v => "≈ " + v + " km", bestHigh: true },
-
-    { group: "Praticidade" },
-    { lab: "Bagagem / caçamba", pick: c => c.bagagem + " (" + c.bagagemNota + ")" },
-    { lab: "Garantia",          pick: c => c.garantia },
-
-    { group: "Notas (0-100)" },
-    { lab: "Conforto",       pick: c => c.notas.conforto, bestHigh: true },
-    { lab: "Espaço interno", pick: c => c.notas.espaco,   bestHigh: true },
-    { lab: "Off-road",       pick: c => c.notas.offroad,  bestHigh: true },
-    { lab: "Performance",    pick: c => c.notas.performance, bestHigh: true },
-    { lab: "Tecnologia",     pick: c => c.notas.tecnologia, bestHigh: true },
-    { lab: "Uso urbano",     pick: c => c.notas.urbano,   bestHigh: true },
-    { lab: "Economia",       pick: c => c.notas.economia, bestHigh: true },
-
-    { group: "Resultado" },
-    { lab: "Nota geral",     pick: c => c.score, fmt: v => v.toFixed(1) + " / 10", bestHigh: true },
-  ];
-
-  const cols = cars.length + 1;
-  tbody.innerHTML = rows.map(r => {
-    if (r.group) return `<tr class="group-head"><th colspan="${cols}">${r.group}</th></tr>`;
-    const vals = cars.map(c => r.pick(c));
-    let bestIdx = -1, worstIdx = -1;
-    if (r.bestHigh || r.bestLow) {
-      const nums = vals.map(v => typeof v === "number" ? v : null);
-      const valid = nums.filter(v => v !== null);
-      if (valid.length === cars.length) {
-        const max = Math.max(...nums), min = Math.min(...nums);
-        if (r.bestHigh) { bestIdx = nums.indexOf(max); worstIdx = nums.indexOf(min); }
-        else            { bestIdx = nums.indexOf(min); worstIdx = nums.indexOf(max); }
+  // ---------- Best/worst por coluna numérica ----------
+  const stats = {};
+  TABLE_COLS.forEach(col => {
+    if (col.numeric && col.sortable) {
+      const vals = cars.map(c => col.sortVal(c)).filter(v => typeof v === "number");
+      if (vals.length === cars.length) {
+        const max = Math.max(...vals), min = Math.min(...vals);
+        stats[col.id] = {
+          best: col.lowIsBest ? min : max,
+          worst: col.lowIsBest ? max : min,
+        };
       }
     }
-    const cells = vals.map((v, i) => {
-      const display = r.fmt ? r.fmt(v) : v;
-      let cls = i === bestIdx ? "best" : (i === worstIdx ? "worst" : "");
-      // Destaques de preço alto / comprimento alto
-      if (r.lab === "Preço (≈)" && cars[i].preco > PRICE_LIMIT) cls += " alert-bad";
-      if (r.lab === "Comprimento" && cars[i].comprimento > LENGTH_LIMIT) cls += " alert-bad";
-      return `<td class="${cls}">${display}</td>`;
+  });
+
+  // ---------- Body ----------
+  tbody.innerHTML = sortedCars.map(car => {
+    const cells = TABLE_COLS.map(col => {
+      const classes = [
+        col.numeric ? "num" : "",
+        col.id === "nome" ? "sticky-col" : "",
+      ];
+      const s = stats[col.id];
+      if (s) {
+        const v = col.sortVal(car);
+        if (v === s.best && s.best !== s.worst) classes.push("cell-best");
+        else if (v === s.worst && s.best !== s.worst) classes.push("cell-worst");
+      }
+      return `<td class="${classes.filter(Boolean).join(" ")}">${col.render(car)}</td>`;
     }).join("");
-    return `<tr><th>${r.lab}</th>${cells}</tr>`;
+    return `<tr>${cells}</tr>`;
   }).join("");
+
+  // ---------- Sort listeners ----------
+  thead.querySelectorAll("th.sortable").forEach(th => {
+    th.addEventListener("click", () => {
+      const colId = th.dataset.col;
+      const col = TABLE_COLS.find(c => c.id === colId);
+      if (tableSort.col === colId) {
+        tableSort.dir = tableSort.dir === "asc" ? "desc" : "asc";
+      } else {
+        tableSort.col = colId;
+        // Primeiro click: numérica vai pro lado "melhor primeiro"
+        if (col.numeric) tableSort.dir = col.lowIsBest ? "asc" : "desc";
+        else             tableSort.dir = "asc";
+      }
+      renderTable();
+    });
+  });
 }
 
 /* ====== Pros & Contras ====== */
