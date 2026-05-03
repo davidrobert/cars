@@ -1,4 +1,4 @@
-# Comparativo de Carros — Decisão em Família
+# Comparativo de Carros
 
 Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparando 8 modelos do mercado brasileiro para ajudar uma decisão de compra em família.
 
