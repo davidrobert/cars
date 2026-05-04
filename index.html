@@ -464,7 +464,8 @@
   .btn.primary:hover { color: #1a1404; filter: brightness(1.05); }
 
   /* ---------- Tooltip styled (data-tip) ---------- */
-  [data-tip] { position: relative; }
+  /* :where() tem especificidade zero — não sobrescreve elementos já posicionados (ex: .pp-badge) */
+  :where([data-tip]) { position: relative; }
   [data-tip]:hover::after,
   [data-tip]:focus-visible::after {
     content: attr(data-tip);
