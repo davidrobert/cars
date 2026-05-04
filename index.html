@@ -784,7 +784,7 @@
 <!-- ========== Hero ========== -->
 <section class="hero">
   <div class="wrap">
-    <span class="eyebrow"><span class="dot"></span> Comparativo · 8 modelos · com nota de segurança · maio 2026</span>
+    <span class="eyebrow"><span class="dot"></span> Comparativo · 8 modelos · com link oficial · maio 2026</span>
     <h1>Comparativo de carros</h1>
     <p class="lede">
       Comparativo direto entre oito candidatos atualmente à venda no mercado brasileiro: <b>Fiat Toro Ranch Diesel</b>, <b>Jeep Commander Blackhawk</b>, <b>Jeep Wrangler Rubicon</b>, <b>Caoa Chery Tiggo 8 Pro PHEV</b>, <b>GWM Tank 300 Hi4-T</b>, <b>Ram Rampage R/T</b>, <b>Jetour T2 Advance</b> e <b>GWM Haval H6 GT</b>.
@@ -990,7 +990,7 @@
       <b>⚠️ Disclaimer importante.</b> Os preços, consumos, fichas técnicas e <b>notas de segurança</b> são <b>aproximações em maio/2026</b>
       e podem variar conforme versão, ano-modelo, região, condições de pagamento e atualizações dos fabricantes.
       Antes de fechar negócio, confirme tudo direto na concessionária e faça um <b>test drive</b> de cada finalista.
-      Esta página é uma ferramenta de comparação — não um documento técnico oficial. A nota de segurança (0-100) é uma síntese qualitativa baseada em: rating NCAP onde disponível (Latin NCAP, Euro NCAP, ANCAP), número de airbags, pacote ADAS de fábrica e robustez estrutural.
+      Esta página é uma ferramenta de comparação — não um documento técnico oficial. A capacidade de porta-malas (litros) NÃO é diretamente comparável: cada fabricante usa um método (VDA 211, VDA 100, SAE J1100 ou medição própria) — por isso ela aparece apenas como pill secundária no card. A nota de segurança (0-100) é uma síntese qualitativa baseada em: rating NCAP onde disponível (Latin NCAP, Euro NCAP, ANCAP), número de airbags, pacote ADAS de fábrica e robustez estrutural.
     </div>
     <div style="margin-top:14px;">
       Feito com ☕ para uma decisão importante. Pressione <kbd>Ctrl/⌘ + P</kbd> para gerar um PDF.
@@ -1026,6 +1026,7 @@ const cars = [
     comprimento: 5045,
     peso: 2030,
     seguranca: { nota: 72, airbags: 4, ncap: "4★ Latin NCAP (2018)", adas: ["ABS+EBD","ESP","Hill Assist","Câmera de ré","6 airbags na 2026"], destaques: "Picape reforçada, mas ADAS L2 só na geração 2026" },
+    urlOficial: "https://toro.fiat.com.br/",
     garantia: "3 anos",
     tanque: "60 L",
     autonomiaKm: 660,
@@ -1067,6 +1068,7 @@ const cars = [
     comprimento: 4764,
     peso: 1900,
     seguranca: { nota: 88, airbags: 7, ncap: "5★ (derivado Compass)", adas: ["AEB","ACC","LKA","BSM","RCTA","360°","TSR","Hill Hold"], destaques: "Pacote ADAS L2+ completo, plataforma Stellantis testada" },
+    urlOficial: "https://commander.jeep.com.br/",
     garantia: "3 anos",
     tanque: "60 L",
     autonomiaKm: 540,
@@ -1108,6 +1110,7 @@ const cars = [
     comprimento: 4785,
     peso: 2031,
     seguranca: { nota: 55, airbags: 4, ncap: "1★ Euro NCAP (2018)", adas: ["ABS","ESP","Câmera de ré","Roll cage"], destaques: "Robustez off-road, mas crash test fraco e SEM ADAS L2" },
+    urlOficial: "https://www.jeep.com.br/wrangler.html",
     garantia: "3 anos",
     tanque: "81 L",
     autonomiaKm: 620,
@@ -1149,6 +1152,7 @@ const cars = [
     comprimento: 4722,
     peso: 1829,
     seguranca: { nota: 88, airbags: 8, ncap: "—", adas: ["AEB","ACC","LKA","BSM","RCTA","360°","DAA","TSR"], destaques: "8 airbags (inclui joelho), ADAS L2+ completo" },
+    urlOficial: "https://caoachery.com.br/novos/tiggo-8-pro-plug-hybrid",
     garantia: "7 anos / bateria 8 anos",
     tanque: "60 L + 18,3 kWh",
     autonomiaKm: 1000,
@@ -1190,6 +1194,7 @@ const cars = [
     comprimento: 4760,
     peso: 2630,
     seguranca: { nota: 84, airbags: 7, ncap: "5★ ANCAP (2024)", adas: ["AEB","ACC","LKA","BSM","RCTA","360°","TSR"], destaques: "Estrutura body-on-frame + ADAS L2 completo" },
+    urlOficial: "https://www.gwmmotors.com.br/pt/modelos/tank-300",
     garantia: "5 anos / bateria 8 anos",
     tanque: "75 L + 37,1 kWh",
     autonomiaKm: 900,
@@ -1231,6 +1236,7 @@ const cars = [
     comprimento: 4778,
     peso: 1830,
     seguranca: { nota: 82, airbags: 6, ncap: "—", adas: ["AEB","ACC","LKA","BSM","RCTA","360°","Highway Assist"], destaques: "ADAS L2+ Highway Assist e câmera 360° de série na R/T" },
+    urlOficial: "https://www.ram.com.br/picapes/rampage.html",
     garantia: "3 anos",
     tanque: "60 L",
     autonomiaKm: 540,
@@ -1272,6 +1278,7 @@ const cars = [
     comprimento: 4785,
     peso: 2090,
     seguranca: { nota: 82, airbags: 6, ncap: "—", adas: ["AEB","ACC","LKA","BSM","RCTA","360°"], destaques: "6 airbags, ADAS completo (ACC/LKA/AEB) — sem teste NCAP ainda" },
+    urlOficial: "https://jetourbr.com/carro/t2/",
     garantia: "6 anos",
     tanque: "70 L + 26,7 kWh",
     autonomiaKm: 950,
@@ -1313,6 +1320,7 @@ const cars = [
     comprimento: 4727,
     peso: 2025,
     seguranca: { nota: 92, airbags: 7, ncap: "5★ ANCAP & Euro NCAP (2022)", adas: ["AEB","ACC","LKA","BSM","RCTA","360°","DAA","TSR","Auto Park","Coffee Pilot"], destaques: "Estrutura premiada + ADAS L2+ Coffee Pilot mais avançado do grupo" },
+    urlOficial: "https://www.gwmmotors.com.br/pt/modelos/haval-h6-gt",
     garantia: "5 anos / bateria 8 anos",
     tanque: "55 L + 35 kWh",
     autonomiaKm: 1000,
@@ -1385,7 +1393,7 @@ function renderCards(filter = "all") {
           <div class="specs-row" title="Specs prioritárias">
             <div class="s"><div class="v ${c.preco > PRICE_LIMIT ? 'alert-bad' : 'brand'}">${c.precoFmt}</div><div class="l">Preço</div></div>
             <div class="s"><div class="v ${c.cv >= maxCv()*0.95 ? 'alert-good' : ''}">${c.cv} cv</div><div class="l">Potência</div></div>
-            <div class="s"><div class="v">${c.bagagem}</div><div class="l">${c.bagagemNota}</div></div>
+            <div class="s"><div class="v ${c.seguranca.nota >= 85 ? 'alert-good' : c.seguranca.nota < 70 ? 'alert-bad' : ''}">${c.seguranca.nota}</div><div class="l">Segurança</div></div>
             <div class="s"><div class="v ${c.comprimento > LENGTH_LIMIT ? 'alert-bad' : ''}">${(c.comprimento/1000).toFixed(2)} m</div><div class="l">Comprimento</div></div>
             <div class="s"><div class="v">${c.autonomiaKm} km</div><div class="l">Autonomia</div></div>
           </div>
@@ -1394,6 +1402,7 @@ function renderCards(filter = "all") {
             <span class="pill">${c.motor}</span>
             <span class="pill">${c.cambio}</span>
             <span class="pill">${c.tracao}</span>
+            <span class="pill" title="Métodos de medição variam entre fabricantes (VDA, SAE, próprio) — comparar com cautela">📦 ${c.bagagem} ${c.bagagemNota}*</span>
             <span class="pill good">Garantia: ${c.garantia}</span>
           </div>
 
@@ -1407,8 +1416,10 @@ function renderCards(filter = "all") {
           </div>
 
           <div class="card-foot">
-            <span style="color:var(--dim);font-size:12px;">Autonomia ≈ ${c.autonomia}</span>
-            <a class="btn" href="#tabela">Ver detalhes →</a>
+            <a class="btn" href="${c.urlOficial}" target="_blank" rel="noopener noreferrer" title="Abrir página do modelo no site do fabricante">
+              🔗 Site oficial
+            </a>
+            <a class="btn primary" href="#tabela">Ver na tabela →</a>
           </div>
         </div>
       </article>`;
