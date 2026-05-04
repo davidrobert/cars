@@ -250,17 +250,22 @@
     text-transform: uppercase; color: #fff;
   }
 
-  /* Tipo badge — agora no canto inferior esquerdo da foto */
+  /* Tipo badge — base inline (usado também na tabela) */
   .badge {
-    position: absolute; bottom: 12px; left: 12px; z-index: 2;
+    display: inline-flex; align-items: center;
     padding: 4px 10px; border-radius: 3px;
     font-size: 10px; font-weight: 700; letter-spacing: .25em; text-transform: uppercase;
-    background: rgba(0,0,0,.55); color: #fff; backdrop-filter: blur(8px);
+    background: rgba(0,0,0,.55); color: #fff;
     border: 1px solid rgba(255,255,255,.14);
   }
   .badge.t-pickup { background: rgba(96,165,250,.28); color: #d6e6ff; border-color: rgba(96,165,250,.55); }
   .badge.t-suv    { background: rgba(74,222,128,.22); color: #d2f7df; border-color: rgba(74,222,128,.55); }
   .badge.t-offroad{ background: rgba(255,181,71,.26); color: #ffe9c0; border-color: rgba(255,181,71,.6); }
+  /* Posicionamento absoluto só dentro do card */
+  .card-img .badge {
+    position: absolute; bottom: 12px; left: 12px; z-index: 2;
+    backdrop-filter: blur(8px);
+  }
 
   /* PP badge — score estilo Performance Points do GT7 */
   .pp-badge {
@@ -2052,9 +2057,11 @@ function renderCards(filter = "all") {
 
 /* ====== Spotlight modal (visão de garagem GT7) ====== */
 let spotlightIdx = 0;
+function getRankedCars() { return [...cars].sort((a, b) => b.score - a.score); }
 
 function renderSpotlight() {
-  const c = cars[spotlightIdx];
+  const ranked = getRankedCars();
+  const c = ranked[spotlightIdx];
   if (!c) return;
   const brand = getBrand(c);
   const model = getModel(c);
@@ -2065,7 +2072,7 @@ function renderSpotlight() {
   const adasChips = (seg.adas || []).map(a => `<span class="chip-mini">${a}</span>`).join("");
 
   document.getElementById("sl-counter").innerHTML =
-    `<b>${spotlightIdx + 1}</b> <span style="opacity:.5;">/</span> ${cars.length}`;
+    `<b>${spotlightIdx + 1}</b> <span style="opacity:.5;">/</span> ${ranked.length}`;
 
   document.getElementById("sl-content").innerHTML = `
     <div class="sl-hero">
@@ -2150,7 +2157,8 @@ function renderSpotlight() {
 }
 
 function openSpotlight(carId) {
-  const idx = cars.findIndex(c => c.id === carId);
+  const ranked = getRankedCars();
+  const idx = ranked.findIndex(c => c.id === carId);
   if (idx < 0) return;
   spotlightIdx = idx;
   renderSpotlight();
@@ -2164,7 +2172,8 @@ function closeSpotlight() {
   document.body.style.overflow = "";
 }
 function navSpotlight(dir) {
-  spotlightIdx = (spotlightIdx + dir + cars.length) % cars.length;
+  const ranked = getRankedCars();
+  spotlightIdx = (spotlightIdx + dir + ranked.length) % ranked.length;
   renderSpotlight();
   document.querySelector(".sl-content").scrollTop = 0;
 }
