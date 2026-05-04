@@ -188,7 +188,7 @@
     margin-top: 22px;
   }
   .card {
-    position: relative; overflow: hidden;
+    position: relative; overflow: visible;
     background:
       radial-gradient(120% 80% at 50% 0%, var(--gunmetal) 0%, var(--surface) 45%, var(--gunmetal-deep) 100%);
     border: 1px solid var(--line);
@@ -197,6 +197,13 @@
     display: flex; flex-direction: column;
     cursor: pointer;
   }
+  /* Cantos arredondados do hero do card (já que .card não clipa mais) */
+  .card-img {
+    border-top-left-radius: var(--radius);
+    border-top-right-radius: var(--radius);
+  }
+  /* Card hovered fica acima dos vizinhos pra tooltip não ser tampado */
+  .card:hover { z-index: 5; }
   .card::before {
     content: ""; position: absolute; inset: 0;
     background: linear-gradient(135deg,
