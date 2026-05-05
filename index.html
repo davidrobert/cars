@@ -2465,6 +2465,8 @@ function getTipText(c, key) {
 function renderCards() {
   const grid = document.getElementById("cars-grid");
   const m = getMaxes();
+  const priceMin = Math.min(...cars.map(c => c.preco));
+  const priceMax = Math.max(...cars.map(c => c.preco));
   const sortedCars = [...cars].sort((a, b) => b.score - a.score);
   grid.innerHTML = sortedCars.map(c => {
     const brand = getBrand(c);
@@ -2472,6 +2474,14 @@ function renderCards() {
     const segNota = c.seguranca.nota;
     const consumoVal = parseNum(c.consumo);
     const priceDanger = c.preco > PRICE_LIMIT;
+    const priceTier = priceMin !== priceMax && c.preco === priceMin ? "top"
+                    : priceMin !== priceMax && c.preco === priceMax ? "bottom"
+                    : null;
+    const priceBadge = priceTier === "top"    ? '<span class="sb-tier top"    aria-label="mais barato">★</span>'
+                     : priceTier === "bottom" ? '<span class="sb-tier bottom" aria-label="mais caro">⚠</span>'
+                     : '';
+    const pctVsMin = c.preco === priceMin ? null : Math.round((c.preco / priceMin - 1) * 100);
+    const priceLabel = pctVsMin == null ? "Mais barato" : `+${pctVsMin}% vs. menor`;
     return `
       <article class="card" data-id="${c.id}" tabindex="0" role="button" aria-label="Abrir detalhes ${c.nome}">
         <div class="card-img">
@@ -2510,8 +2520,8 @@ function renderCards() {
 
           <div class="card-foot">
             <div class="price-big ${priceDanger ? 'danger' : ''}" data-tip="${escapeAttr(getTipText(c,'preco'))}" data-tip-pos="below">
-              ${c.precoFmt}
-              <small>Preço</small>
+              ${priceBadge}${c.precoFmt}
+              <small>${priceLabel}</small>
             </div>
             <button type="button" class="cta-spotlight" data-spot="${c.id}">
               Ver mais <span class="arrow">→</span>
