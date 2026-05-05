@@ -215,7 +215,7 @@
 
   /* ---------- Grid de carros (Garagem GT7) ---------- */
   .cars {
-    display: grid; gap: 22px;
+    display: grid; gap: 16px;
     grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
     margin-top: 22px;
   }
@@ -250,9 +250,9 @@
     border-color: color-mix(in srgb, var(--brand) 45%, var(--line-2));
     box-shadow: var(--shadow-lg), var(--shadow-glow);
   }
-  /* Hero photo do card — 21:9 cinematográfico */
+  /* Hero photo do card — 24:9 cinematográfico */
   .card-img {
-    aspect-ratio: 21/10;
+    aspect-ratio: 24/9;
     background:
       radial-gradient(80% 100% at 50% 50%, var(--gunmetal) 0%, var(--gunmetal-deep) 100%);
     border-bottom: 1px solid var(--line);
@@ -267,9 +267,30 @@
   .card-img::after {
     content: ""; position: absolute; inset: 0;
     background:
-      radial-gradient(120% 60% at 50% 100%, rgba(0,0,0,.55), transparent 70%),
-      linear-gradient(180deg, transparent 60%, rgba(0,0,0,.45) 100%);
+      radial-gradient(120% 60% at 50% 100%, rgba(0,0,0,.65), transparent 70%),
+      linear-gradient(180deg, transparent 50%, rgba(0,0,0,.78) 100%);
     pointer-events: none;
+  }
+
+  /* Nameplate overlay sobre o hero (estilo GT7 photo mode) */
+  .card-nameplate {
+    position: absolute; left: 0; right: 64px; bottom: 0;
+    z-index: 2;
+    padding: 12px 14px 12px;
+    display: flex; flex-direction: column; gap: 1px;
+    pointer-events: none;
+  }
+  .card-nameplate .np-model {
+    font-family: var(--font-display);
+    font-size: 19px; font-weight: 800; letter-spacing: -.02em;
+    line-height: 1.1; color: #fff;
+    text-shadow: 0 2px 12px rgba(0,0,0,.7);
+    margin: 0;
+  }
+  .card-nameplate .np-version {
+    font-style: italic; font-size: 11.5px;
+    color: rgba(255,255,255,.78);
+    text-shadow: 0 2px 8px rgba(0,0,0,.6);
   }
 
   /* Brand crest top-left */
@@ -297,9 +318,12 @@
   .badge.t-pickup { background: rgba(96,165,250,.28); color: #d6e6ff; border-color: rgba(96,165,250,.55); }
   .badge.t-suv    { background: rgba(74,222,128,.22); color: #d2f7df; border-color: rgba(74,222,128,.55); }
   .badge.t-offroad{ background: rgba(255,181,71,.26); color: #ffe9c0; border-color: rgba(255,181,71,.6); }
-  /* Posicionamento absoluto só dentro do card */
-  .card-img .badge {
-    position: absolute; bottom: 12px; left: 12px; z-index: 2;
+  /* Badge dentro do nameplate (kicker acima do nome) */
+  .card-nameplate .badge {
+    align-self: flex-start;
+    margin-bottom: 4px;
+    padding: 2px 7px;
+    font-size: 8.5px; letter-spacing: .22em;
     backdrop-filter: blur(8px);
   }
 
@@ -332,26 +356,17 @@
 
   .card-body {
     position: relative; z-index: 1;
-    padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 14px; flex: 1;
+    padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 10px; flex: 1;
   }
 
-  /* Nameplate — model + version */
-  .nameplate { display: flex; flex-direction: column; gap: 2px; }
-  .nameplate .np-model {
-    font-family: var(--font-display);
-    font-size: 22px; font-weight: 800; letter-spacing: -.025em;
-    line-height: 1.1; color: var(--text);
-    margin: 0;
-  }
-  .nameplate .np-version {
-    font-style: italic; font-size: 12.5px;
-    color: var(--dim); letter-spacing: .01em;
-  }
-
-  /* Stat bars — barras normalizadas estilo GT7 */
+  /* Stat bars — grid 2 colunas para densidade single-glance (estilo Forza Carlist) */
   .stat-bars {
-    display: flex; flex-direction: column; gap: 7px;
-    padding: 12px 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: min-content;
+    align-items: center;
+    column-gap: 14px; row-gap: 6px;
+    padding: 10px 12px;
     background: linear-gradient(180deg,
       color-mix(in srgb, var(--gunmetal-deep) 60%, transparent),
       color-mix(in srgb, var(--gunmetal-deep) 80%, transparent));
@@ -359,16 +374,20 @@
     border-radius: 6px;
   }
   .sb-row {
-    display: grid; grid-template-columns: 90px 1fr 70px;
-    align-items: center; gap: 10px;
+    display: flex; align-items: center; gap: 6px;
+    min-width: 0;
   }
+  .sb-row .sb-lab { flex: 0 0 48px; }
+  .sb-row .sb-bar { flex: 1 1 auto; }
+  .sb-row .sb-val { flex: 0 0 58px; }
   .sb-lab {
-    font-size: 9.5px; font-weight: 700;
-    letter-spacing: .22em; text-transform: uppercase;
+    font-size: 8.5px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
     color: var(--muted);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .sb-bar {
-    height: 5px; border-radius: 999px;
+    height: 4px; border-radius: 999px;
     background: rgba(0,0,0,.4);
     border: 1px solid var(--line);
     overflow: hidden;
@@ -383,15 +402,16 @@
   }
   .sb-val {
     font-family: var(--font-display);
-    font-size: 13px; font-weight: 800; text-align: right;
+    font-size: 12px; font-weight: 800; text-align: right;
     color: var(--text); letter-spacing: -.01em;
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
-  .sb-val small { color: var(--dim); font-weight: 600; font-size: 10.5px; margin-left: 2px; }
+  .sb-val small { color: var(--dim); font-weight: 600; font-size: 9.5px; margin-left: 2px; }
   .sb-tier {
     display: inline-block;
-    margin-right: 4px;
-    font-size: 10px;
+    margin-right: 2px;
+    font-size: 9px;
     vertical-align: 1px;
     line-height: 1;
   }
@@ -399,11 +419,11 @@
   .sb-tier.bottom { color: var(--bad);  text-shadow: 0 0 6px color-mix(in srgb, var(--bad)  40%, transparent); }
 
   /* Chips minimais (tipo, tração, motor, garantia) */
-  .chips-row { display: flex; flex-wrap: wrap; gap: 5px; }
+  .chips-row { display: flex; flex-wrap: wrap; gap: 4px; }
   .chip-mini {
-    font-size: 10.5px; font-weight: 700;
-    letter-spacing: .12em; text-transform: uppercase;
-    padding: 4px 9px; border-radius: 3px;
+    font-size: 9.5px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 3px;
     background: color-mix(in srgb, var(--surface-2) 80%, transparent);
     border: 1px solid var(--line);
     color: var(--muted);
@@ -421,13 +441,13 @@
 
   /* Card foot — preço grande + CTA único */
   .card-foot {
-    margin-top: auto; padding-top: 14px;
+    margin-top: auto; padding-top: 10px;
     border-top: 1px solid var(--line);
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
   }
   .price-big {
     font-family: var(--font-display);
-    font-size: 22px; font-weight: 800;
+    font-size: 19px; font-weight: 800;
     color: var(--brand);
     letter-spacing: -.02em;
     font-variant-numeric: tabular-nums;
@@ -435,18 +455,18 @@
   }
   .price-big.danger { color: var(--bad); }
   .price-big small {
-    display: block; font-size: 9.5px; font-weight: 700;
+    display: block; font-size: 8.5px; font-weight: 700;
     letter-spacing: .25em; color: var(--muted);
     text-transform: uppercase;
-    margin-top: 4px;
+    margin-top: 2px;
   }
   .cta-spotlight {
     appearance: none; cursor: pointer;
     background: linear-gradient(135deg, var(--brand), var(--brand-2));
     color: #1a1404;
     border: none; border-radius: 4px;
-    padding: 11px 16px;
-    font: 700 12px/1 inherit;
+    padding: 9px 13px;
+    font: 700 11px/1 inherit;
     letter-spacing: .15em; text-transform: uppercase;
     box-shadow: 0 6px 18px -8px rgba(255,138,0,.6);
     transition: transform .2s, box-shadow .2s, filter .2s;
@@ -479,10 +499,6 @@
   }
   .meter .val { text-align: right; color: var(--text); font-weight: 700; font-size: 12px; }
 
-  .card-foot {
-    margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line);
-    display: flex; align-items: center; justify-content: space-between; gap: 8px;
-  }
   .btn {
     appearance: none; border: 1px solid var(--line-2);
     background: var(--surface-2); color: var(--text);
@@ -1404,12 +1420,14 @@
     /* Cards: 1 coluna */
     .cars { gap: 16px; grid-template-columns: 1fr; margin-top: 16px; }
     .card-img { aspect-ratio: 16/9; }
-    .card-body { padding: 16px 16px 18px; gap: 12px; }
-    .nameplate .np-model { font-size: 19px; }
-    .nameplate .np-version { font-size: 12px; }
+    .card-body { padding: 14px 16px 16px; gap: 10px; }
+    .card-nameplate { padding: 10px 12px; right: 56px; }
+    .card-nameplate .np-model { font-size: 17px; }
+    .card-nameplate .np-version { font-size: 11px; }
+    .card-nameplate .badge { font-size: 8px; padding: 2px 6px; }
 
-    /* Stat bars compactas em mobile */
-    .stat-bars { padding: 10px 12px; gap: 6px; }
+    /* Stat bars: voltam para 1 coluna em mobile (largura insuficiente p/ 2) */
+    .stat-bars { grid-template-columns: 1fr; padding: 10px 12px; row-gap: 6px; }
     .sb-row { grid-template-columns: 80px 1fr 60px; gap: 8px; }
     .sb-lab { font-size: 9px; letter-spacing: .18em; }
     .sb-val { font-size: 12px; }
@@ -2477,18 +2495,17 @@ function renderCards() {
         <div class="card-img">
           ${carIMG(c)}
           <span class="brand-crest">${brand}</span>
-          <span class="badge ${c.badge}">${c.tipo}</span>
           <div class="pp-badge" data-tip="${escapeAttr(getTipText(c,'pp'))}">
             <div class="pp-num">${Math.round(c.score * 10)}<small>/100</small></div>
             <div class="pp-lab">Pontuação</div>
           </div>
-        </div>
-        <div class="card-body">
-          <div class="nameplate">
+          <div class="card-nameplate">
+            <span class="badge ${c.badge}">${c.tipo}</span>
             <h3 class="np-model">${model}</h3>
             <div class="np-version">${c.versao}</div>
           </div>
-
+        </div>
+        <div class="card-body">
           <div class="stat-bars">
             ${statBar("Potência",    c.cv,                c.cv,                m.cv,        { unit: "cv",   tip: getTipText(c,'potencia'),    tier: getStatTier('potencia',    c.cv) })}
             ${statBar("Performance", c.notas.performance, c.notas.performance, 100,         { unit: "/100", tip: getTipText(c,'performance'), tier: getStatTier('performance', c.notas.performance) })}
