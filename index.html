@@ -2371,21 +2371,33 @@ function getMaxes() {
   };
   return _maxes;
 }
-/* Limiares editoriais por métrica:
-   floor = abaixo disso a barra ganha ⚠
-   ceiling = acima disso a barra ganha ★ */
-const STAT_TIERS = {
-  consumo:     { floor: 10,   ceiling: null },
-  retencao:    { floor: 50,   ceiling: null },
-  offroad:     { floor: 25,   ceiling: null },
-  performance: { floor: null, ceiling: 65   },
-  seguranca:   { floor: 70,   ceiling: 80   },
-};
+/* Tiers relativos ao dataset: máximo da métrica → ★, mínimo → ⚠.
+   Higher-is-better em todas as 8 stat bars (Potência, Performance, Segurança,
+   Autonomia, Consumo, Tecnologia, Off-road, Retenção). */
+let _statBounds = null;
+function getStatBounds() {
+  if (_statBounds) return _statBounds;
+  const vals = {
+    potencia:    cars.map(c => c.cv),
+    performance: cars.map(c => c.notas.performance),
+    seguranca:   cars.map(c => c.seguranca.nota),
+    autonomia:   cars.map(c => c.autonomiaKm),
+    consumo:     cars.map(c => parseNum(c.consumo)),
+    tecnologia:  cars.map(c => c.notas.tecnologia),
+    offroad:     cars.map(c => c.notas.offroad),
+    retencao:    cars.map(c => c.depreciacao.score),
+  };
+  _statBounds = {};
+  for (const [k, arr] of Object.entries(vals)) {
+    _statBounds[k] = { min: Math.min(...arr), max: Math.max(...arr) };
+  }
+  return _statBounds;
+}
 function getStatTier(key, value) {
-  const t = STAT_TIERS[key];
-  if (!t) return null;
-  if (t.ceiling != null && value > t.ceiling) return "top";
-  if (t.floor   != null && value < t.floor)   return "bottom";
+  const b = getStatBounds()[key];
+  if (!b || b.max === b.min) return null;
+  if (value === b.max) return "top";
+  if (value === b.min) return "bottom";
   return null;
 }
 function statBar(label, value, valueFmt, max, opts = {}) {
@@ -2478,12 +2490,12 @@ function renderCards() {
           </div>
 
           <div class="stat-bars">
-            ${statBar("Potência",    c.cv,                c.cv,                m.cv,        { unit: "cv",   tip: getTipText(c,'potencia') })}
+            ${statBar("Potência",    c.cv,                c.cv,                m.cv,        { unit: "cv",   tip: getTipText(c,'potencia'),    tier: getStatTier('potencia',    c.cv) })}
             ${statBar("Performance", c.notas.performance, c.notas.performance, 100,         { unit: "/100", tip: getTipText(c,'performance'), tier: getStatTier('performance', c.notas.performance) })}
             ${statBar("Segurança",   segNota,             segNota,             100,         { unit: "/100", tip: getTipText(c,'seguranca'),   tier: getStatTier('seguranca',   segNota) })}
-            ${statBar("Autonomia",   c.autonomiaKm,       c.autonomiaKm,       m.autonomia, { unit: "km",   tip: getTipText(c,'autonomia') })}
-            ${statBar("Consumo",     consumoVal,          consumoVal.toFixed(consumoVal % 1 === 0 ? 0 : 1), m.consumo, { unit: "km/l", tip: getTipText(c,'consumo'), tier: getStatTier('consumo', consumoVal) })}
-            ${statBar("Tecnologia",  c.notas.tecnologia,  c.notas.tecnologia,  100,         { unit: "/100", tip: getTipText(c,'tecnologia') })}
+            ${statBar("Autonomia",   c.autonomiaKm,       c.autonomiaKm,       m.autonomia, { unit: "km",   tip: getTipText(c,'autonomia'),   tier: getStatTier('autonomia',   c.autonomiaKm) })}
+            ${statBar("Consumo",     consumoVal,          consumoVal.toFixed(consumoVal % 1 === 0 ? 0 : 1), m.consumo, { unit: "km/l", tip: getTipText(c,'consumo'),     tier: getStatTier('consumo',     consumoVal) })}
+            ${statBar("Tecnologia",  c.notas.tecnologia,  c.notas.tecnologia,  100,         { unit: "/100", tip: getTipText(c,'tecnologia'),  tier: getStatTier('tecnologia',  c.notas.tecnologia) })}
             ${statBar("Off-road",    c.notas.offroad,     c.notas.offroad,     100,         { unit: "/100", tip: getTipText(c,'offroad'),     tier: getStatTier('offroad',     c.notas.offroad) })}
             ${statBar("Retenção",    c.depreciacao.score, c.depreciacao.score, 100,         { unit: "/100", tip: getTipText(c,'retencao'),    tier: getStatTier('retencao',    c.depreciacao.score) })}
           </div>
