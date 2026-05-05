@@ -2296,7 +2296,7 @@ function computeFinalScore(c) {
   const precoN = maxPrecoVal === minPrecoVal ? 50 : (1 - (c.preco - minPrecoVal) / (maxPrecoVal - minPrecoVal)) * 100;
   const w = SCORE_WEIGHTS;
   const weighted = (potN*w.pot + perfN*w.perf + segN*w.seg + autoN*w.auto + tecN*w.tec + offN*w.off + desvN*w.desv + consN*w.cons + precoN*w.preco) / SCORE_WSUM;
-  return Math.round(weighted) / 10; // escala 0-10 com 1 casa
+  return weighted / 10; // escala 0-10, precisão completa (display arredonda)
 }
 
 /* ====== Mutação inicial: aplicar fórmulas a cada carro ====== */
@@ -2920,7 +2920,7 @@ function computeFinalScoreDynamic(c, wSum) {
   const precoN = maxPrecoVal === minPrecoVal ? 50 : (1 - (c.preco - minPrecoVal) / (maxPrecoVal - minPrecoVal)) * 100;
   const safe   = wSum > 0 ? wSum : 1;
   const weighted = (potN*w.pot + perfN*w.perf + segN*w.seg + autoN*w.auto + tecN*w.tec + offN*w.off + desvN*w.desv + consN*w.cons + precoN*w.preco) / safe;
-  return Math.round(weighted) / 10;
+  return weighted / 10;
 }
 
 /* ====== FLIP animation + contador animado ====== */
