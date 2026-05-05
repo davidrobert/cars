@@ -381,10 +381,6 @@
     box-shadow: 0 0 8px rgba(255,181,71,.5);
     transition: width .8s cubic-bezier(.2,.8,.2,1);
   }
-  .sb-bar.danger > i {
-    background: linear-gradient(90deg, var(--bad), var(--racing-red));
-    box-shadow: 0 0 8px rgba(248,113,113,.4);
-  }
   .sb-val {
     font-family: var(--font-display);
     font-size: 13px; font-weight: 800; text-align: right;
@@ -392,6 +388,15 @@
     font-variant-numeric: tabular-nums;
   }
   .sb-val small { color: var(--dim); font-weight: 600; font-size: 10.5px; margin-left: 2px; }
+  .sb-tier {
+    display: inline-block;
+    margin-right: 4px;
+    font-size: 10px;
+    vertical-align: 1px;
+    line-height: 1;
+  }
+  .sb-tier.top    { color: var(--good); text-shadow: 0 0 6px color-mix(in srgb, var(--good) 50%, transparent); }
+  .sb-tier.bottom { color: var(--bad);  text-shadow: 0 0 6px color-mix(in srgb, var(--bad)  40%, transparent); }
 
   /* Chips minimais (tipo, tração, motor, garantia) */
   .chips-row { display: flex; flex-wrap: wrap; gap: 5px; }
@@ -2366,15 +2371,35 @@ function getMaxes() {
   };
   return _maxes;
 }
+/* Limiares editoriais por métrica:
+   floor = abaixo disso a barra ganha ⚠
+   ceiling = acima disso a barra ganha ★ */
+const STAT_TIERS = {
+  consumo:     { floor: 10,   ceiling: null },
+  retencao:    { floor: 50,   ceiling: null },
+  offroad:     { floor: 25,   ceiling: null },
+  performance: { floor: null, ceiling: 65   },
+  seguranca:   { floor: 70,   ceiling: 80   },
+};
+function getStatTier(key, value) {
+  const t = STAT_TIERS[key];
+  if (!t) return null;
+  if (t.ceiling != null && value > t.ceiling) return "top";
+  if (t.floor   != null && value < t.floor)   return "bottom";
+  return null;
+}
 function statBar(label, value, valueFmt, max, opts = {}) {
   const pct = max > 0 ? Math.min(100, (value / max) * 100) : 0;
-  const danger = opts.danger ? " danger" : "";
+  const tier = opts.tier || null;
+  const tierBadge = tier === "top"    ? `<span class="sb-tier top"    aria-label="destaque">★</span>`
+                  : tier === "bottom" ? `<span class="sb-tier bottom" aria-label="abaixo do limite">⚠</span>`
+                  : '';
   const valHtml = opts.unit ? `${valueFmt}<small>${opts.unit}</small>` : valueFmt;
   const tip = opts.tip ? ` data-tip="${escapeAttr(opts.tip)}"` : '';
   return `<div class="sb-row"${tip}>
     <div class="sb-lab">${label}</div>
-    <div class="sb-bar${danger}"><i style="width:${pct}%"></i></div>
-    <div class="sb-val">${valHtml}</div>
+    <div class="sb-bar"><i style="width:${pct}%"></i></div>
+    <div class="sb-val">${tierBadge}${valHtml}</div>
   </div>`;
 }
 
@@ -2433,7 +2458,7 @@ function renderCards() {
     const brand = getBrand(c);
     const model = getModel(c);
     const segNota = c.seguranca.nota;
-    const segDanger = segNota < 70;
+    const consumoVal = parseNum(c.consumo);
     const priceDanger = c.preco > PRICE_LIMIT;
     return `
       <article class="card" data-id="${c.id}" tabindex="0" role="button" aria-label="Abrir detalhes ${c.nome}">
@@ -2454,13 +2479,13 @@ function renderCards() {
 
           <div class="stat-bars">
             ${statBar("Potência",    c.cv,                c.cv,                m.cv,        { unit: "cv",   tip: getTipText(c,'potencia') })}
-            ${statBar("Performance", c.notas.performance, c.notas.performance, 100,         { unit: "/100", tip: getTipText(c,'performance') })}
-            ${statBar("Segurança",   segNota,             segNota,             100,         { unit: "/100", tip: getTipText(c,'seguranca'), danger: segDanger })}
+            ${statBar("Performance", c.notas.performance, c.notas.performance, 100,         { unit: "/100", tip: getTipText(c,'performance'), tier: getStatTier('performance', c.notas.performance) })}
+            ${statBar("Segurança",   segNota,             segNota,             100,         { unit: "/100", tip: getTipText(c,'seguranca'),   tier: getStatTier('seguranca',   segNota) })}
             ${statBar("Autonomia",   c.autonomiaKm,       c.autonomiaKm,       m.autonomia, { unit: "km",   tip: getTipText(c,'autonomia') })}
-            ${statBar("Consumo",     parseNum(c.consumo), parseNum(c.consumo).toFixed(parseNum(c.consumo) % 1 === 0 ? 0 : 1), m.consumo, { unit: "km/l", tip: getTipText(c,'consumo') })}
+            ${statBar("Consumo",     consumoVal,          consumoVal.toFixed(consumoVal % 1 === 0 ? 0 : 1), m.consumo, { unit: "km/l", tip: getTipText(c,'consumo'), tier: getStatTier('consumo', consumoVal) })}
             ${statBar("Tecnologia",  c.notas.tecnologia,  c.notas.tecnologia,  100,         { unit: "/100", tip: getTipText(c,'tecnologia') })}
-            ${statBar("Off-road",    c.notas.offroad,     c.notas.offroad,     100,         { unit: "/100", tip: getTipText(c,'offroad') })}
-            ${statBar("Retenção",    c.depreciacao.score, c.depreciacao.score, 100,         { unit: "/100", tip: getTipText(c,'retencao') })}
+            ${statBar("Off-road",    c.notas.offroad,     c.notas.offroad,     100,         { unit: "/100", tip: getTipText(c,'offroad'),     tier: getStatTier('offroad',     c.notas.offroad) })}
+            ${statBar("Retenção",    c.depreciacao.score, c.depreciacao.score, 100,         { unit: "/100", tip: getTipText(c,'retencao'),    tier: getStatTier('retencao',    c.depreciacao.score) })}
           </div>
 
           <div class="chips-row">
