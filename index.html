@@ -2179,6 +2179,68 @@ const DESVAL_DATA = {
   h6gt:      { taxaAnual: 12.7, fonte: "FIPE 2024→2026 (Haval H6 GT 1.5 AWD híbrido)" },
 };
 
+/* ====== Estrutura de Off-road (fichas técnicas oficiais) ====== */
+/* tracao:   "4x4-reduzida-low" | "4x4-reduzida" | "awd-inteligente" | "awd-eletrico" | "fwd"
+   chassi:   "body-on-frame" | "monobloco-semi-ladder" | "monobloco-reforcado" | "monobloco"
+   bloqueios: 0 (nenhum) | 1 (traseiro) | 2 (diant+tras)
+   sway:      0 | 1 (sway-bar disconnect — só Wrangler Rubicon)
+   ataque, saida: graus
+   vao:       altura do solo (mm)
+   vau:       máxima travessia d'água segura (mm) */
+const OFFROAD_DATA = {
+  toro:      { tracao: "4x4-reduzida",      chassi: "monobloco-reforcado",   bloqueios: 1, sway: 0, ataque: 27, saida: 25, vao: 220, vau: 500 },
+  commander: { tracao: "awd-inteligente",   chassi: "monobloco",             bloqueios: 0, sway: 0, ataque: 18, saida: 22, vao: 195, vau: 500 },
+  wrangler:  { tracao: "4x4-reduzida-low",  chassi: "body-on-frame",         bloqueios: 2, sway: 1, ataque: 44, saida: 37, vao: 270, vau: 760 },
+  tiggo8:    { tracao: "fwd",               chassi: "monobloco",             bloqueios: 0, sway: 0, ataque: 17, saida: 17, vao: 180, vau: 400 },
+  tank:      { tracao: "4x4-reduzida-low",  chassi: "body-on-frame",         bloqueios: 2, sway: 0, ataque: 33, saida: 34, vao: 224, vau: 700 },
+  rampage:   { tracao: "awd-eletrico",      chassi: "monobloco",             bloqueios: 0, sway: 0, ataque: 21, saida: 24, vao: 200, vau: 500 },
+  t2:        { tracao: "awd-inteligente",   chassi: "monobloco-semi-ladder", bloqueios: 0, sway: 0, ataque: 25, saida: 30, vao: 210, vau: 600 },
+  h6gt:      { tracao: "awd-inteligente",   chassi: "monobloco",             bloqueios: 0, sway: 0, ataque: 17, saida: 23, vao: 180, vau: 500 },
+};
+const TRACAO_PTS = {
+  "4x4-reduzida-low": 25,   // mecânico c/ low-range robusto
+  "4x4-reduzida":     20,   // 4x4 com reduzida normal
+  "awd-inteligente":  12,   // AWD com modos (lama, areia)
+  "awd-eletrico":     8,    // AWD on-demand via motor elétrico
+  "fwd":              0,    // 4x2 dianteira
+};
+const CHASSI_PTS = {
+  "body-on-frame":          15,  // chassi separado tipo escada
+  "monobloco-semi-ladder":  8,   // monobloco com reforço de chassi (T2)
+  "monobloco-reforcado":    5,   // monobloco reforçado p/ uso pesado (Toro)
+  "monobloco":              0,   // monobloco padrão urbano
+};
+const TRACAO_LABEL = {
+  "4x4-reduzida-low": "4x4 c/ reduzida (low range)",
+  "4x4-reduzida":     "4x4 c/ reduzida",
+  "awd-inteligente":  "AWD inteligente",
+  "awd-eletrico":     "AWD elétrico (motor traseiro)",
+  "fwd":              "4x2 (dianteira / FWD)",
+};
+const CHASSI_LABEL = {
+  "body-on-frame":          "Body-on-frame (chassi tipo escada)",
+  "monobloco-semi-ladder":  "Monobloco c/ reforço de chassi",
+  "monobloco-reforcado":    "Monobloco reforçado",
+  "monobloco":              "Monobloco urbano",
+};
+
+/* ====== Cálculo de Off-road (objetivo, a partir de OFFROAD_DATA) ====== */
+function computeOffroad(c) {
+  const o = OFFROAD_DATA[c.id];
+  if (!o) return c.notas.offroad;
+  const tracaoP    = TRACAO_PTS[o.tracao] ?? 0;
+  const chassiP    = CHASSI_PTS[o.chassi] ?? 0;
+  const bloqueiosP = o.bloqueios * 7.5;                                  // 0 / 7.5 / 15
+  const swayP      = o.sway * 5;                                         // 0 / 5
+  const ataqueP    = Math.max(0, Math.min(15, (o.ataque - 15) * 0.5));   // 0-15
+  const saidaP     = Math.max(0, Math.min(15, (o.saida - 15) * 0.5));    // 0-15
+  const vaoP       = Math.max(0, Math.min(10, (o.vao - 150) / 12));      // 0-10
+  const vauP       = Math.max(0, Math.min(15, (o.vau - 300) / 30));      // 0-15
+  return Math.max(0, Math.min(100, Math.round(
+    tracaoP + chassiP + bloqueiosP + swayP + ataqueP + saidaP + vaoP + vauP
+  )));
+}
+
 /* ====== Cálculo de Tecnologia (objetivo, a partir de TECH_DATA + ADAS + PHEV) ====== */
 function computeTech(c) {
   const t = TECH_DATA[c.id];
@@ -2219,6 +2281,7 @@ function computeFinalScore(c) {
 /* ====== Mutação inicial: aplicar fórmulas a cada carro ====== */
 cars.forEach(c => {
   c.notas.tecnologia = computeTech(c);
+  c.notas.offroad = computeOffroad(c);
   c.depreciacao = {
     taxa: DESVAL_DATA[c.id]?.taxaAnual ?? null,
     fonte: DESVAL_DATA[c.id]?.fonte ?? "—",
@@ -2320,7 +2383,11 @@ function getTipText(c, key) {
     autonomia: `${c.autonomiaKm} km combinados\n${c.phev ? "Tanque + bateria PHEV" : "Tanque cheio"}\nFonte: fabricante / Inmetro\n${pesoTxt('auto')}`,
     consumo: `${c.consumo}\nFonte: Inmetro / fabricante\nMede custo-por-km — diferencia PHEVs (~22-27 km/l) de ICE (~8-11)\n${pesoTxt('cons')}`,
     tecnologia: `Nota ${c.notas.tecnologia}/100 — calculada\n• ${c.seguranca.adas.length} itens ADAS × 4\n• Tela ${t.tela || "?"}" × 1,5\n• ${techBools}/7 features × 5\n• ${c.phev ? "PHEV +8" : "sem bônus PHEV"}\n• Base 5\n${pesoTxt('tec')}`,
-    offroad: `Nota ${c.notas.offroad}/100 (subjetiva — hardcoded)\nConsidera: bloqueios, reduzida, ângulos de ataque/saída, suspensão\n${pesoTxt('off')}`,
+    offroad: (() => {
+      const o = OFFROAD_DATA[c.id];
+      if (!o) return `Nota ${c.notas.offroad}/100 (subjetiva)\n${pesoTxt('off')}`;
+      return `Nota ${c.notas.offroad}/100 — calculada\n• ${TRACAO_LABEL[o.tracao]}\n• ${CHASSI_LABEL[o.chassi]}\n• ${o.bloqueios === 0 ? "Sem bloqueios" : o.bloqueios === 1 ? "1 bloqueio (traseiro)" : "2 bloqueios (diant+tras)"}${o.sway ? "\n• Sway-bar disconnect" : ""}\n• Ângulos: ataque ${o.ataque}° · saída ${o.saida}°\n• Vão livre: ${o.vao} mm\n• Vau (água): até ${o.vau} mm\n${pesoTxt('off')}`;
+    })(),
     retencao: `Retenção ${dep.score}/100\nDepreciação ~${dep.taxa}% ao ano\nFonte: ${dep.fonte || "—"}\nFórmula: 100 − (taxa × 3,5)\n${pesoTxt('desv')}`,
     pp: `Score final ${(c.score * 10).toFixed(0)}/100\nMédia ponderada (peso/${fmtW(wSum)}):\n• Potência ×${fmtW(w.pot)}\n• Performance ×${fmtW(w.perf)}\n• Segurança ×${fmtW(w.seg)}\n• Autonomia ×${fmtW(w.auto)}\n• Consumo ×${fmtW(w.cons)}\n• Tecnologia ×${fmtW(w.tec)}\n• Off-road ×${fmtW(w.off)}\n• Retenção ×${fmtW(w.desv)}`,
     preco: `${c.precoFmt}\nPreço sugerido ${getBrand(c)} (mai/2026, sem opcionais)\n${c.preco > PRICE_LIMIT ? "⚠ Acima do limite de R$ 350k" : ""}`,
