@@ -2309,8 +2309,8 @@ function computeDesval(c) {
 }
 
 /* ====== Cálculo do Score Final (0-10, ponderado) ====== */
-const SCORE_WEIGHTS = { pot: 2, perf: 1, seg: 4, auto: 1.5, tec: 3, off: 1.5, desv: 2.5, cons: 1 };
-const SCORE_WSUM = Object.values(SCORE_WEIGHTS).reduce((a, b) => a + b, 0); // 16.5
+const SCORE_WEIGHTS = { pot: 2, perf: 1, seg: 5, auto: 1.5, tec: 3.5, off: 1, desv: 2.5, cons: 1 };
+const SCORE_WSUM = Object.values(SCORE_WEIGHTS).reduce((a, b) => a + b, 0); // 17.5
 
 function computeFinalScore(c) {
   const maxCvVal   = Math.max(...cars.map(x => x.cv));
@@ -2825,10 +2825,10 @@ const TUNING_METRICS = [
   { key: "cons", label: "Consumo",     max: 5 },
 ];
 const PRESETS = {
-  default:   { label: "Mercado BR", weights: { pot: 2,   perf: 1,   seg: 4, auto: 1.5, tec: 3,   off: 1.5, desv: 2.5, cons: 1   } },
+  default:   { label: "Mercado BR", weights: { pot: 2,   perf: 1,   seg: 5, auto: 1.5, tec: 3.5, off: 1,   desv: 2.5, cons: 1   } },
   esportivo: { label: "Esportivo",  weights: { pot: 4,   perf: 4,   seg: 2, auto: 1,   tec: 2.5, off: 1,   desv: 1,   cons: 0.5 } },
   familia:   { label: "Família",    weights: { pot: 1,   perf: 0.5, seg: 5, auto: 2,   tec: 3,   off: 0.5, desv: 2,   cons: 1.5 } },
-  offroad:   { label: "Off-road",   weights: { pot: 2,   perf: 1,   seg: 3, auto: 2,   tec: 1.5, off: 4,   desv: 2,   cons: 1   } },
+  offroad:   { label: "Off-road",   weights: { pot: 2,   perf: 1,   seg: 1, auto: 2,   tec: 1.5, off: 5,   desv: 2,   cons: 1   } },
 };
 const STORAGE_KEY = "car-comp-tuning-v1";
 let activePreset = "default";
