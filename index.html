@@ -359,13 +359,9 @@
     padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 10px; flex: 1;
   }
 
-  /* Stat bars — grid 2 colunas para densidade single-glance (estilo Forza Carlist) */
+  /* Stat bars — 1 coluna (labels completas, barras longas) */
   .stat-bars {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: min-content;
-    align-items: center;
-    column-gap: 14px; row-gap: 6px;
+    display: flex; flex-direction: column; gap: 6px;
     padding: 10px 12px;
     background: linear-gradient(180deg,
       color-mix(in srgb, var(--gunmetal-deep) 60%, transparent),
@@ -374,17 +370,17 @@
     border-radius: 6px;
   }
   .sb-row {
-    display: flex; align-items: center; gap: 6px;
+    display: flex; align-items: center; gap: 10px;
     min-width: 0;
   }
-  .sb-row .sb-lab { flex: 0 0 48px; }
+  .sb-row .sb-lab { flex: 0 0 92px; }
   .sb-row .sb-bar { flex: 1 1 auto; }
-  .sb-row .sb-val { flex: 0 0 58px; }
+  .sb-row .sb-val { flex: 0 0 64px; }
   .sb-lab {
-    font-size: 8.5px; font-weight: 700;
-    letter-spacing: .1em; text-transform: uppercase;
+    font-size: 9.5px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
     color: var(--muted);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .sb-bar {
     height: 4px; border-radius: 999px;
@@ -778,213 +774,259 @@
   .sl-nav.next { right: 22px; }
   .sl-nav:hover { background: var(--brand); color: #1a1404; border-color: var(--brand); }
 
+  /* Modal container — split horizontal (foto | dados) */
   .sl-content {
     position: relative; z-index: 101;
-    width: 100%; max-width: 1100px;
+    width: calc(100% - 32px); max-width: 1240px;
+    height: calc(100vh - 80px); max-height: 820px;
     margin: 40px auto;
     background: linear-gradient(180deg, var(--surface) 0%, var(--gunmetal-deep) 100%);
     border: 1px solid var(--line-2);
     border-radius: var(--radius);
-    overflow: hidden auto;
+    overflow: hidden;
+    display: flex; flex-direction: column;
     box-shadow: 0 40px 100px -30px rgba(0,0,0,.8);
     animation: scaleIn .3s cubic-bezier(.2,.8,.2,1);
   }
   @keyframes scaleIn { from { transform: scale(.96); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-  /* Hero photo do spotlight */
-  .sl-hero {
-    position: relative;
-    aspect-ratio: 21/9;
-    background:
-      radial-gradient(80% 100% at 50% 50%, var(--gunmetal) 0%, var(--gunmetal-deep) 100%);
-    overflow: hidden;
-    border-bottom: 1px solid var(--line);
+  .sl-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex: 1; min-height: 0;
   }
-  .sl-hero img {
+
+  /* Painel esquerdo: hero full-height */
+  .sl-hero-pane {
+    position: relative;
+    background: radial-gradient(80% 100% at 50% 50%, var(--gunmetal) 0%, var(--gunmetal-deep) 100%);
+    overflow: hidden;
+    border-right: 1px solid var(--line);
+  }
+  .sl-hero-pane img {
     width: 100%; height: 100%;
     object-fit: cover; object-position: center;
     display: block;
-    animation: heroZoom 12s ease-out infinite alternate;
+    animation: heroZoom 14s ease-out infinite alternate;
   }
-  @keyframes heroZoom { from { transform: scale(1); } to { transform: scale(1.06); } }
-  .sl-hero::after {
+  @keyframes heroZoom { from { transform: scale(1); } to { transform: scale(1.05); } }
+  .sl-hero-pane::after {
     content: ""; position: absolute; inset: 0;
     background:
-      linear-gradient(180deg, transparent 30%, rgba(0,0,0,.55) 80%, rgba(5,6,15,.95) 100%),
-      radial-gradient(60% 40% at 50% 100%, rgba(255,138,0,.15), transparent 70%);
+      linear-gradient(180deg, transparent 70%, rgba(0,0,0,.45) 100%),
+      radial-gradient(60% 40% at 50% 100%, rgba(255,138,0,.08), transparent 70%);
     pointer-events: none;
   }
-  .sl-hero-info {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    padding: 28px 32px;
-    display: flex; align-items: flex-end; justify-content: space-between;
-    gap: 20px; flex-wrap: wrap;
+
+  /* Painel direito: dados densos, scroll só se necessário */
+  .sl-data-pane {
+    display: flex; flex-direction: column;
+    padding: 26px 30px 22px;
+    gap: 16px;
+    overflow-y: auto;
+    min-height: 0;
   }
-  .sl-nameplate { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .sl-data-pane::-webkit-scrollbar { width: 8px; }
+  .sl-data-pane::-webkit-scrollbar-track { background: transparent; }
+  .sl-data-pane::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 4px; }
+  .sl-data-pane::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+  /* Header (nameplate sobre fundo escuro do painel — sempre legível) */
+  .sl-data-head { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
   .sl-brand {
     font-family: var(--font-display);
-    font-size: 13px; font-weight: 800; letter-spacing: .35em;
+    font-size: 11.5px; font-weight: 800; letter-spacing: .32em;
     text-transform: uppercase; color: var(--brand);
-    text-shadow: 0 2px 12px rgba(0,0,0,.5);
   }
   .sl-model {
     font-family: var(--font-display);
-    font-size: clamp(28px, 4.2vw, 44px);
-    font-weight: 800; letter-spacing: -.025em;
-    line-height: 1.05; color: #fff;
-    text-shadow: 0 4px 20px rgba(0,0,0,.6);
+    font-size: clamp(24px, 2.4vw, 30px);
+    font-weight: 800; letter-spacing: -.022em;
+    line-height: 1.08; color: var(--text);
     margin: 0;
   }
   .sl-version {
-    font-style: italic; font-size: 14px;
-    color: rgba(255,255,255,.7);
-    text-shadow: 0 2px 10px rgba(0,0,0,.5);
+    font-style: italic; font-size: 13px;
+    color: var(--dim);
+  }
+
+  /* Linha-resumo: PP score + quick specs inline */
+  .sl-summary-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
   }
   .sl-pp {
     display: flex; flex-direction: column; align-items: flex-end;
-    padding: 14px 20px;
+    padding: 8px 14px;
     background: linear-gradient(135deg, rgba(8,9,26,.85), rgba(20,24,49,.85));
     border: 1px solid color-mix(in srgb, var(--brand) 50%, transparent);
-    border-radius: 6px;
-    backdrop-filter: blur(10px);
+    border-radius: 5px;
+    flex-shrink: 0;
   }
   .sl-pp .sl-pp-num {
     font-family: var(--font-display);
-    font-size: 48px; font-weight: 800;
+    font-size: 26px; font-weight: 800;
     color: var(--brand); line-height: 1; letter-spacing: -.03em;
     font-variant-numeric: tabular-nums;
   }
-  .sl-pp .sl-pp-num small { font-size: 18px; color: var(--muted); margin-left: 2px; }
+  .sl-pp .sl-pp-num small { font-size: 12px; color: var(--muted); margin-left: 2px; }
   .sl-pp .sl-pp-lab {
-    font-size: 10px; font-weight: 700; letter-spacing: .35em;
+    font-size: 8px; font-weight: 700; letter-spacing: .3em;
     color: var(--muted); text-transform: uppercase;
-    margin-top: 6px;
+    margin-top: 3px;
+  }
+  .sl-quick-specs {
+    font-family: var(--font-display);
+    font-size: 12.5px; font-weight: 600;
+    color: var(--muted);
+    letter-spacing: .03em; line-height: 1.55;
+    flex: 1; min-width: 0;
+  }
+  .sl-quick-specs .qs-price {
+    color: var(--brand);
+    font-size: 17px; font-weight: 800;
+    letter-spacing: -.01em;
+    font-variant-numeric: tabular-nums;
+  }
+  .sl-quick-specs .qs-price.danger { color: var(--bad); }
+  .sl-quick-specs .qs-sep {
+    color: var(--line-2); margin: 0 6px;
   }
 
-  /* Body do spotlight */
-  .sl-body { padding: 32px; display: flex; flex-direction: column; gap: 28px; }
-
-  /* Stat bars maiores no spotlight */
-  .sl-stats {
-    display: flex; flex-direction: column; gap: 12px;
-    padding: 22px 26px;
+  /* Stats em grid 2×3 (compactas, herdam técnica do card) */
+  .sl-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: min-content;
+    align-items: center;
+    column-gap: 18px; row-gap: 7px;
+    padding: 12px 14px;
     background: linear-gradient(180deg,
       color-mix(in srgb, var(--gunmetal-deep) 70%, transparent),
       color-mix(in srgb, var(--gunmetal-deep) 90%, transparent));
     border: 1px solid var(--line);
     border-radius: 8px;
   }
-  .sl-stats .sb-row { grid-template-columns: 130px 1fr 110px; gap: 16px; }
-  .sl-stats .sb-lab { font-size: 11px; }
-  .sl-stats .sb-bar { height: 8px; }
-  .sl-stats .sb-val { font-size: 16px; }
-  .sl-stats .sb-val small { font-size: 12px; }
+  .sl-stats-grid .sb-row {
+    display: flex; align-items: center; gap: 8px;
+    min-width: 0;
+  }
+  .sl-stats-grid .sb-row .sb-lab {
+    flex: 0 0 60px;
+    font-size: 9.5px; letter-spacing: .14em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .sl-stats-grid .sb-row .sb-bar { flex: 1 1 auto; height: 5px; }
+  .sl-stats-grid .sb-row .sb-val {
+    flex: 0 0 auto;
+    font-size: 13px;
+    white-space: nowrap;
+    text-align: right;
+  }
+  .sl-stats-grid .sb-row .sb-val small { font-size: 10px; }
 
-  /* Specs detalhadas em grid */
-  .sl-specs {
-    display: grid; gap: 1px;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .sl-spec {
-    background: var(--surface);
-    padding: 14px 16px;
-  }
-  .sl-spec .sl-spec-lab {
-    font-size: 9.5px; font-weight: 700; letter-spacing: .25em;
-    color: var(--muted); text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .sl-spec .sl-spec-val {
-    font-family: var(--font-display);
-    font-size: 15px; font-weight: 700; color: var(--text);
-    letter-spacing: -.01em;
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* Bloco de segurança */
+  /* Bloco de segurança compacto */
   .sl-safety {
-    padding: 22px 26px;
+    padding: 12px 14px;
     background: var(--surface);
     border: 1px solid var(--line);
     border-left: 3px solid var(--good);
     border-radius: 8px;
   }
   .sl-safety h4 {
-    margin: 0 0 12px;
-    font-size: 11px; font-weight: 800; letter-spacing: .3em;
+    margin: 0 0 8px;
+    font-size: 10px; font-weight: 800; letter-spacing: .28em;
     text-transform: uppercase; color: var(--muted);
   }
   .sl-safety-row {
-    display: flex; flex-wrap: wrap; gap: 18px; align-items: baseline;
-    margin-bottom: 14px;
+    display: flex; gap: 14px; align-items: baseline;
+    margin-bottom: 8px;
   }
   .sl-safety-num {
     font-family: var(--font-display);
-    font-size: 36px; font-weight: 800;
+    font-size: 26px; font-weight: 800;
     line-height: 1; letter-spacing: -.02em;
     color: var(--good);
     font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
   }
   .sl-safety-num.mid { color: var(--warn); }
   .sl-safety-num.low { color: var(--bad); }
-  .sl-safety-num small { font-size: 14px; color: var(--muted); }
-  .sl-safety-meta { color: var(--muted); font-size: 13px; line-height: 1.5; flex: 1; min-width: 200px; }
+  .sl-safety-num small { font-size: 11px; color: var(--muted); }
+  .sl-safety-meta { color: var(--muted); font-size: 12px; line-height: 1.45; flex: 1; min-width: 0; }
   .sl-safety-meta b { color: var(--text); }
-  .sl-adas { display: flex; flex-wrap: wrap; gap: 5px; }
-  .sl-adas .chip-mini { background: rgba(0,0,0,.3); }
+  .sl-adas { display: flex; flex-wrap: wrap; gap: 4px; }
+  .sl-adas .chip-mini {
+    background: rgba(0,0,0,.3);
+    font-size: 9px; padding: 3px 7px; letter-spacing: .08em;
+  }
 
-  /* Pros e Contras lado a lado */
-  .sl-pc { display: grid; gap: 18px; grid-template-columns: 1fr 1fr; }
-  .sl-pc-col {
-    padding: 20px 22px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 8px;
+  /* Tabs Pros / Contras */
+  .sl-tabs { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  .sl-tabs-head {
+    display: flex; gap: 2px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 10px;
   }
-  .sl-pc-col h4 {
-    margin: 0 0 12px;
-    font-size: 11px; font-weight: 800; letter-spacing: .3em;
-    text-transform: uppercase;
-    display: flex; align-items: center; gap: 8px;
+  .sl-tab {
+    appearance: none; background: transparent;
+    border: none; padding: 9px 14px 10px;
+    font-family: var(--font-display);
+    font-size: 10.5px; font-weight: 800;
+    letter-spacing: .25em; text-transform: uppercase;
+    color: var(--muted); cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color .15s, border-color .15s;
+    display: inline-flex; align-items: center; gap: 7px;
   }
-  .sl-pc-col.pros h4 { color: var(--good); }
-  .sl-pc-col.cons h4 { color: var(--bad); }
-  .sl-pc-col h4 .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    box-shadow: 0 0 12px currentColor;
+  .sl-tab:hover { color: var(--text); }
+  .sl-tab .dot {
+    width: 7px; height: 7px; border-radius: 50%;
     background: currentColor;
+    box-shadow: 0 0 8px currentColor;
+    opacity: .6;
   }
-  .sl-pc-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-  .sl-pc-col li {
+  .sl-tab[data-tab="pros"] { color: color-mix(in srgb, var(--good) 70%, var(--muted)); }
+  .sl-tab[data-tab="cons"] { color: color-mix(in srgb, var(--bad) 70%, var(--muted)); }
+  .sl-tab.is-active { border-bottom-color: currentColor; }
+  .sl-tab.is-active[data-tab="pros"] { color: var(--good); }
+  .sl-tab.is-active[data-tab="cons"] { color: var(--bad); }
+  .sl-tab.is-active .dot { opacity: 1; }
+
+  .sl-tab-panel { padding: 4px 0 0; }
+  .sl-tab-panel ul {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 7px;
+  }
+  .sl-tab-panel li {
     display: flex; align-items: flex-start; gap: 10px;
-    font-size: 13.5px; line-height: 1.5; color: var(--text);
-    padding-left: 0;
+    font-size: 13px; line-height: 1.5; color: var(--text);
   }
-  .sl-pc-col li::before {
+  .sl-tab-panel li::before {
     content: ""; flex: 0 0 6px;
     width: 6px; height: 6px; border-radius: 50%;
-    margin-top: 8px;
+    margin-top: 7px;
   }
-  .sl-pc-col.pros li::before { background: var(--good); }
-  .sl-pc-col.cons li::before { background: var(--bad); }
+  .sl-tab-panel[data-panel="pros"] li::before { background: var(--good); }
+  .sl-tab-panel[data-panel="cons"] li::before { background: var(--bad); }
 
-  /* CTA do spotlight */
+  /* CTA sticky no rodapé do modal (sempre visível) */
   .sl-cta-row {
-    display: flex; gap: 12px; flex-wrap: wrap;
-    padding-top: 8px;
+    display: flex; gap: 10px; flex-shrink: 0;
+    padding: 14px 30px;
     border-top: 1px solid var(--line);
+    background: var(--surface);
   }
   .sl-cta-primary {
-    flex: 1; min-width: 200px;
+    flex: 1; min-width: 0;
     appearance: none; cursor: pointer;
     background: linear-gradient(135deg, var(--brand), var(--brand-2));
     color: #1a1404; border: none; border-radius: 6px;
-    padding: 16px 24px;
-    font: 800 13px/1 inherit;
+    padding: 13px 22px;
+    font: 800 12px/1 inherit;
     letter-spacing: .2em; text-transform: uppercase;
     text-decoration: none;
     box-shadow: 0 8px 24px -8px rgba(255,138,0,.6);
@@ -998,13 +1040,13 @@
   }
   .sl-cta-secondary {
     appearance: none; cursor: pointer;
-    background: var(--surface);
+    background: var(--surface-2);
     color: var(--muted);
     border: 1px solid var(--line-2);
     border-radius: 6px;
-    padding: 16px 22px;
-    font: 700 12px/1 inherit;
-    letter-spacing: .2em; text-transform: uppercase;
+    padding: 13px 20px;
+    font: 700 11px/1 inherit;
+    letter-spacing: .18em; text-transform: uppercase;
     text-decoration: none;
     display: inline-flex; align-items: center; gap: 8px;
     transition: all .2s;
@@ -1365,6 +1407,22 @@
     padding: 0 4px;
   }
 
+  /* ============ TABLET: modal volta ao layout vertical ============ */
+  @media (max-width: 1100px) {
+    .sl-content {
+      max-width: calc(100% - 32px);
+      max-height: calc(100vh - 40px);
+      margin: 20px auto;
+    }
+    .sl-split { grid-template-columns: 1fr; }
+    .sl-hero-pane {
+      aspect-ratio: 21/9; height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+    }
+    .sl-data-pane { padding: 22px 24px 18px; gap: 14px; }
+  }
+
   /* ============ MOBILE RESPONSIVE ============ */
   @media (max-width: 760px) {
     .wrap { padding: 0 14px; }
@@ -1426,10 +1484,12 @@
     .card-nameplate .np-version { font-size: 11px; }
     .card-nameplate .badge { font-size: 8px; padding: 2px 6px; }
 
-    /* Stat bars: voltam para 1 coluna em mobile (largura insuficiente p/ 2) */
-    .stat-bars { grid-template-columns: 1fr; padding: 10px 12px; row-gap: 6px; }
-    .sb-row { grid-template-columns: 80px 1fr 60px; gap: 8px; }
-    .sb-lab { font-size: 9px; letter-spacing: .18em; }
+    /* Stat bars compactas em mobile (já 1-col por padrão) */
+    .stat-bars { padding: 10px 12px; gap: 5px; }
+    .sb-row { gap: 8px; }
+    .sb-row .sb-lab { flex-basis: 84px; }
+    .sb-row .sb-val { flex-basis: 60px; }
+    .sb-lab { font-size: 9px; letter-spacing: .12em; }
     .sb-val { font-size: 12px; }
 
     /* PP badge encolhe */
@@ -1446,24 +1506,24 @@
     .cta-spotlight { padding: 10px 14px; font-size: 11px; }
 
     /* Spotlight modal — drawer full screen em mobile */
-    .sl-content { margin: 0; max-width: 100%; min-height: 100vh; border-radius: 0; border: none; }
-    .sl-hero { aspect-ratio: 16/10; }
-    .sl-hero-info { padding: 18px 18px; gap: 12px; }
-    .sl-model { font-size: clamp(22px, 7vw, 32px); }
-    .sl-pp { padding: 10px 14px; }
-    .sl-pp .sl-pp-num { font-size: 32px; }
-    .sl-pp .sl-pp-num small { font-size: 13px; }
-    .sl-body { padding: 22px 18px; gap: 22px; }
-    .sl-stats { padding: 16px 18px; }
-    .sl-stats .sb-row { grid-template-columns: 100px 1fr 80px; gap: 12px; }
-    .sl-stats .sb-lab { font-size: 10px; }
-    .sl-stats .sb-val { font-size: 14px; }
-    .sl-pc { grid-template-columns: 1fr; gap: 12px; }
-    .sl-pc-col { padding: 16px 18px; }
-    .sl-safety { padding: 16px 18px; }
-    .sl-safety-num { font-size: 28px; }
-    .sl-cta-primary { padding: 14px 20px; font-size: 12px; }
-    .sl-cta-secondary { padding: 14px 18px; font-size: 11px; }
+    .sl-content { margin: 0; width: 100%; max-width: 100%; height: 100vh; max-height: 100vh; border-radius: 0; border: none; }
+    .sl-hero-pane { aspect-ratio: 16/10; height: auto; border-right: none; border-bottom: 1px solid var(--line); }
+    .sl-data-pane { padding: 18px 18px 16px; gap: 14px; }
+    .sl-model { font-size: clamp(22px, 6vw, 28px); }
+    .sl-summary-row { flex-direction: column; align-items: flex-start; gap: 10px; padding: 10px 0; }
+    .sl-pp { padding: 8px 12px; }
+    .sl-pp .sl-pp-num { font-size: 22px; }
+    .sl-pp .sl-pp-num small { font-size: 11px; }
+    .sl-quick-specs { font-size: 12px; }
+    .sl-quick-specs .qs-price { font-size: 16px; }
+    .sl-stats-grid { grid-template-columns: 1fr; padding: 12px; row-gap: 8px; }
+    .sl-stats-grid .sb-row .sb-lab { flex-basis: 80px; font-size: 10px; }
+    .sl-stats-grid .sb-row .sb-val { font-size: 13px; }
+    .sl-safety { padding: 14px 16px; }
+    .sl-safety-num { font-size: 24px; }
+    .sl-cta-row { padding: 12px 18px; }
+    .sl-cta-primary { padding: 12px 18px; font-size: 11px; }
+    .sl-cta-secondary { padding: 12px 16px; font-size: 10.5px; }
     .sl-nav { display: none; }
     .sl-counter { top: 18px; left: 18px; padding: 6px 10px; font-size: 10px; }
     .sl-close { top: 18px; right: 18px; width: 38px; height: 38px; font-size: 18px; }
@@ -2568,72 +2628,85 @@ function renderSpotlight() {
   document.getElementById("sl-counter").innerHTML =
     `<b>${spotlightIdx + 1}</b> <span style="opacity:.5;">/</span> ${ranked.length}`;
 
+  const priceDanger = c.preco > PRICE_LIMIT;
+  const compridoChip = c.comprimento > LENGTH_LIMIT
+    ? `<span class="qs-sep">·</span><span style="color:var(--bad);">${(c.comprimento/1000).toFixed(2)} m</span>`
+    : `<span class="qs-sep">·</span>${(c.comprimento/1000).toFixed(2)} m`;
+
   document.getElementById("sl-content").innerHTML = `
-    <div class="sl-hero">
-      <img src="${c.img}" alt="${c.nome}" />
-      <div class="sl-hero-info">
-        <div class="sl-nameplate">
+    <div class="sl-split">
+      <div class="sl-hero-pane">
+        <img src="${c.img}" alt="${c.nome}" />
+      </div>
+      <div class="sl-data-pane">
+        <header class="sl-data-head">
           <div class="sl-brand">${brand}</div>
           <h2 class="sl-model">${model}</h2>
           <div class="sl-version">${c.versao}</div>
+        </header>
+
+        <div class="sl-summary-row">
+          <div class="sl-pp">
+            <div class="sl-pp-num">${Math.round(c.score * 10)}<small>/100</small></div>
+            <div class="sl-pp-lab">Pontuação</div>
+          </div>
+          <div class="sl-quick-specs">
+            <span class="qs-price ${priceDanger ? 'danger' : ''}">${c.precoFmt}</span>
+            <span class="qs-sep">·</span>${c.tipo}
+            <span class="qs-sep">·</span>${c.motor}
+            <br>
+            ${c.cambio}<span class="qs-sep">·</span>${c.tracao}${compridoChip}<span class="qs-sep">·</span>${c.garantia}
+            ${c.phev ? '<span class="qs-sep">·</span><span style="color:var(--brand);">PHEV</span>' : ''}
+          </div>
         </div>
-        <div class="sl-pp">
-          <div class="sl-pp-num">${Math.round(c.score * 10)}<small>/100</small></div>
-          <div class="sl-pp-lab">Pontuação</div>
+
+        <div class="sl-stats-grid">
+          ${statBar("Potência",    c.cv,                  c.cv,                m.cv,        { unit: "cv" })}
+          ${statBar("Torque",      parseNum(c.torque),    c.torque,            m.torque,    {})}
+          ${statBar("P-malas",     parseNum(c.bagagem),   c.bagagem + (c.bagagemNota ? " " + c.bagagemNota : ""), m.bagagem, {})}
+          ${statBar("Autonomia",   c.autonomiaKm,         c.autonomiaKm,       m.autonomia, { unit: "km" })}
+          ${statBar("Consumo",     parseNum(c.consumo),   c.consumo,           m.consumo,   {})}
+          ${statBar("Peso",        m.peso - c.peso + 200, c.peso,              m.peso,      { unit: "kg" })}
+        </div>
+
+        <div class="sl-safety">
+          <h4>Segurança</h4>
+          <div class="sl-safety-row">
+            <div class="sl-safety-num ${segCls}">${seg.nota}<small>/100</small></div>
+            <div class="sl-safety-meta">
+              <b>${seg.airbags} airbags</b>${seg.ncap && seg.ncap !== "—" ? ` · ${seg.ncap}` : ""}<br>
+              ${seg.destaques || ""}
+            </div>
+          </div>
+          <div class="sl-adas">${adasChips}</div>
+        </div>
+
+        <div class="sl-tabs">
+          <div class="sl-tabs-head" role="tablist">
+            <button type="button" class="sl-tab is-active" data-tab="pros" role="tab" aria-selected="true">
+              <span class="dot"></span>Pontos fortes
+            </button>
+            <button type="button" class="sl-tab" data-tab="cons" role="tab" aria-selected="false">
+              <span class="dot"></span>Pontos fracos
+            </button>
+          </div>
+          <div class="sl-tab-panel" data-panel="pros" role="tabpanel">
+            <ul>${c.pros.map(p => `<li>${p}</li>`).join("")}</ul>
+          </div>
+          <div class="sl-tab-panel" data-panel="cons" role="tabpanel" hidden>
+            <ul>${c.contras.map(p => `<li>${p}</li>`).join("")}</ul>
+          </div>
         </div>
       </div>
     </div>
-    <div class="sl-body">
-      <div class="sl-stats">
-        ${statBar("Potência",    c.cv,                  c.cv,                m.cv,        { unit: "cv" })}
-        ${statBar("Torque",      parseNum(c.torque),    c.torque,            m.torque,    {})}
-        ${statBar("Porta-malas", parseNum(c.bagagem),   c.bagagem + (c.bagagemNota ? " " + c.bagagemNota : ""), m.bagagem, {})}
-        ${statBar("Autonomia",   c.autonomiaKm,         c.autonomiaKm,       m.autonomia, { unit: "km" })}
-        ${statBar("Consumo",     parseNum(c.consumo),   c.consumo,           m.consumo,   {})}
-        ${statBar("Peso",        m.peso - c.peso + 200, c.peso,              m.peso,      { unit: "kg" })}
-      </div>
 
-      <div class="sl-specs">
-        <div class="sl-spec"><div class="sl-spec-lab">Preço</div><div class="sl-spec-val" style="color:var(--brand);">${c.precoFmt}</div></div>
-        <div class="sl-spec"><div class="sl-spec-lab">Tipo</div><div class="sl-spec-val">${c.tipo}</div></div>
-        <div class="sl-spec"><div class="sl-spec-lab">Motor</div><div class="sl-spec-val">${c.motor}</div></div>
-        <div class="sl-spec"><div class="sl-spec-lab">Câmbio</div><div class="sl-spec-val">${c.cambio}</div></div>
-        <div class="sl-spec"><div class="sl-spec-lab">Tração</div><div class="sl-spec-val">${c.tracao}</div></div>
-        <div class="sl-spec"><div class="sl-spec-lab">Comprimento</div><div class="sl-spec-val">${(c.comprimento/1000).toFixed(2)} m</div></div>
-        <div class="sl-spec"><div class="sl-spec-lab">Garantia</div><div class="sl-spec-val">${c.garantia}</div></div>
-      </div>
-
-      <div class="sl-safety">
-        <h4>Segurança</h4>
-        <div class="sl-safety-row">
-          <div class="sl-safety-num ${segCls}">${seg.nota}<small>/100</small></div>
-          <div class="sl-safety-meta">
-            <b>${seg.airbags} airbags</b>${seg.ncap && seg.ncap !== "—" ? ` · ${seg.ncap}` : ""}<br>
-            ${seg.destaques || ""}
-          </div>
-        </div>
-        <div class="sl-adas">${adasChips}</div>
-      </div>
-
-      <div class="sl-pc">
-        <div class="sl-pc-col pros">
-          <h4><span class="dot"></span>Pontos fortes</h4>
-          <ul>${c.pros.map(p => `<li>${p}</li>`).join("")}</ul>
-        </div>
-        <div class="sl-pc-col cons">
-          <h4><span class="dot"></span>Pontos fracos</h4>
-          <ul>${c.contras.map(p => `<li>${p}</li>`).join("")}</ul>
-        </div>
-      </div>
-
-      <div class="sl-cta-row">
-        <a class="sl-cta-primary" href="${c.urlOficial}" target="_blank" rel="noopener noreferrer">
-          🔗 Site oficial do modelo
-        </a>
-        <a class="sl-cta-secondary" href="#tabela" data-close="1">
-          Ver na tabela
-        </a>
-      </div>
+    <div class="sl-cta-row">
+      <a class="sl-cta-primary" href="${c.urlOficial}" target="_blank" rel="noopener noreferrer">
+        🔗 Site oficial
+      </a>
+      <a class="sl-cta-secondary" href="#tabela" data-close="1">
+        Ver na tabela →
+      </a>
     </div>
   `;
 
@@ -3134,11 +3207,24 @@ document.getElementById("cars-grid").addEventListener("keydown", (e) => {
   e.preventDefault();
   openSpotlight(card.dataset.id);
 });
-// Backdrop / close button / secondary CTA dentro do modal
+// Backdrop / close button / secondary CTA / tabs dentro do modal
 document.getElementById("spotlight").addEventListener("click", (e) => {
   if (e.target.closest("[data-close]")) closeSpotlight();
   const navBtn = e.target.closest("[data-nav]");
   if (navBtn) navSpotlight(parseInt(navBtn.dataset.nav, 10));
+  const tab = e.target.closest(".sl-tab");
+  if (tab) {
+    const which = tab.dataset.tab;
+    const content = document.getElementById("sl-content");
+    content.querySelectorAll(".sl-tab").forEach(t => {
+      const active = t === tab;
+      t.classList.toggle("is-active", active);
+      t.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    content.querySelectorAll(".sl-tab-panel").forEach(p => {
+      p.hidden = p.dataset.panel !== which;
+    });
+  }
 });
 // ESC fecha, setas navegam
 document.addEventListener("keydown", (e) => {
