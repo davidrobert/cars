@@ -123,27 +123,57 @@
     background: linear-gradient(120deg, var(--brand) 0%, var(--racing-red) 55%, var(--brand) 100%);
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
-  /* Stat band — meta-info enxuta no estilo GT7 */
-  .stat-band {
-    display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
-    padding: 14px 18px; margin: 0 0 28px;
+  /* Hero "Como funciona" — briefing GT7 com 3 passos */
+  .howto {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin: 0 0 28px;
+    padding: 0;
     background: linear-gradient(90deg,
       color-mix(in srgb, var(--surface) 80%, transparent),
       color-mix(in srgb, var(--surface) 40%, transparent));
     border: 1px solid var(--line);
     border-left: 3px solid var(--brand);
     border-radius: 4px;
+    overflow: hidden;
   }
-  .sb-item {
-    font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase;
-    color: var(--muted); font-weight: 500;
+  .howto-step {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 22px;
+    border-right: 1px solid var(--line);
+    transition: background .2s;
   }
-  .sb-item b { color: var(--text); font-weight: 800; letter-spacing: .12em; }
-  .sb-sep {
-    width: 1px; height: 14px;
-    background: var(--line-2);
+  .howto-step:last-child { border-right: none; }
+  .howto-step:hover { background: color-mix(in srgb, var(--brand) 5%, transparent); }
+  .howto-num {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 800;
+    line-height: 1; letter-spacing: -.04em;
+    color: var(--brand);
+    font-variant-numeric: tabular-nums;
     flex: 0 0 auto;
+    text-shadow: 0 0 12px rgba(255,138,0,.25);
   }
+  .howto-text { min-width: 0; }
+  .howto-title {
+    font-family: var(--font-display);
+    font-size: 11.5px; font-weight: 800;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .howto-desc {
+    font-size: 12.5px; line-height: 1.45;
+    color: var(--muted);
+  }
+  .howto-desc b { color: var(--text); font-weight: 700; }
+  .howto-desc a {
+    color: var(--brand); text-decoration: none;
+    border-bottom: 1px dashed color-mix(in srgb, var(--brand) 50%, transparent);
+    transition: border-color .15s;
+  }
+  .howto-desc a:hover { border-bottom-color: var(--brand); }
 
   /* ---------- Section ---------- */
   section { padding: 36px 0; }
@@ -1361,12 +1391,19 @@
     /* Hero */
     .hero { padding: 26px 0 14px; }
     h1 { font-size: clamp(28px, 8vw, 42px); margin: 14px 0 14px; }
-    .stat-band {
-      gap: 10px 14px; padding: 12px 14px; margin-bottom: 18px;
-      display: grid; grid-template-columns: 1fr 1fr;
+    .howto {
+      grid-template-columns: 1fr;
+      margin-bottom: 18px;
     }
-    .stat-band .sb-sep { display: none; }
-    .sb-item { font-size: 11px; letter-spacing: .15em; }
+    .howto-step {
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+      padding: 12px 16px; gap: 12px;
+    }
+    .howto-step:last-child { border-bottom: none; }
+    .howto-num { font-size: 18px; }
+    .howto-title { font-size: 10.5px; letter-spacing: .18em; }
+    .howto-desc { font-size: 12px; }
     .eyebrow { font-size: 11.5px; padding: 5px 10px; }
 
     /* Sections */
@@ -1512,7 +1549,7 @@
   @media print {
     body { background: #fff; color: #000; }
     .topbar, .filters, .vote-actions, .nav, .btn,
-    .spotlight, .cta-spotlight, .stat-band { display: none !important; }
+    .spotlight, .cta-spotlight, .howto, .tuning { display: none !important; }
     .card, .table-wrap, .pc, .scene, .discuss { box-shadow: none; border-color: #ccc; background: #fff; color: #000; }
     .card { break-inside: avoid; }
   }
@@ -1550,14 +1587,28 @@
   <div class="wrap">
     <span class="eyebrow"><span class="dot"></span> Garagem · 8 modelos · maio 2026</span>
     <h1><span class="grad">Garagem</span> Comparativa</h1>
-    <div class="stat-band" aria-label="Resumo da garagem">
-      <span class="sb-item"><b>8</b> modelos</span>
-      <span class="sb-sep"></span>
-      <span class="sb-item">maio <b>2026</b></span>
-      <span class="sb-sep"></span>
-      <span class="sb-item">segurança <b>avaliada</b></span>
-      <span class="sb-sep"></span>
-      <span class="sb-item">link oficial <b>por carro</b></span>
+    <div class="howto" aria-label="Como funciona o comparativo">
+      <div class="howto-step">
+        <div class="howto-num">01</div>
+        <div class="howto-text">
+          <div class="howto-title">Configure os pesos</div>
+          <div class="howto-desc">Abra o painel <a href="#tuning" data-howto-target="tuning"><b>Tuning</b></a> e ajuste o que importa pra você</div>
+        </div>
+      </div>
+      <div class="howto-step">
+        <div class="howto-num">02</div>
+        <div class="howto-text">
+          <div class="howto-title">Ranking ao vivo</div>
+          <div class="howto-desc">Os cards reordenam em tempo real conforme você arrasta os sliders</div>
+        </div>
+      </div>
+      <div class="howto-step">
+        <div class="howto-num">03</div>
+        <div class="howto-text">
+          <div class="howto-title">Abra cada carro</div>
+          <div class="howto-desc">Click no card pra entrar na <b>garagem completa</b> com specs e prós/contras</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -3021,6 +3072,16 @@ document.querySelectorAll(".tuning-chip").forEach(btn => {
 });
 document.getElementById("tuning-reset").addEventListener("click", () => applyPreset("default"));
 document.getElementById("tuning-share").addEventListener("click", shareTuning);
+
+// Mini-guia "Como funciona" → click em "Tuning" abre o painel e rola até ele
+document.querySelectorAll('[data-howto-target="tuning"]').forEach(a => {
+  a.addEventListener("click", (e) => {
+    e.preventDefault();
+    const t = document.getElementById("tuning");
+    t.open = true;
+    t.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+});
 
 /* ====== Spotlight: wire-up ====== */
 // Click no card (ou no botão "Ver mais") abre o modal
