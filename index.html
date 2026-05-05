@@ -250,9 +250,6 @@
     border-color: color-mix(in srgb, var(--brand) 45%, var(--line-2));
     box-shadow: var(--shadow-lg), var(--shadow-glow);
   }
-  .card.dim { opacity: .32; filter: saturate(.55); transform: none; }
-  .card.dim:hover { transform: none; box-shadow: none; }
-
   /* Hero photo do card — 21:9 cinematográfico */
   .card-img {
     aspect-ratio: 21/10;
@@ -643,24 +640,6 @@
     font-variant-numeric: tabular-nums;
     letter-spacing: -.01em;
   }
-  .tuning-presets { display: inline-flex; gap: 6px; flex-wrap: wrap; }
-  .tuning-chip {
-    appearance: none; cursor: pointer;
-    background: color-mix(in srgb, var(--surface-2) 80%, transparent);
-    border: 1px solid var(--line);
-    color: var(--muted);
-    padding: 7px 12px; border-radius: 4px;
-    font: 700 11px/1 inherit;
-    letter-spacing: .15em; text-transform: uppercase;
-    transition: all .15s;
-  }
-  .tuning-chip:hover { color: var(--text); border-color: var(--brand); }
-  .tuning-chip.active {
-    background: linear-gradient(135deg, var(--brand), var(--brand-2));
-    color: #1a1404; border-color: transparent;
-    box-shadow: 0 4px 14px -6px rgba(255,138,0,.5);
-  }
-
   .tuning-extras {
     display: flex; align-items: center; gap: 12px;
     padding-top: 12px;
@@ -1415,7 +1394,6 @@
     .tuning-row .tr-val { font-size: 13px; }
     .tuning-foot { gap: 10px; }
     .tuning-sum-val { font-size: 16px; }
-    .tuning-chip { padding: 6px 10px; font-size: 10.5px; }
     .tuning-extras { flex-wrap: wrap; }
 
     /* Cards: 1 coluna */
@@ -1602,26 +1580,34 @@
 <section id="cars" class="sec-cars">
   <div class="wrap">
 
-    <div class="filters" role="tablist" aria-label="Filtros por cenário">
-      <button class="chip active" data-filter="all">
+    <div class="filters" role="tablist" aria-label="Presets de tuning">
+      <button class="chip active" data-preset="default">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-        Todos
+        Mercado BR
       </button>
-      <button class="chip" data-filter="economia">
+      <button class="chip" data-preset="economia">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 7c0-2 2-3 7-3s7 1 7 3-2 3-7 3-7 1-7 3 2 3 7 3 7 1 7 3-2 3-7 3-7-1-7-3"/></svg>
         Economia
       </button>
-      <button class="chip" data-filter="offroad">
+      <button class="chip" data-preset="offroad">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18l4-6 4 3 5-7 5 10"/><circle cx="7" cy="20" r="2"/><circle cx="17" cy="20" r="2"/></svg>
         Off-road / Trilha
       </button>
-      <button class="chip" data-filter="viagem">
+      <button class="chip" data-preset="viagem">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/><circle cx="12" cy="12" r="10"/></svg>
         Viagem longa
       </button>
-      <button class="chip" data-filter="utilidade">
+      <button class="chip" data-preset="trabalho">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h13l3 4v6H3z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
         Trabalho / Carga
+      </button>
+      <button class="chip" data-preset="esportivo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+        Esportivo
+      </button>
+      <button class="chip" data-preset="familia">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 20v-1a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1M15 20v-1a3 3 0 0 1 3-3h1a3 3 0 0 1 3 3v1"/></svg>
+        Família
       </button>
     </div>
 
@@ -1647,12 +1633,6 @@
           <div class="tuning-sum">
             <span class="tuning-sum-lab">Σ Total</span>
             <span class="tuning-sum-val" id="tuning-sum">16,5</span>
-          </div>
-          <div class="tuning-presets" id="tuning-presets">
-            <button type="button" class="tuning-chip active" data-preset="default">Mercado BR</button>
-            <button type="button" class="tuning-chip" data-preset="esportivo">Esportivo</button>
-            <button type="button" class="tuning-chip" data-preset="familia">Família</button>
-            <button type="button" class="tuning-chip" data-preset="offroad">Off-road</button>
           </div>
         </div>
 
@@ -1860,7 +1840,6 @@ const cars = [
     tanque: "60 L",
     autonomiaKm: 660,
     autonomia: "≈ 660 km",
-    cenarios: ["offroad","utilidade"],
     score: 8.0,
     phev: false,
     notas: { economia: 78, conforto: 72, espaco: 75, offroad: 88, performance: 60, urbano: 45, tecnologia: 65 },
@@ -1902,7 +1881,6 @@ const cars = [
     tanque: "60 L",
     autonomiaKm: 540,
     autonomia: "≈ 540 km",
-    cenarios: ["diario","viagem","urbano"],
     score: 8.4,
     phev: false,
     notas: { economia: 50, conforto: 88, espaco: 95, offroad: 60, performance: 78, urbano: 60, tecnologia: 88 },
@@ -1944,7 +1922,6 @@ const cars = [
     tanque: "81 L",
     autonomiaKm: 620,
     autonomia: "≈ 620 km",
-    cenarios: ["offroad"],
     score: 8.3,
     phev: false,
     notas: { economia: 25, conforto: 55, espaco: 65, offroad: 100, performance: 70, urbano: 30, tecnologia: 70 },
@@ -1986,7 +1963,6 @@ const cars = [
     tanque: "60 L + 18,3 kWh",
     autonomiaKm: 1000,
     autonomia: "≈ 1.000 km (80 km elétr.)",
-    cenarios: ["diario","economia","viagem"],
     score: 8.5,
     phev: true,
     notas: { economia: 88, conforto: 85, espaco: 92, offroad: 30, performance: 84, urbano: 75, tecnologia: 90 },
@@ -2028,7 +2004,6 @@ const cars = [
     tanque: "75 L + 37,1 kWh",
     autonomiaKm: 900,
     autonomia: "≈ 900 km (74 km elétr.)",
-    cenarios: ["offroad","viagem","economia","diario"],
     score: 8.7,
     phev: true,
     notas: { economia: 80, conforto: 80, espaco: 70, offroad: 95, performance: 88, urbano: 45, tecnologia: 90 },
@@ -2070,7 +2045,6 @@ const cars = [
     tanque: "60 L",
     autonomiaKm: 540,
     autonomia: "≈ 540 km",
-    cenarios: ["utilidade","viagem","urbano","offroad"],
     score: 7.8,
     phev: false,
     notas: { economia: 45, conforto: 80, espaco: 70, offroad: 75, performance: 78, urbano: 70, tecnologia: 85 },
@@ -2112,7 +2086,6 @@ const cars = [
     tanque: "70 L + 26,7 kWh",
     autonomiaKm: 950,
     autonomia: "≈ 950 km (75 km elétr.)",
-    cenarios: ["diario","economia","viagem","offroad"],
     score: 8.5,
     phev: true,
     notas: { economia: 88, conforto: 82, espaco: 88, offroad: 50, performance: 86, urbano: 65, tecnologia: 88 },
@@ -2154,7 +2127,6 @@ const cars = [
     tanque: "55 L + 35 kWh",
     autonomiaKm: 1000,
     autonomia: "≈ 1.000 km (119 km elétr.)",
-    cenarios: ["viagem","economia","diario"],
     score: 8.8,
     phev: true,
     notas: { economia: 85, conforto: 88, espaco: 70, offroad: 60, performance: 96, urbano: 78, tecnologia: 95 },
@@ -2457,19 +2429,18 @@ function getTipText(c, key) {
 }
 
 /* ====== Render dos cards (estilo garagem GT7) ====== */
-function renderCards(filter = "all") {
+function renderCards() {
   const grid = document.getElementById("cars-grid");
   const m = getMaxes();
   const sortedCars = [...cars].sort((a, b) => b.score - a.score);
   grid.innerHTML = sortedCars.map(c => {
-    const matches = filter === "all" || c.cenarios.includes(filter);
     const brand = getBrand(c);
     const model = getModel(c);
     const segNota = c.seguranca.nota;
     const segDanger = segNota < 70;
     const priceDanger = c.preco > PRICE_LIMIT;
     return `
-      <article class="card ${matches ? "" : "dim"}" data-id="${c.id}" tabindex="0" role="button" aria-label="Abrir detalhes ${c.nome}">
+      <article class="card" data-id="${c.id}" tabindex="0" role="button" aria-label="Abrir detalhes ${c.nome}">
         <div class="card-img">
           ${carIMG(c)}
           <span class="brand-crest">${brand}</span>
@@ -2808,15 +2779,9 @@ function renderProsCons() {
   `).join("");
 }
 
-/* ====== Filtros ====== */
-let currentFilter = "all";
+/* ====== Presets (chips superiores) ====== */
 document.querySelectorAll(".filters .chip").forEach(chip => {
-  chip.addEventListener("click", () => {
-    document.querySelectorAll(".filters .chip").forEach(c => c.classList.remove("active"));
-    chip.classList.add("active");
-    currentFilter = chip.dataset.filter;
-    renderCardsAnimated(currentFilter);
-  });
+  chip.addEventListener("click", () => applyPreset(chip.dataset.preset));
 });
 
 /* ====== Tuning Panel ====== */
@@ -2833,9 +2798,12 @@ const TUNING_METRICS = [
 ];
 const PRESETS = {
   default:   { label: "Mercado BR", weights: { pot: 2,   perf: 1,   seg: 5, auto: 1.5, tec: 3.5, off: 1,   desv: 2.5, cons: 1,   preco: 1   } },
+  economia:  { label: "Economia",   weights: { pot: 1,   perf: 0.5, seg: 2, auto: 2,   tec: 1,   off: 0.5, desv: 4,   cons: 5,   preco: 5   } },
+  offroad:   { label: "Off-road",   weights: { pot: 2,   perf: 1,   seg: 1, auto: 2,   tec: 1.5, off: 5,   desv: 2,   cons: 1,   preco: 0.5 } },
+  viagem:    { label: "Viagem",     weights: { pot: 2,   perf: 2,   seg: 4, auto: 5,   tec: 3,   off: 0.5, desv: 1.5, cons: 2,   preco: 1   } },
+  trabalho:  { label: "Trabalho",   weights: { pot: 4,   perf: 0.5, seg: 2, auto: 2,   tec: 1,   off: 2,   desv: 3,   cons: 2,   preco: 2.5 } },
   esportivo: { label: "Esportivo",  weights: { pot: 3.5, perf: 5,   seg: 2, auto: 1,   tec: 2.5, off: 1,   desv: 1,   cons: 0.5, preco: 0.5 } },
   familia:   { label: "Família",    weights: { pot: 1,   perf: 0.5, seg: 5, auto: 2,   tec: 3,   off: 0.5, desv: 2,   cons: 1.5, preco: 1.5 } },
-  offroad:   { label: "Off-road",   weights: { pot: 2,   perf: 1,   seg: 1, auto: 2,   tec: 1.5, off: 5,   desv: 2,   cons: 1,   preco: 0.5 } },
 };
 const STORAGE_KEY = "car-comp-tuning-v1";
 let activePreset = "default";
@@ -2884,8 +2852,8 @@ function reflectTuningState() {
   document.querySelectorAll(".tuning-row").forEach(row => {
     row.classList.toggle("is-max", SCORE_WEIGHTS[row.dataset.key] === maxW && maxW > 0);
   });
-  // Atualiza presets ativos
-  document.querySelectorAll(".tuning-chip").forEach(c => {
+  // Atualiza presets ativos na barra superior
+  document.querySelectorAll(".filters .chip").forEach(c => {
     c.classList.toggle("active", c.dataset.preset === activePreset);
   });
   // Atualiza nome do preset no header
@@ -2926,10 +2894,10 @@ function applyWeightsToCars(animate) {
   cars.forEach(c => { c.score = computeFinalScoreDynamic(c, newSum); });
   // Re-render com FLIP animation se solicitado
   if (animate) {
-    renderCardsAnimated(currentFilter, oldPP);
+    renderCardsAnimated(oldPP);
     renderTable();
   } else {
-    renderCards(currentFilter);
+    renderCards();
     renderTable();
   }
 }
@@ -2956,7 +2924,7 @@ function computeFinalScoreDynamic(c, wSum) {
 }
 
 /* ====== FLIP animation + contador animado ====== */
-function renderCardsAnimated(filter, oldPP) {
+function renderCardsAnimated(oldPP) {
   const grid = document.getElementById("cars-grid");
   // 1. FIRST: capturar posições atuais
   const oldRects = {};
@@ -2971,7 +2939,7 @@ function renderCardsAnimated(filter, oldPP) {
     });
   }
   // 2. RE-RENDER: substitui DOM
-  renderCards(filter);
+  renderCards();
   // 3. LAST + INVERT + PLAY
   const cards = grid.querySelectorAll(".card");
   cards.forEach(el => {
@@ -3077,9 +3045,6 @@ activePreset = matchPreset();
 buildTuningGrid();         // 2. constrói sliders refletindo SCORE_WEIGHTS atual
 applyWeightsToCars(false); // 3. recomputa scores + renderiza cards/tabela (sem animar na primeira carga)
 
-document.querySelectorAll(".tuning-chip").forEach(btn => {
-  btn.addEventListener("click", () => applyPreset(btn.dataset.preset));
-});
 document.getElementById("tuning-reset").addEventListener("click", () => applyPreset("default"));
 document.getElementById("tuning-share").addEventListener("click", shareTuning);
 
