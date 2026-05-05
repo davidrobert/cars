@@ -1954,12 +1954,13 @@ function computeDesval(c) {
 }
 
 /* ====== Cálculo do Score Final (0-10, ponderado) ====== */
-const SCORE_WEIGHTS = { pot: 2, perf: 1, seg: 4, auto: 2, tec: 3, off: 1, desv: 2 };
-const SCORE_WSUM = Object.values(SCORE_WEIGHTS).reduce((a, b) => a + b, 0); // 15
+const SCORE_WEIGHTS = { pot: 2, perf: 1, seg: 4, auto: 1.5, tec: 3, off: 1.5, desv: 2.5, cons: 1 };
+const SCORE_WSUM = Object.values(SCORE_WEIGHTS).reduce((a, b) => a + b, 0); // 16.5
 
 function computeFinalScore(c) {
   const maxCvVal   = Math.max(...cars.map(x => x.cv));
   const maxAutoVal = Math.max(...cars.map(x => x.autonomiaKm));
+  const maxConsVal = Math.max(...cars.map(x => parseNum(x.consumo)));
   const potN  = (c.cv / maxCvVal) * 100;
   const perfN = c.notas.performance;
   const segN  = c.seguranca.nota;
@@ -1967,8 +1968,9 @@ function computeFinalScore(c) {
   const tecN  = computeTech(c);
   const offN  = c.notas.offroad;
   const desvN = computeDesval(c);
+  const consN = (parseNum(c.consumo) / maxConsVal) * 100;
   const w = SCORE_WEIGHTS;
-  const weighted = (potN * w.pot + perfN * w.perf + segN * w.seg + autoN * w.auto + tecN * w.tec + offN * w.off + desvN * w.desv) / SCORE_WSUM;
+  const weighted = (potN*w.pot + perfN*w.perf + segN*w.seg + autoN*w.auto + tecN*w.tec + offN*w.off + desvN*w.desv + consN*w.cons) / SCORE_WSUM;
   return Math.round(weighted) / 10; // escala 0-10 com 1 casa
 }
 
@@ -2065,11 +2067,12 @@ function getTipText(c, key) {
   const tips = {
     potencia: `${c.cv} cv\nFonte: ficha técnica oficial ${getBrand(c)}\nPeso 2 no score final`,
     seguranca: `Nota ${c.seguranca.nota}/100\n${c.seguranca.airbags} airbags · ${c.seguranca.ncap}\n${c.seguranca.adas.length} itens ADAS\nPeso 4 no score (maior peso)\n\n${c.seguranca.destaques}`,
-    autonomia: `${c.autonomiaKm} km combinados\n${c.phev ? "Tanque + bateria PHEV" : "Tanque cheio"}\nFonte: fabricante / Inmetro\nPeso 2 no score`,
+    autonomia: `${c.autonomiaKm} km combinados\n${c.phev ? "Tanque + bateria PHEV" : "Tanque cheio"}\nFonte: fabricante / Inmetro\nPeso 1,5 no score`,
+    consumo: `${c.consumo}\nFonte: Inmetro / fabricante\nMede custo-por-km — diferencia PHEVs (~22-27 km/l) de ICE (~8-11)\nPeso 1 no score`,
     tecnologia: `Nota ${c.notas.tecnologia}/100 — calculada\n• ${c.seguranca.adas.length} itens ADAS × 4\n• Tela ${t.tela || "?"}" × 1,5\n• ${techBools}/7 features × 5\n• ${c.phev ? "PHEV +8" : "sem bônus PHEV"}\n• Base 5\nPeso 3 no score`,
-    offroad: `Nota ${c.notas.offroad}/100 (subjetiva)\nConsidera: bloqueios, reduzida, ângulos de ataque/saída, suspensão\nPeso 1 no score`,
-    retencao: `Retenção ${dep.score}/100\nDepreciação ~${dep.taxa}% ao ano\nFonte: ${dep.fonte || "—"}\nFórmula: 100 − (taxa × 3,5)\nPeso 2 no score`,
-    pp: `Score final ${(c.score * 10).toFixed(0)}/100\nMédia ponderada (peso/15):\n• Potência ×2\n• Performance ×1\n• Segurança ×4\n• Autonomia ×2\n• Tecnologia ×3\n• Off-road ×1\n• Retenção ×2`,
+    offroad: `Nota ${c.notas.offroad}/100 (subjetiva)\nConsidera: bloqueios, reduzida, ângulos de ataque/saída, suspensão\nPeso 1,5 no score`,
+    retencao: `Retenção ${dep.score}/100\nDepreciação ~${dep.taxa}% ao ano\nFonte: ${dep.fonte || "—"}\nFórmula: 100 − (taxa × 3,5)\nPeso 2,5 no score`,
+    pp: `Score final ${(c.score * 10).toFixed(0)}/100\nMédia ponderada (peso/16,5):\n• Potência ×2\n• Performance ×1\n• Segurança ×4\n• Autonomia ×1,5\n• Tecnologia ×3\n• Off-road ×1,5\n• Retenção ×2,5\n• Consumo ×1`,
     preco: `${c.precoFmt}\nPreço sugerido ${getBrand(c)} (mai/2026, sem opcionais)\n${c.preco > PRICE_LIMIT ? "⚠ Acima do limite de R$ 350k" : ""}`,
     tracao: `Tração: ${c.tracao}\nFonte: ficha técnica`,
     cambio: `Câmbio: ${c.cambio}\nFonte: ficha técnica`,
