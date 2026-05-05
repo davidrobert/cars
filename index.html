@@ -1597,10 +1597,6 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/><circle cx="12" cy="12" r="10"/></svg>
         Viagem longa
       </button>
-      <button class="chip" data-preset="trabalho">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h13l3 4v6H3z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
-        Trabalho / Carga
-      </button>
       <button class="chip" data-preset="esportivo">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>
         Esportivo
@@ -2800,9 +2796,8 @@ const PRESETS = {
   default:   { label: "Mercado BR", weights: { pot: 2,   perf: 1,   seg: 5, auto: 1.5, tec: 3.5, off: 1,   desv: 2.5, cons: 1,   preco: 1   } },
   economia:  { label: "Economia",   weights: { pot: 0,   perf: 0,   seg: 1, auto: 0.5, tec: 1,   off: 0,   desv: 5,   cons: 3,   preco: 5   } },
   offroad:   { label: "Off-road",   weights: { pot: 2,   perf: 1,   seg: 1, auto: 2,   tec: 1.5, off: 5,   desv: 2,   cons: 1,   preco: 0.5 } },
-  viagem:    { label: "Viagem",     weights: { pot: 2,   perf: 2,   seg: 4, auto: 5,   tec: 3,   off: 0.5, desv: 1.5, cons: 2,   preco: 1   } },
-  trabalho:  { label: "Trabalho",   weights: { pot: 4,   perf: 0.5, seg: 2, auto: 2,   tec: 1,   off: 2,   desv: 3,   cons: 2,   preco: 2.5 } },
-  esportivo: { label: "Esportivo",  weights: { pot: 3.5, perf: 5,   seg: 2, auto: 1,   tec: 2.5, off: 1,   desv: 1,   cons: 0.5, preco: 0.5 } },
+  viagem:    { label: "Viagem",     weights: { pot: 2,   perf: 2,   seg: 5, auto: 5,   tec: 3,   off: 0.5, desv: 1.5, cons: 2,   preco: 1   } },
+  esportivo: { label: "Esportivo",  weights: { pot: 5,   perf: 5,   seg: 2, auto: 1,   tec: 2.5, off: 1,   desv: 1,   cons: 0.5, preco: 0.5 } },
   familia:   { label: "Família",    weights: { pot: 1,   perf: 0.5, seg: 5, auto: 2,   tec: 3,   off: 0.5, desv: 2,   cons: 1.5, preco: 1.5 } },
 };
 const STORAGE_KEY = "car-comp-tuning-v1";
