@@ -177,6 +177,8 @@
 
   /* ---------- Section ---------- */
   section { padding: 36px 0; }
+  /* Cars section: sem section-head, encosta no hero */
+  section.sec-cars { padding-top: 8px; }
   .section-head {
     display: flex; align-items: end; justify-content: space-between; gap: 20px;
     margin-bottom: 22px; flex-wrap: wrap;
@@ -1614,14 +1616,8 @@
 </section>
 
 <!-- ========== Modelos ========== -->
-<section id="cars">
+<section id="cars" class="sec-cars">
   <div class="wrap">
-    <div class="section-head">
-      <div>
-        <h2>Os candidatos</h2>
-        <p>Filtre por cenário para ver quais carros se encaixam melhor no que importa para vocês.</p>
-      </div>
-    </div>
 
     <div class="filters" role="tablist" aria-label="Filtros por cenário">
       <button class="chip active" data-filter="all">
