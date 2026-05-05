@@ -1365,20 +1365,6 @@
     padding: 0 4px;
   }
 
-  /* Legenda dos destaques */
-  .legend {
-    display: flex; flex-wrap: wrap; gap: 12px; margin: 10px 0 4px;
-    font-size: 12.5px; color: var(--muted);
-  }
-  .legend > span { display: inline-flex; align-items: center; gap: 6px; }
-  .legend .sw {
-    width: 12px; height: 12px; border-radius: 4px;
-    border: 1px solid var(--line);
-  }
-  .legend .sw.bad  { background: color-mix(in srgb, var(--bad) 30%, transparent); }
-  .legend .sw.good { background: color-mix(in srgb, var(--good) 30%, transparent); }
-  .legend .sw.power{ background: var(--brand); }
-
   /* ============ MOBILE RESPONSIVE ============ */
   @media (max-width: 760px) {
     .wrap { padding: 0 14px; }
@@ -1431,9 +1417,6 @@
     .tuning-sum-val { font-size: 16px; }
     .tuning-chip { padding: 6px 10px; font-size: 10.5px; }
     .tuning-extras { flex-wrap: wrap; }
-
-    /* Legend acima dos cards */
-    .legend { font-size: 11.5px; gap: 8px 12px; line-height: 1.4; }
 
     /* Cards: 1 coluna */
     .cars { gap: 16px; grid-template-columns: 1fr; margin-top: 16px; }
@@ -1642,14 +1625,8 @@
       </button>
     </div>
 
-    <div class="legend">
-      <span><span class="sw bad"></span> Preço &gt; R$ 350.000 ou comprimento &gt; 5,10 m</span>
-      <span><span class="sw good"></span> PHEV (carrega na tomada + gasolina)</span>
-      <span><span class="sw power"></span> Entre as 2 potências mais altas</span>
-    </div>
-
     <!-- Tuning Panel -->
-    <details class="tuning" id="tuning">
+    <details class="tuning" id="tuning" open>
       <summary class="tuning-head">
         <span class="tuning-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -2304,31 +2281,57 @@ function computeDesval(c) {
   return Math.max(0, Math.min(100, Math.round(100 - d.taxaAnual * 3.5)));
 }
 
+/* ====== Cálculo de Performance (objetivo, a partir de 0-100 km/h e power-to-weight) ====== */
+/* tempo0_100 em segundos — fonte: testes Inmetro / fabricante / publicações automotivas */
+const PERF_DATA = {
+  toro:      { tempo0_100: 9.0 },
+  commander: { tempo0_100: 7.5 },
+  wrangler:  { tempo0_100: 7.5 },
+  tiggo8:    { tempo0_100: 6.5 },
+  tank:      { tempo0_100: 8.0 },
+  rampage:   { tempo0_100: 6.5 },
+  t2:        { tempo0_100: 6.5 },
+  h6gt:      { tempo0_100: 4.8 },
+};
+function computePerf(c) {
+  const t = PERF_DATA[c.id]?.tempo0_100 ?? 8;
+  const ptw = (c.cv / c.peso) * 1000; // cv/ton
+  // Tempo 0-100: 4s → 100 pts; 12s → 0 pts
+  const tempoP = Math.max(0, Math.min(100, ((12 - t) / 8) * 100));
+  // Power-to-weight: 100 cv/ton → 30 pts; 220 cv/ton → 100 pts (linear)
+  const ptwP   = Math.max(0, Math.min(100, ((ptw - 100) / 120) * 100 + 30));
+  return Math.max(0, Math.min(100, Math.round(tempoP * 0.65 + ptwP * 0.35)));
+}
+
 /* ====== Cálculo do Score Final (0-10, ponderado) ====== */
-const SCORE_WEIGHTS = { pot: 2, perf: 1, seg: 5, auto: 1.5, tec: 3.5, off: 1, desv: 2.5, cons: 1 };
-const SCORE_WSUM = Object.values(SCORE_WEIGHTS).reduce((a, b) => a + b, 0); // 17.5
+const SCORE_WEIGHTS = { pot: 2, perf: 1, seg: 5, auto: 1.5, tec: 3.5, off: 1, desv: 2.5, cons: 1, preco: 1 };
+const SCORE_WSUM = Object.values(SCORE_WEIGHTS).reduce((a, b) => a + b, 0); // 18.5
 
 function computeFinalScore(c) {
-  const maxCvVal   = Math.max(...cars.map(x => x.cv));
-  const maxAutoVal = Math.max(...cars.map(x => x.autonomiaKm));
-  const maxConsVal = Math.max(...cars.map(x => parseNum(x.consumo)));
-  const potN  = (c.cv / maxCvVal) * 100;
-  const perfN = c.notas.performance;
-  const segN  = c.seguranca.nota;
-  const autoN = (c.autonomiaKm / maxAutoVal) * 100;
-  const tecN  = computeTech(c);
-  const offN  = c.notas.offroad;
-  const desvN = computeDesval(c);
-  const consN = (parseNum(c.consumo) / maxConsVal) * 100;
+  const maxCvVal    = Math.max(...cars.map(x => x.cv));
+  const maxAutoVal  = Math.max(...cars.map(x => x.autonomiaKm));
+  const maxConsVal  = Math.max(...cars.map(x => parseNum(x.consumo)));
+  const minPrecoVal = Math.min(...cars.map(x => x.preco));
+  const maxPrecoVal = Math.max(...cars.map(x => x.preco));
+  const potN   = (c.cv / maxCvVal) * 100;
+  const perfN  = c.notas.performance;
+  const segN   = c.seguranca.nota;
+  const autoN  = (c.autonomiaKm / maxAutoVal) * 100;
+  const tecN   = computeTech(c);
+  const offN   = c.notas.offroad;
+  const desvN  = computeDesval(c);
+  const consN  = (parseNum(c.consumo) / maxConsVal) * 100;
+  const precoN = maxPrecoVal === minPrecoVal ? 50 : (1 - (c.preco - minPrecoVal) / (maxPrecoVal - minPrecoVal)) * 100;
   const w = SCORE_WEIGHTS;
-  const weighted = (potN*w.pot + perfN*w.perf + segN*w.seg + autoN*w.auto + tecN*w.tec + offN*w.off + desvN*w.desv + consN*w.cons) / SCORE_WSUM;
+  const weighted = (potN*w.pot + perfN*w.perf + segN*w.seg + autoN*w.auto + tecN*w.tec + offN*w.off + desvN*w.desv + consN*w.cons + precoN*w.preco) / SCORE_WSUM;
   return Math.round(weighted) / 10; // escala 0-10 com 1 casa
 }
 
 /* ====== Mutação inicial: aplicar fórmulas a cada carro ====== */
 cars.forEach(c => {
   c.notas.tecnologia = computeTech(c);
-  c.notas.offroad = computeOffroad(c);
+  c.notas.offroad    = computeOffroad(c);
+  c.notas.performance = computePerf(c);
   c.depreciacao = {
     taxa: DESVAL_DATA[c.id]?.taxaAnual ?? null,
     fonte: DESVAL_DATA[c.id]?.fonte ?? "—",
@@ -2436,8 +2439,14 @@ function getTipText(c, key) {
       return `Nota ${c.notas.offroad}/100 — calculada\n• ${TRACAO_LABEL[o.tracao]}\n• ${CHASSI_LABEL[o.chassi]}\n• ${o.bloqueios === 0 ? "Sem bloqueios" : o.bloqueios === 1 ? "1 bloqueio (traseiro)" : "2 bloqueios (diant+tras)"}${o.sway ? "\n• Sway-bar disconnect" : ""}\n• Ângulos: ataque ${o.ataque}° · saída ${o.saida}°\n• Vão livre: ${o.vao} mm\n• Vau (água): até ${o.vau} mm\n${pesoTxt('off')}`;
     })(),
     retencao: `Retenção ${dep.score}/100\nDepreciação ~${dep.taxa}% ao ano\nFonte: ${dep.fonte || "—"}\nFórmula: 100 − (taxa × 3,5)\n${pesoTxt('desv')}`,
-    pp: `Score final ${(c.score * 10).toFixed(0)}/100\nMédia ponderada (peso/${fmtW(wSum)}):\n• Potência ×${fmtW(w.pot)}\n• Performance ×${fmtW(w.perf)}\n• Segurança ×${fmtW(w.seg)}\n• Autonomia ×${fmtW(w.auto)}\n• Consumo ×${fmtW(w.cons)}\n• Tecnologia ×${fmtW(w.tec)}\n• Off-road ×${fmtW(w.off)}\n• Retenção ×${fmtW(w.desv)}`,
-    preco: `${c.precoFmt}\nPreço sugerido ${getBrand(c)} (mai/2026, sem opcionais)\n${c.preco > PRICE_LIMIT ? "⚠ Acima do limite de R$ 350k" : ""}`,
+    pp: `Score final ${(c.score * 10).toFixed(0)}/100\nMédia ponderada (peso/${fmtW(wSum)}):\n• Potência ×${fmtW(w.pot)}\n• Performance ×${fmtW(w.perf)}\n• Segurança ×${fmtW(w.seg)}\n• Autonomia ×${fmtW(w.auto)}\n• Consumo ×${fmtW(w.cons)}\n• Tecnologia ×${fmtW(w.tec)}\n• Off-road ×${fmtW(w.off)}\n• Retenção ×${fmtW(w.desv)}\n• Preço ×${fmtW(w.preco)} (menor preço = mais pontos)`,
+    preco: `${c.precoFmt}\nPreço sugerido ${getBrand(c)} (mai/2026, sem opcionais)\n${c.preco > PRICE_LIMIT ? "⚠ Acima do limite de R$ 350k\n" : ""}Normalizado: cheaper = 100, mais caro = 0\n${pesoTxt('preco')}`,
+    performance: (() => {
+      const p = PERF_DATA[c.id];
+      if (!p) return `Nota ${c.notas.performance}/100\n${pesoTxt('perf')}`;
+      const ptw = ((c.cv / c.peso) * 1000).toFixed(0);
+      return `Nota ${c.notas.performance}/100 — calculada\n• 0-100 km/h: ${p.tempo0_100}s (peso 65%)\n• Power-to-weight: ${ptw} cv/ton (peso 35%)\n  (${c.cv} cv ÷ ${c.peso} kg)\n${pesoTxt('perf')}`;
+    })(),
     tracao: `Tração: ${c.tracao}\nFonte: ficha técnica`,
     cambio: `Câmbio: ${c.cambio}\nFonte: ficha técnica`,
     phev: "Plug-in híbrido — carrega na tomada e abastece gasolina/etanol",
@@ -2811,20 +2820,21 @@ document.querySelectorAll(".filters .chip").forEach(chip => {
 
 /* ====== Tuning Panel ====== */
 const TUNING_METRICS = [
-  { key: "seg",  label: "Segurança",   max: 5 },
-  { key: "tec",  label: "Tecnologia",  max: 5 },
-  { key: "desv", label: "Retenção",    max: 5 },
-  { key: "pot",  label: "Potência",    max: 5 },
-  { key: "auto", label: "Autonomia",   max: 5 },
-  { key: "off",  label: "Off-road",    max: 5 },
-  { key: "perf", label: "Performance", max: 5 },
-  { key: "cons", label: "Consumo",     max: 5 },
+  { key: "seg",   label: "Segurança",   max: 5 },
+  { key: "tec",   label: "Tecnologia",  max: 5 },
+  { key: "desv",  label: "Retenção",    max: 5 },
+  { key: "pot",   label: "Potência",    max: 5 },
+  { key: "auto",  label: "Autonomia",   max: 5 },
+  { key: "off",   label: "Off-road",    max: 5 },
+  { key: "perf",  label: "Performance", max: 5 },
+  { key: "cons",  label: "Consumo",     max: 5 },
+  { key: "preco", label: "Preço",       max: 5 },
 ];
 const PRESETS = {
-  default:   { label: "Mercado BR", weights: { pot: 2,   perf: 1,   seg: 5, auto: 1.5, tec: 3.5, off: 1,   desv: 2.5, cons: 1   } },
-  esportivo: { label: "Esportivo",  weights: { pot: 4,   perf: 4,   seg: 2, auto: 1,   tec: 2.5, off: 1,   desv: 1,   cons: 0.5 } },
-  familia:   { label: "Família",    weights: { pot: 1,   perf: 0.5, seg: 5, auto: 2,   tec: 3,   off: 0.5, desv: 2,   cons: 1.5 } },
-  offroad:   { label: "Off-road",   weights: { pot: 2,   perf: 1,   seg: 1, auto: 2,   tec: 1.5, off: 5,   desv: 2,   cons: 1   } },
+  default:   { label: "Mercado BR", weights: { pot: 2,   perf: 1,   seg: 5, auto: 1.5, tec: 3.5, off: 1,   desv: 2.5, cons: 1,   preco: 1   } },
+  esportivo: { label: "Esportivo",  weights: { pot: 4,   perf: 4,   seg: 2, auto: 1,   tec: 2.5, off: 1,   desv: 1,   cons: 0.5, preco: 0.5 } },
+  familia:   { label: "Família",    weights: { pot: 1,   perf: 0.5, seg: 5, auto: 2,   tec: 3,   off: 0.5, desv: 2,   cons: 1.5, preco: 1.5 } },
+  offroad:   { label: "Off-road",   weights: { pot: 2,   perf: 1,   seg: 1, auto: 2,   tec: 1.5, off: 5,   desv: 2,   cons: 1,   preco: 0.5 } },
 };
 const STORAGE_KEY = "car-comp-tuning-v1";
 let activePreset = "default";
@@ -2924,20 +2934,23 @@ function applyWeightsToCars(animate) {
 }
 // Versão de computeFinalScore que aceita wSum dinâmico (para sliders)
 function computeFinalScoreDynamic(c, wSum) {
-  const maxCvVal   = Math.max(...cars.map(x => x.cv));
-  const maxAutoVal = Math.max(...cars.map(x => x.autonomiaKm));
-  const maxConsVal = Math.max(...cars.map(x => parseNum(x.consumo)));
+  const maxCvVal    = Math.max(...cars.map(x => x.cv));
+  const maxAutoVal  = Math.max(...cars.map(x => x.autonomiaKm));
+  const maxConsVal  = Math.max(...cars.map(x => parseNum(x.consumo)));
+  const minPrecoVal = Math.min(...cars.map(x => x.preco));
+  const maxPrecoVal = Math.max(...cars.map(x => x.preco));
   const w = SCORE_WEIGHTS;
-  const potN  = (c.cv / maxCvVal) * 100;
-  const perfN = c.notas.performance;
-  const segN  = c.seguranca.nota;
-  const autoN = (c.autonomiaKm / maxAutoVal) * 100;
-  const tecN  = c.notas.tecnologia;
-  const offN  = c.notas.offroad;
-  const desvN = c.depreciacao.score;
-  const consN = (parseNum(c.consumo) / maxConsVal) * 100;
-  const safe  = wSum > 0 ? wSum : 1;
-  const weighted = (potN*w.pot + perfN*w.perf + segN*w.seg + autoN*w.auto + tecN*w.tec + offN*w.off + desvN*w.desv + consN*w.cons) / safe;
+  const potN   = (c.cv / maxCvVal) * 100;
+  const perfN  = c.notas.performance;
+  const segN   = c.seguranca.nota;
+  const autoN  = (c.autonomiaKm / maxAutoVal) * 100;
+  const tecN   = c.notas.tecnologia;
+  const offN   = c.notas.offroad;
+  const desvN  = c.depreciacao.score;
+  const consN  = (parseNum(c.consumo) / maxConsVal) * 100;
+  const precoN = maxPrecoVal === minPrecoVal ? 50 : (1 - (c.preco - minPrecoVal) / (maxPrecoVal - minPrecoVal)) * 100;
+  const safe   = wSum > 0 ? wSum : 1;
+  const weighted = (potN*w.pot + perfN*w.perf + segN*w.seg + autoN*w.auto + tecN*w.tec + offN*w.off + desvN*w.desv + consN*w.cons + precoN*w.preco) / safe;
   return Math.round(weighted) / 10;
 }
 
