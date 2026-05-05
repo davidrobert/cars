@@ -2486,13 +2486,14 @@ function renderCards(filter = "all") {
           </div>
 
           <div class="stat-bars">
-            ${statBar("Potência",   c.cv,                c.cv,                m.cv,        { unit: "cv",   tip: getTipText(c,'potencia') })}
-            ${statBar("Segurança",  segNota,             segNota,             100,         { unit: "/100", tip: getTipText(c,'seguranca'), danger: segDanger })}
-            ${statBar("Autonomia",  c.autonomiaKm,       c.autonomiaKm,       m.autonomia, { unit: "km",   tip: getTipText(c,'autonomia') })}
-            ${statBar("Consumo",    parseNum(c.consumo), parseNum(c.consumo).toFixed(parseNum(c.consumo) % 1 === 0 ? 0 : 1), m.consumo, { unit: "km/l", tip: getTipText(c,'consumo') })}
-            ${statBar("Tecnologia", c.notas.tecnologia,  c.notas.tecnologia,  100,         { unit: "/100", tip: getTipText(c,'tecnologia') })}
-            ${statBar("Off-road",   c.notas.offroad,     c.notas.offroad,     100,         { unit: "/100", tip: getTipText(c,'offroad') })}
-            ${statBar("Retenção",   c.depreciacao.score, c.depreciacao.score, 100,         { unit: "/100", tip: getTipText(c,'retencao') })}
+            ${statBar("Potência",    c.cv,                c.cv,                m.cv,        { unit: "cv",   tip: getTipText(c,'potencia') })}
+            ${statBar("Performance", c.notas.performance, c.notas.performance, 100,         { unit: "/100", tip: getTipText(c,'performance') })}
+            ${statBar("Segurança",   segNota,             segNota,             100,         { unit: "/100", tip: getTipText(c,'seguranca'), danger: segDanger })}
+            ${statBar("Autonomia",   c.autonomiaKm,       c.autonomiaKm,       m.autonomia, { unit: "km",   tip: getTipText(c,'autonomia') })}
+            ${statBar("Consumo",     parseNum(c.consumo), parseNum(c.consumo).toFixed(parseNum(c.consumo) % 1 === 0 ? 0 : 1), m.consumo, { unit: "km/l", tip: getTipText(c,'consumo') })}
+            ${statBar("Tecnologia",  c.notas.tecnologia,  c.notas.tecnologia,  100,         { unit: "/100", tip: getTipText(c,'tecnologia') })}
+            ${statBar("Off-road",    c.notas.offroad,     c.notas.offroad,     100,         { unit: "/100", tip: getTipText(c,'offroad') })}
+            ${statBar("Retenção",    c.depreciacao.score, c.depreciacao.score, 100,         { unit: "/100", tip: getTipText(c,'retencao') })}
           </div>
 
           <div class="chips-row">
