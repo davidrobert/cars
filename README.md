@@ -1,6 +1,6 @@
 # Comparativo de Carros
 
-Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparando 8 modelos do mercado brasileiro para ajudar uma decisão de compra em família.
+Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparando 9 modelos do mercado brasileiro para ajudar uma decisão de compra em família.
 
 🔗 **Versão online:** https://davidrobert.github.io/cars/
 
@@ -16,6 +16,7 @@ Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparand
 | Ram Rampage R/T | Picape compacta | R$ 269.990 | 272 cv |
 | Jetour T2 Advance | SUV PHEV | R$ 289.900 | 339 cv |
 | GWM Haval H6 GT | SUV coupé PHEV | R$ 326.000 | 393 cv |
+| GWM WEY 07 | SUV PHEV 6 lug. | R$ 429.000 | 517 cv |
 
 ## Funcionalidades
 
