@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Comparativo de carros</title>
-<meta name="description" content="Comparativo entre Fiat Toro Ranch, GWM Tank 300 Hi4-T, Ram Rampage R/T, GWM Haval H6 GT, Jetour T2 Advance, Jeep Commander Blackhawk, Jeep Wrangler Rubicon e Caoa Chery Tiggo 8 Pro PHEV para apoiar a decisão de compra." />
+<meta name="description" content="Comparativo entre Fiat Toro Ranch, GWM Tank 300 Hi4-T, Ram Rampage R/T, GWM Haval H6 GT, GWM WEY 07, Jetour T2 Advance, Jeep Commander Blackhawk, Jeep Wrangler Rubicon e Caoa Chery Tiggo 8 Pro PHEV para apoiar a decisão de compra." />
 <style>
   /* ---------- Tokens ---------- */
   :root {
@@ -1631,7 +1631,7 @@
 <!-- ========== Hero ========== -->
 <section class="hero">
   <div class="wrap">
-    <span class="eyebrow"><span class="dot"></span> Garagem · 8 modelos · maio 2026</span>
+    <span class="eyebrow"><span class="dot"></span> Garagem · 9 modelos · maio 2026</span>
     <h1><span class="grad">Garagem</span> Comparativa</h1>
     <div class="howto" aria-label="Como funciona o comparativo">
       <div class="howto-step">
@@ -1786,7 +1786,7 @@
         <h4>Viagem longa de estrada</h4>
         <p>Conforto em alta velocidade, autonomia, ADAS, espaço de bagagem.</p>
         <span class="winner">🏆 Jeep Commander Blackhawk</span>
-        <div class="alt">Conforto premium + 7 lug. Vice: H6 GT (~1.000 km autonomia) ou Tiggo 8 Pro PHEV</div>
+        <div class="alt">Conforto premium + 7 lug. Vice: WEY 07 (luxo 6 lug., ~1.000 km) ou H6 GT (~1.000 km autonomia)</div>
       </div>
       <div class="scene">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h13l3 4v6H3z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></div>
@@ -1807,7 +1807,7 @@
         <h4>Performance / "carro dos sonhos"</h4>
         <p>Potência, torque, prazer ao dirigir, status.</p>
         <span class="winner">🏆 Haval H6 GT</span>
-        <div class="alt">393 cv, 0–100 em 4,8s. Vice: Tank 300 Hi4-T (394 cv, mas mais pesado)</div>
+        <div class="alt">0–100 em 4,8s (393 cv). Vice: WEY 07 (517 cv, 0–100 em 4,9s — mas R$ 429k)</div>
       </div>
       <div class="scene">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5 5 2 8-7-4-7 4 2-8-5-5h7z"/></svg></div>
@@ -2094,7 +2094,7 @@ const cars = [
       "Garantia longa de 5 anos / 8 anos na bateria",
     ],
     contras: [
-      "O segundo mais caro do grupo (R$ 339k)",
+      "Entre os mais caros do grupo (R$ 339k)",
       "Pesado e grande — sofre na cidade e estacionamento",
       "Rede GWM ainda em expansão fora das capitais",
     ],
@@ -2210,16 +2210,58 @@ const cars = [
     phev: true,
     notas: { economia: 85, conforto: 88, espaco: 70, offroad: 60, performance: 96, urbano: 78, tecnologia: 95 },
     pros: [
-      "O mais rápido do grupo: 393 cv, 0-100 em 4,8s",
+      "O mais rápido do grupo no 0-100: 4,8s (393 cv)",
       "PHEV Hi4 com tração 4WD inteligente (motor traseiro elétrico)",
       "Autonomia elétrica de 119 km — quase ninguém abastece no dia a dia",
       "Visual coupé-SUV agressivo, interior premium renovado",
       "Pacote ADAS e tela 14,6 pol. + Coffee OS 3",
     ],
     contras: [
-      "Caro: R$ 326k é o segundo mais alto do grupo",
+      "Caro: R$ 326k está entre os mais altos do grupo",
       "Porta-malas menor que H6 padrão (485 L vs 600 L)",
       "Espaço de cabeça atrás reduzido pela linha do teto",
+    ],
+  },
+  {
+    id: "wey07",
+    nome: "GWM WEY 07",
+    versao: "1.5 Turbo PHEV AWD DHT",
+    tipo: "SUV PHEV 6 lugares",
+    badge: "t-suv",
+    img: "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20800%20500%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27bg%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23141831%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%230a0d1f%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%27800%27%20height%3D%27500%27%20fill%3D%27url%28%23bg%29%27%2F%3E%3Ctext%20x%3D%27400%27%20y%3D%27130%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%2CHelvetica%2Csans-serif%27%20font-size%3D%2746%27%20font-weight%3D%27700%27%20fill%3D%27%239aa3c7%27%3EGWM%20WEY%2007%3C%2Ftext%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23353d72%27%20stroke-width%3D%271.6%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%20transform%3D%27translate%28310%2C180%29%20scale%287.5%29%27%3E%3Cpath%20d%3D%27M3%2013l2-5a3%203%200%200%201%202.8-2h8.4A3%203%200%200%201%2019%208l2%205%27%2F%3E%3Cpath%20d%3D%27M3%2013h18v5a1%201%200%200%201-1%201h-2a2%202%200%200%201-4%200H10a2%202%200%200%201-4%200H4a1%201%200%200%201-1-1z%27%2F%3E%3C%2Fg%3E%3Ctext%20x%3D%27400%27%20y%3D%27430%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%2CHelvetica%2Csans-serif%27%20font-size%3D%2720%27%20fill%3D%27%236b7399%27%3EFoto%20oficial%20indisponivel%20-%20imagem%20ilustrativa%3C%2Ftext%3E%3C%2Fsvg%3E",
+    preco: 429000,
+    precoFmt: "R$ 429k",
+    motor: "1.5 Turbo PHEV (Hi4 — 2 elétricos)",
+    cv: 517,
+    torque: "83,6 kgfm (comb.)",
+    cambio: "DHT (aut. 4 marchas)",
+    tracao: "AWD (1 motor elétrico por eixo)",
+    consumo: "≈ 17 km/l (híbrido)",
+    bagagem: "1.040 L",
+    bagagemNota: "porta-malas (4 lug.)",
+    comprimento: 5156,
+    peso: 2545,
+    seguranca: { nota: 88, airbags: 6, ncap: "—", adas: ["AEB","ACC","LKA","BSM","RCW","TJA","Auto Park","540°"], destaques: "ADAS L2+ com 22 sensores (5 radares, 12 ultrassônicos, 5 câmeras) e visão 540° com chassi transparente" },
+    urlOficial: "https://www.gwmmotors.com.br/pt/modelos/wey-07",
+    garantia: "6 anos / bateria 8 anos",
+    tanque: "79 L + 42,5 kWh",
+    autonomiaKm: 1000,
+    autonomia: "≈ 1.000 km (128 km elétr.)",
+    score: 8.5,
+    phev: true,
+    notas: { economia: 78, conforto: 96, espaco: 90, offroad: 25, performance: 90, urbano: 35, tecnologia: 95 },
+    pros: [
+      "O mais potente do grupo: 517 cv e 83,6 kgfm combinados, 0-100 em 4,9s",
+      "6 lugares com poltronas individuais na 2ª fileira e acesso facilitado à 3ª",
+      "128 km elétricos (Inmetro) — maior autonomia EV do grupo",
+      "Luxo de série: HUD de 25 pol., som Hi-Fi 16 falantes, bancos c/ massagem, tela 14,6 pol.",
+      "Garantia 6 anos / bateria 8 anos + recarga DC 30-80% em 26 min",
+    ],
+    contras: [
+      "R$ 429k — só o Wrangler custa mais; bem acima do limite de R$ 350k",
+      "5,16 m de comprimento — acima do limite de 5,10 m, sofre em garagem/estacionamento",
+      "Porta-malas de só 239 L com os 6 lugares em uso",
+      "Sem teste NCAP divulgado e 6 airbags — menos que rivais de luxo",
     ],
   },
 ];
@@ -2239,6 +2281,7 @@ const TECH_DATA = {
   rampage:   { tela: 10.25, wirelessCP: 1, hud: 0, autoPark: 0, ota: 0, app: 1, cockpitDigital: 1, wirelessCharger: 1 },
   t2:        { tela: 13.2,  wirelessCP: 1, hud: 0, autoPark: 1, ota: 1, app: 1, cockpitDigital: 1, wirelessCharger: 1 },
   h6gt:      { tela: 14.6,  wirelessCP: 1, hud: 1, autoPark: 1, ota: 1, app: 1, cockpitDigital: 1, wirelessCharger: 1 },
+  wey07:     { tela: 14.6,  wirelessCP: 1, hud: 1, autoPark: 1, ota: 1, app: 1, cockpitDigital: 1, wirelessCharger: 1 },
 };
 
 /* ====== Depreciação (FIPE, mai/2026) ====== */
@@ -2252,6 +2295,7 @@ const DESVAL_DATA = {
   rampage:   { taxaAnual: 5.8,  fonte: "FIPE 2024→2026 (Rampage R/T Hurricane 4)" },
   t2:        { taxaAnual: 22.0, fonte: "Heurística (FIPE só tem 2026; chinesa novata = ~22%/ano)" },
   h6gt:      { taxaAnual: 12.7, fonte: "FIPE 2024→2026 (Haval H6 GT 1.5 AWD híbrido)" },
+  wey07:     { taxaAnual: 12.7, fonte: "Proxy: GWM Haval H6 GT (mesma marca + segmento PHEV; Wey 07 lançou out/2025, FIPE só tem 2026)" },
 };
 
 /* ====== Estrutura de Off-road (fichas técnicas oficiais) ====== */
@@ -2271,6 +2315,7 @@ const OFFROAD_DATA = {
   rampage:   { tracao: "awd-eletrico",      chassi: "monobloco",             bloqueios: 0, sway: 0, ataque: 21, saida: 24, vao: 200, vau: 500 },
   t2:        { tracao: "awd-inteligente",   chassi: "monobloco-semi-ladder", bloqueios: 0, sway: 0, ataque: 25, saida: 30, vao: 210, vau: 600 },
   h6gt:      { tracao: "awd-inteligente",   chassi: "monobloco",             bloqueios: 0, sway: 0, ataque: 17, saida: 23, vao: 180, vau: 500 },
+  // wey07: GWM não divulga ângulos de ataque/saída, vão livre e vau no BR — cai no fallback (nota subjetiva em notas.offroad)
 };
 const TRACAO_PTS = {
   "4x4-reduzida-low": 25,   // mecânico c/ low-range robusto
@@ -2343,6 +2388,7 @@ const PERF_DATA = {
   rampage:   { tempo0_100: 6.5 },
   t2:        { tempo0_100: 6.5 },
   h6gt:      { tempo0_100: 4.8 },
+  wey07:     { tempo0_100: 4.9 },
 };
 function computePerf(c) {
   const t = PERF_DATA[c.id]?.tempo0_100 ?? 8;
@@ -2421,6 +2467,7 @@ const BRAND_MAP = {
   rampage: "Ram",
   t2: "Jetour",
   h6gt: "GWM",
+  wey07: "GWM",
 };
 function getBrand(c) { return BRAND_MAP[c.id] || c.nome.split(" ")[0]; }
 function getModel(c) {
