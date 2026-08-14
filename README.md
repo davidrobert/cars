@@ -1,6 +1,6 @@
 # Comparativo de Carros
 
-Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparando 9 modelos do mercado brasileiro para ajudar uma decisão de compra em família.
+Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparando 10 modelos do mercado brasileiro para ajudar uma decisão de compra em família.
 
 🔗 **Versão online:** https://davidrobert.github.io/cars/
 
@@ -17,6 +17,7 @@ Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparand
 | Jetour T2 Advance | SUV PHEV | R$ 289.900 | 339 cv |
 | GWM Haval H6 GT | SUV coupé PHEV | R$ 326.000 | 393 cv |
 | GWM WEY 07 | SUV PHEV 6 lug. | R$ 429.000 | 517 cv |
+| Jeep Avenger Limited | SUV compacto MHEV | R$ 145.990 | 116 cv |
 
 ## Funcionalidades
 
@@ -30,6 +31,6 @@ Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparand
 
 ## Disclaimer
 
-Preços e fichas técnicas são aproximações de **maio/2026** baseadas em fontes públicas (sites oficiais, Mobiauto, Webmotors, AutosSegredos, CNN Brasil, etc.). Confirme tudo na concessionária antes de comprar.
+Preços e fichas técnicas são aproximações de **maio/2026** (Jeep Avenger: dados do lançamento em **agosto/2026**) baseadas em fontes públicas (sites oficiais, Mobiauto, Webmotors, AutosSegredos, CNN Brasil, etc.). Confirme tudo na concessionária antes de comprar.
 
 Imagens via Wikimedia Commons (CC-BY/CC-BY-SA) e sites oficiais — uso ilustrativo.
