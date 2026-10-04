@@ -1,22 +1,25 @@
 # Comparativo de Carros
 
-Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparando 9 modelos do mercado brasileiro para ajudar uma decisão de compra em família.
+Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparando 12 modelos do mercado brasileiro para ajudar uma decisão de compra em família.
 
 🔗 **Versão online:** https://davidrobert.github.io/cars/
 
 ## Modelos comparados
 
-| Modelo | Tipo | Preço aprox. | Potência |
+| Modelo | Tipo | Preço (out/2026) | Potência |
 |---|---|---|---|
-| Fiat Toro Ranch | Picape | R$ 224.990 | 200 cv (diesel) |
-| Jeep Commander Blackhawk | SUV 7 lug. | R$ 336.490 | 272 cv |
-| Jeep Wrangler Rubicon | Off-road extremo | R$ 499.990 | 272 cv |
-| Caoa Chery Tiggo 8 Pro PHEV | SUV 7 lug. PHEV | R$ 269.990 | 317 cv |
-| GWM Tank 300 Hi4-T | SUV off-road PHEV | R$ 339.000 | 394 cv |
-| Ram Rampage R/T | Picape compacta | R$ 269.990 | 272 cv |
-| Jetour T2 Advance | SUV PHEV | R$ 289.900 | 339 cv |
-| GWM Haval H6 GT | SUV coupé PHEV | R$ 326.000 | 393 cv |
+| Fiat Toro Ultra T270 MHEV | Picape híbrida leve (4x2) | R$ 206.490 | 176 cv |
+| Caoa Chery Tiggo 8 Pro PHEV | SUV 7 lug. PHEV | R$ 249.990 | 279 cv |
+| Ram Rampage R/T Flex | Picape compacta 4x4 | R$ 275.990 | 272 cv |
+| Jetour T2 Advance | SUV PHEV | R$ 289.900 | 359 cv (soma dos motores) |
+| GWM Haval H6 GT Flex | SUV coupé PHEV | R$ 326.000 | 393 cv |
+| Jeep Commander Blackhawk Flex | SUV 7 lug. | R$ 329.990 | 272 cv |
+| GWM Tank 300 Hi4-T Flex | SUV off-road PHEV | R$ 342.000 | 394 cv |
+| BYD Shark GS | Picape média PHEV | R$ 344.990 | 437 cv |
+| BYD Tan EV | SUV elétrico 7 lug. | R$ 426.800 | 517 cv |
 | GWM WEY 07 | SUV PHEV 6 lug. | R$ 429.000 | 517 cv |
+| Denza B5 GS | SUV off-road PHEV | R$ 449.000 | 677 cv |
+| Jeep Wrangler Rubicon | Off-road extremo | R$ 529.990 | 272 cv |
 
 ## Funcionalidades
 
@@ -30,6 +33,6 @@ Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparand
 
 ## Disclaimer
 
-Preços e fichas técnicas são aproximações de **maio/2026** baseadas em fontes públicas (sites oficiais, Mobiauto, Webmotors, AutosSegredos, CNN Brasil, etc.). Confirme tudo na concessionária antes de comprar.
+Preços, fichas técnicas e consumos levantados em **outubro/2026** em fontes oficiais: sites, configuradores e fichas técnicas dos fabricantes; consumo e autonomia elétrica da tabela **PBEV 2026 do Inmetro**. A autonomia total é calculada como tanque × consumo na estrada (Inmetro) + autonomia elétrica (PHEV). Confirme tudo na concessionária antes de comprar.
 
 Imagens via Wikimedia Commons (CC-BY/CC-BY-SA) e sites oficiais — uso ilustrativo.
