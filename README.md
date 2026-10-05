@@ -27,6 +27,7 @@ Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparand
 
 ## Funcionalidades
 
+- **Serve pra nossa família?** — checklist por carro com os requisitos da família (2 bebês-conforto simultâneos, carrinho duplo no porta-malas/caçamba coberta, segurança mínima, revenda em 4 anos, uso em SP, viagem mensal e adulto entre as crianças), com veredito, selo no card e bloco no detalhe do carro. Vira a métrica **Família** do score, com peso máximo no preset Família
 - Cards com specs prioritárias (preço, potência, porta-malas, comprimento, autonomia)
 - Filtros por cenário (família, off-road, economia, viagem, etc.)
 - Tabela comparativa completa com destaque pro melhor/pior em cada critério

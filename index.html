@@ -1275,6 +1275,65 @@
     .scroll-hint { display: block; }
   }
 
+  /* ---------- Família (requisitos 2 adultos + 2 bebês) ---------- */
+  .fam-reqs {
+    display: grid; gap: 10px; margin-bottom: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  }
+  .fam-req {
+    background: var(--surface); border: 1px solid var(--line);
+    border-left: 3px solid var(--line-2);
+    border-radius: var(--radius-sm); padding: 10px 12px;
+  }
+  .fam-req.obrigatorio { border-left-color: var(--bad); }
+  .fam-req.importante  { border-left-color: var(--warn); }
+  .fam-req.desejavel   { border-left-color: var(--info); }
+  .fam-req .fr-head { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; }
+  .fam-req .fr-lvl {
+    margin-left: auto; font-size: 9.5px; font-weight: 800;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--dim);
+  }
+  .fam-req.obrigatorio .fr-lvl { color: var(--bad); }
+  .fam-req.importante  .fr-lvl { color: var(--warn); }
+  .fam-req.desejavel   .fr-lvl { color: var(--info); }
+  .fam-req .fr-desc { color: var(--muted); font-size: 12.5px; line-height: 1.45; margin-top: 4px; }
+
+  .fam-st {
+    display: inline-grid; place-items: center;
+    width: 20px; height: 20px; border-radius: 50%;
+    font-size: 11px; font-weight: 900; flex: none;
+  }
+  .fam-st.ok   { background: color-mix(in srgb, var(--good) 22%, transparent); color: var(--good); }
+  .fam-st.warn { background: color-mix(in srgb, var(--warn) 22%, transparent); color: var(--warn); }
+  .fam-st.fail { background: color-mix(in srgb, var(--bad) 22%, transparent);  color: var(--bad); }
+
+  table.fam-table td { vertical-align: top; }
+  table.fam-table tbody tr { cursor: pointer; }
+  table.fam-table tbody tr.fam-out td:not(.sticky-col) { opacity: .55; }
+  table.fam-table th, table.fam-table td { white-space: normal; }
+  table.fam-table thead th { white-space: nowrap; }
+  .fam-cell { display: flex; gap: 6px; align-items: flex-start; width: 190px; }
+  .fam-cell .fam-txt { font-size: 12px; line-height: 1.35; color: var(--muted); }
+  .fam-verdict {
+    display: inline-flex; flex-direction: column; gap: 3px; min-width: 96px;
+  }
+  .fam-verdict b { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+  .fam-verdict.ok b   { color: var(--good); }
+  .fam-verdict.fail b { color: var(--bad); }
+  .fam-verdict small { color: var(--dim); font-size: 11px; }
+
+  .chip-mini.fam-ok {
+    color: var(--good);
+    border-color: color-mix(in srgb, var(--good) 40%, transparent);
+    background: color-mix(in srgb, var(--good) 10%, transparent);
+  }
+
+  .sl-family { margin-top: 14px; }
+  .sl-family ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+  .sl-family li { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+  .sl-family li b { color: var(--text); font-weight: 700; }
+  .sl-family .sl-fam-obs { margin-top: 8px; font-size: 12px; color: var(--dim); line-height: 1.45; }
+
   /* ---------- Cenários / recomendações ---------- */
   .scenes { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
   .scene {
@@ -1620,6 +1679,7 @@
     </div>
     <nav class="nav">
       <a href="#cars">Modelos</a>
+      <a href="#familia">Família</a>
       <a href="#tabela">Tabela</a>
       <a href="#cenarios">Cenários</a>
       <a href="#proscons">Prós & Contras</a>
@@ -1724,6 +1784,32 @@
     </details>
 
     <div class="cars" id="cars-grid"></div>
+  </div>
+</section>
+
+<!-- ========== Família ========== -->
+<section id="familia">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Serve pra nossa família?</h2>
+        <p>2 adultos + Theo e Peter em <b>bebê-conforto</b>, ~4 anos de uso antes de vender, dia a dia em São Paulo e uma viagem por mês. Requisito <b>obrigatório</b> reprovado tira o carro da disputa. <b>Clique na linha</b> pra abrir o carro.</p>
+      </div>
+    </div>
+    <div class="fam-reqs" id="fam-reqs"><!-- preenchido por JS --></div>
+    <div class="table-wrap">
+      <div class="scroll">
+        <table class="cmp fam-table" id="fam-table">
+          <thead><!-- preenchido por JS --></thead>
+          <tbody><!-- preenchido por JS --></tbody>
+        </table>
+      </div>
+      <div class="scroll-hint">👆 Arraste pro lado pra ver todos os requisitos</div>
+    </div>
+    <p style="color:var(--dim);font-size:12.5px;margin:12px 0 0;max-width:820px;">
+      Encaixe de cadeirinha e espaço pro adulto no meio vêm de manuais, fichas oficiais e testes práticos (BabyDrive, Euro NCAP, ANCAP) — nenhuma marca publica a largura interna de todos.
+      Antes de fechar, <b>levem os bebês-conforto e o carrinho de vocês ao test drive</b> e instalem de verdade.
+    </p>
   </div>
 </section>
 
@@ -2724,7 +2810,7 @@ function computePerf(c) {
 }
 
 /* ====== Cálculo do Score Final (0-10, ponderado) ====== */
-const SCORE_WEIGHTS = { pot: 2, perf: 1, seg: 5, auto: 1.5, tec: 3.5, off: 1, desv: 2.5, cons: 1, preco: 1 };
+const SCORE_WEIGHTS = { pot: 2, perf: 1, seg: 5, auto: 1.5, tec: 3.5, off: 1, desv: 2.5, cons: 1, preco: 1, fam: 0 };
 const SCORE_WSUM = Object.values(SCORE_WEIGHTS).reduce((a, b) => a + b, 0); // 18.5
 
 function computeFinalScore(c) {
@@ -2743,7 +2829,8 @@ function computeFinalScore(c) {
   const consN  = (parseNum(c.consumo) / maxConsVal) * 100;
   const precoN = maxPrecoVal === minPrecoVal ? 50 : (1 - (c.preco - minPrecoVal) / (maxPrecoVal - minPrecoVal)) * 100;
   const w = SCORE_WEIGHTS;
-  const weighted = (potN*w.pot + perfN*w.perf + segN*w.seg + autoN*w.auto + tecN*w.tec + offN*w.off + desvN*w.desv + consN*w.cons + precoN*w.preco) / SCORE_WSUM;
+  const famN   = famScoreN(c);
+  const weighted = (potN*w.pot + perfN*w.perf + segN*w.seg + autoN*w.auto + tecN*w.tec + offN*w.off + desvN*w.desv + consN*w.cons + precoN*w.preco + famN*w.fam) / SCORE_WSUM;
   return weighted / 10; // escala 0-10, precisão completa (display arredonda)
 }
 
@@ -2760,6 +2847,185 @@ cars.forEach(c => {
   c.score = computeFinalScore(c);
 });
 
+
+/* ====== Família: 2 adultos + Theo e Peter (2 bebês-conforto) ====== */
+/* isofix:   pontos ISOFIX na 2ª fileira · isofix3: na 3ª fileira
+   bebes:    2 bebês-conforto (grupo 0+, de costas) lado a lado: "ok" | "apertado" | "nao"
+   adulto:   adulto junto das crianças: "ok" (no meio, entre as cadeirinhas) | "apertado" | "3a" (só na 3ª fileira) | "nao"
+   carrinho: carrinho duplo dobrado (~85×60×40 cm) protegido de chuva: "ok" | "apertado" | "nao"
+   Fontes: manuais e fichas técnicas oficiais, reviews (Autoesporte, Quatro Rodas, Motor1) e protocolos NCAP — out/2026 */
+const FAMILIA_DATA = {
+  toro:      { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "apertado", adulto: "nao",      carrinho: "ok",       carrinhoNota: "Caçamba de 937 L sob capota rígida de série (trava, mas não é estanque)",
+               obs: "2ª fileira com só 1.375 mm nos ombros (a mais estreita do grupo) e bebê-conforto de costas obriga a avançar os bancos da frente. Latin NCAP infantil 2018 (protocolo antigo): 4★, ~75%." },
+  commander: { isofix: 2, isofix3: 0, fileira2: "banco de 3 que desliza", bebes: "ok", adulto: "apertado", carrinho: "ok",   carrinhoNota: "661 L com a 3ª fileira rebatida; com 7 lugares em uso são só 233 L",
+               obs: "2ª fileira desliza 14 cm — ajuda a afastar o bebê-conforto do banco da frente. A 3ª fileira não tem ISOFIX: as cadeirinhas ficam obrigatoriamente na 2ª. Três adultos atrás \"roçam ombros\" (Quatro Rodas)." },
+  wrangler:  { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "apertado", adulto: "nao",      carrinho: "apertado", carrinhoNota: "~500 L com porta lateral: entra atravessado e sobra pouco espaço pra mala",
+               obs: "Euro NCAP registrou dificuldade pra instalar cadeirinhas e o bebê-conforto deixa pouco espaço pro passageiro da frente. Cabine alta: colocar o bebê-conforto exige esforço. Infantil Euro NCAP 2018: 69%." },
+  tiggo8:    { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "ok",       adulto: "apertado", carrinho: "ok",       carrinhoNota: "Cabe com a 3ª fileira rebatida; com 7 lugares em uso, não",
+               obs: "Euro NCAP 2025 (Tiggo 8 PHEV europeu): 85% na proteção infantil e detector de criança esquecida. Carroceria de 1,86 m de largura: o adulto no meio vai justo." },
+  tank:      { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "apertado", adulto: "apertado", carrinho: "apertado", carrinhoNota: "~360 L reais até o encosto; tandem entra em pé, side-by-side provavelmente não",
+               obs: "Porta traseira lateral e pesada com o estepe: ruim em vaga apertada. Piso alto pra erguer o bebê-conforto e túnel central incomoda quem vai no meio. ANCAP 2022: 89% infantil (versão HEV)." },
+  rampage:   { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "apertado", adulto: "nao",      carrinho: "apertado", carrinhoNota: "Caçamba de 980 L com capota marítima de lona de série — protege da chuva, não de roubo",
+               obs: "Banco traseiro é o ponto fraco: pernas justas e encosto muito reto; bebê-conforto de costas obriga a avançar os bancos da frente. Nunca testada por NCAP." },
+  t2:        { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "apertado", adulto: "apertado", carrinho: "ok",       carrinhoNota: "580 L, porta-malas quadrado (porta lateral); tandem cabe fácil",
+               obs: "Alerta do ASEAN NCAP: um bebê-conforto de referência só coube no lugar central, não nas laterais — teste a cadeirinha de vocês antes. Piso plano e carro largo (2,0 m). ASEAN NCAP: ~80% infantil." },
+  h6gt:      { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "ok",       adulto: "apertado", carrinho: "apertado", carrinhoNota: "515 L, mas a tampa coupé inclinada limita a altura — side-by-side pode não fechar",
+               obs: "Teto coupé e vão de porta mais baixo dificultam encaixar o bebê-conforto. Piso traseiro quase plano. ANCAP 2022 (H6): 88% na proteção infantil." },
+  wey07:     { isofix: 2, isofix3: 0, fileira2: "2 poltronas capitão", bebes: "ok", adulto: "3a",     carrinho: "ok",       carrinhoNota: "1.040 L com a 3ª fileira rebatida; com ela em uso, só 239 L",
+               obs: "Sem lugar no meio da 2ª fileira: o adulto vai na 3ª, logo atrás, e alcança as crianças pelo corredor. Catálogo cita ISOFIX nas fileiras 2 e 3 (quantidade não informada). Sem teste NCAP." },
+  shark:     { isofix: 2, isofix3: 0, fileira2: "banco de 3, piso plano", bebes: "ok", adulto: "ok",   carrinho: "apertado", carrinhoNota: "Caçamba de 1.200 L sem capota de série — precisa comprar (a partir de ~R$ 1,1 mil)",
+               obs: "Teste prático (BabyDrive): adulto senta no meio de 2 cadeirinhas com folga. Detector de criança esquecida. ANCAP 2025: 87% infantil. Com bebê-conforto de costas, motorista até ~1,82 m." },
+  tan:       { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "ok",       adulto: "apertado", carrinho: "ok",       carrinhoNota: "940 L com a 3ª fileira rebatida (cabe carrinho duplo grande + mala); 235 L com 7 lugares",
+               obs: "Euro NCAP 2023 (Tang): 87% infantil, com nota máxima em instalação de cadeirinhas. O Tang europeu tem ISOFIX na 3ª fileira, não confirmado no Tan brasileiro. Elétrico: viagens pedem parada pra recarga." },
+  b5:        { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "ok",       adulto: "ok",       carrinho: "ok",       carrinhoNota: "470 L — testado com carrinho duplo side-by-side + sacola (BabyDrive)",
+               obs: "Teste prático (BabyDrive): cabem 3 cadeirinhas lado a lado e um adulto entre duas. ANCAP 2025: 95% infantil, a melhor do grupo. Porta traseira lateral com estepe e carro alto (1,92 m) pra erguer o bebê-conforto." },
+  atto8:     { isofix: 2, isofix3: 0, fileira2: "banco 60/40 que desliza", bebes: "ok", adulto: "ok",   carrinho: "ok",       carrinhoNota: "960 L com a 3ª fileira rebatida; com 7 lugares cabe só um carrinho simples",
+               obs: "Teste prático (BabyDrive, Sealion 8): adulto senta \"confortavelmente\" entre 2 cadeirinhas. A 3ª fileira tem ISOFIX, mas o manual BR só libera cadeirinha virada pra frente lá." },
+  gs9:       { isofix: 2, isofix3: 0, fileira2: "2 poltronas capitão", bebes: "ok", adulto: "3a",     carrinho: "ok",       carrinhoNota: "1.005 L com a 3ª fileira rebatida; com ela em uso, só 255 L",
+               obs: "Sem lugar no meio da 2ª fileira: o adulto vai na 3ª (espaço \"razoável\") e alcança as crianças pelo corredor central. Trava infantil elétrica e cortinas até a 3ª fileira. Sem teste NCAP." },
+  poer:      { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "ok",       adulto: "apertado", carrinho: "apertado", carrinhoNota: "Caçamba de 1.248 L sem capota de série — precisa comprar",
+               obs: "Muito espaço pra pernas (bom pro bebê-conforto de costas), mas quem vai no meio senta sobre os fechos dos cintos. ANCAP 2021 (GWM Cannon): 87% infantil." },
+  tasman:    { isofix: 2, isofix3: 0, fileira2: "banco 60/40, piso plano", bebes: "ok", adulto: "apertado", carrinho: "apertado", carrinhoNota: "Caçamba de 1.173 L sem capota de série — só como acessório",
+               obs: "Cabine traseira larga (1.516 mm nos ombros) e 915 mm pras pernas. Mas a GL brasileira vem sem AEB nem ADAS — reprova no requisito de segurança. ANCAP 2025: 85% infantil (versões com ADAS)." },
+};
+
+const FAM_TRIP_KM = 600;            // viagem mensal: ida+volta sem parar pra abastecer/carregar
+const FAM_CITY_LEN = 4850;          // até 4,85 m: vaga de shopping/prédio em SP sem sofrimento
+const FAM_YEARS = 4;                // horizonte de revenda
+
+const FAMILIA_REQS = [
+  { key: "bebes", icon: "👶", label: "2 bebês-conforto", nivel: "obrigatorio",
+    desc: "Theo e Peter em bebê-conforto ao mesmo tempo: 2 ISOFIX na 2ª fileira e espaço pra cadeirinha de costas.",
+    eval(c, f) {
+      const iso = `${f.isofix} ISOFIX` + (f.isofix3 ? ` (+${f.isofix3} na 3ª)` : "");
+      if (f.isofix < 2 || f.bebes === "nao") return { st: "fail", txt: `${iso} · não cabem os dois` };
+      if (f.bebes === "apertado") return { st: "warn", txt: `${iso} · cabem, mas apertado` };
+      return { st: "ok", txt: `${iso} · ${f.fileira2}` };
+    } },
+  { key: "carrinho", icon: "🛒", label: "Carrinho duplo", nivel: "obrigatorio",
+    desc: "Carrinho pra 2 crianças fechado no porta-malas — ou na caçamba, desde que coberta.",
+    eval(c, f) {
+      const st = f.carrinho === "ok" ? "ok" : f.carrinho === "apertado" ? "warn" : "fail";
+      return { st, txt: f.carrinhoNota };
+    } },
+  { key: "seg", icon: "🛡️", label: "Segurança mínima", nivel: "obrigatorio",
+    desc: "Pelo menos 6 airbags + frenagem autônoma de emergência (AEB). Nota abaixo de 75 vira alerta.",
+    eval(c) {
+      const s = c.seguranca;
+      const aeb = s.adas.includes("AEB");
+      const txt = `${s.airbags} airbags · ${aeb ? "com" : "sem"} AEB · nota ${s.nota}`;
+      if (s.airbags < 6 || !aeb) return { st: "fail", txt };
+      return { st: s.nota >= 75 ? "ok" : "warn", txt };
+    } },
+  { key: "revenda", icon: "💰", label: `Revenda em ${FAM_YEARS} anos`, nivel: "importante",
+    desc: "Vamos vender em ~4 anos: quanto do preço volta, pela depreciação anual da FIPE.",
+    eval(c) {
+      const taxa = c.depreciacao.taxa;
+      if (taxa == null) return { st: "warn", txt: "Sem histórico FIPE" };
+      const resid = Math.pow(1 - taxa / 100, FAM_YEARS);
+      const txt = `≈ ${Math.round(resid * 100)}% do valor (≈ R$ ${Math.round(c.preco * resid / 1000)}k)`;
+      return { st: resid >= 0.65 ? "ok" : resid >= 0.5 ? "warn" : "fail", txt };
+    } },
+  { key: "cidade", icon: "🏙️", label: "Cidade de SP", nivel: "importante",
+    desc: "Dia a dia em São Paulo: caber em vaga de prédio e shopping, manobrar no trânsito.",
+    eval(c) {
+      const txt = `${(c.comprimento / 1000).toFixed(2).replace(".", ",")} m de comprimento`;
+      if (c.comprimento > LENGTH_LIMIT) return { st: "fail", txt: txt + " · grande demais pra vaga" };
+      return { st: c.comprimento <= FAM_CITY_LEN ? "ok" : "warn", txt };
+    } },
+  { key: "viagem", icon: "🛣️", label: "Viagem mensal", nivel: "importante",
+    desc: `1 viagem por mês: autonomia de ${FAM_TRIP_KM} km+ pra ir e voltar sem parada obrigatória.`,
+    eval(c) {
+      const txt = `${c.autonomia}` + (c.bev ? " · precisa planejar recarga" : "");
+      return { st: c.autonomiaKm >= FAM_TRIP_KM ? "ok" : c.autonomiaKm >= 450 ? "warn" : "fail", txt };
+    } },
+  { key: "adulto", icon: "🧑‍🍼", label: "Adulto com as crianças", nivel: "desejavel",
+    desc: "Desejável: um adulto sentado junto dos dois, no meio das cadeirinhas.",
+    eval(c, f) {
+      const map = {
+        ok:       { st: "ok",   txt: "Cabe no meio, entre as cadeirinhas" },
+        apertado: { st: "warn", txt: "No meio, mas apertado" },
+        "3a":     { st: "warn", txt: "Só na 3ª fileira, logo atrás" },
+        nao:      { st: "fail", txt: "Não cabe entre as cadeirinhas" },
+      };
+      return map[f.adulto] || map.nao;
+    } },
+];
+const FAM_NIVEL = {
+  obrigatorio: { label: "Obrigatório", peso: 3 },
+  importante:  { label: "Importante",  peso: 2 },
+  desejavel:   { label: "Desejável",   peso: 1 },
+};
+const FAM_ST_ICON = { ok: "✓", warn: "!", fail: "✕" };
+
+function familiaFit(c) {
+  const f = FAMILIA_DATA[c.id];
+  const checks = FAMILIA_REQS.map(r => ({ req: r, ...r.eval(c, f) }));
+  const essencial = checks.every(k => k.req.nivel !== "obrigatorio" || k.st !== "fail");
+  let pts = 0, max = 0;
+  checks.forEach(k => {
+    const p = FAM_NIVEL[k.req.nivel].peso;
+    max += p;
+    pts += k.st === "ok" ? p : k.st === "warn" ? p / 2 : 0;
+  });
+  return { checks, essencial, pct: Math.round((pts / max) * 100), okCount: checks.filter(k => k.st === "ok").length, obs: f.obs };
+}
+cars.forEach(c => { c.familia = familiaFit(c); });
+// Métrica "Família" do score: reprovou um requisito obrigatório = 0, senão a nota de aderência
+function famScoreN(c) {
+  if (!c.familia) return 0;
+  return c.familia.essencial ? c.familia.pct : 0;
+}
+
+function famStatus(st) {
+  return `<span class="fam-st ${st}" aria-label="${st === "ok" ? "atende" : st === "warn" ? "atende com ressalva" : "não atende"}">${FAM_ST_ICON[st]}</span>`;
+}
+function famTip(c) {
+  const fit = c.familia;
+  const head = fit.essencial ? `Serve pra família · ${fit.pct}/100` : "Não atende o obrigatório (conta 0 no score)";
+  const peso = SCORE_WEIGHTS.fam > 0 ? `\nPeso ${fmtWeight(SCORE_WEIGHTS.fam)} no score` : "";
+  return head + peso + "\n\n" + fit.checks.map(k => `${FAM_ST_ICON[k.st]} ${k.req.label}: ${k.txt}`).join("\n");
+}
+function famChip(c) {
+  const fit = c.familia;
+  return fit.essencial
+    ? `<span class="chip-mini fam-ok" data-tip="${escapeAttr(famTip(c))}">Família ${fit.okCount}/${fit.checks.length}</span>`
+    : `<span class="chip-mini danger" data-tip="${escapeAttr(famTip(c))}">Não serve p/ família</span>`;
+}
+function famSpotlightBlock(c) {
+  const fit = c.familia;
+  return `
+    <div class="sl-safety sl-family">
+      <h4>Família · ${fit.essencial ? `<span style="color:var(--good);">serve (${fit.pct}/100)</span>` : `<span style="color:var(--bad);">não atende o obrigatório</span>`}</h4>
+      <ul>${fit.checks.map(k => `<li>${famStatus(k.st)}<span><b>${k.req.label}:</b> ${k.txt}</span></li>`).join("")}</ul>
+      ${fit.obs ? `<div class="sl-fam-obs">${fit.obs}</div>` : ""}
+    </div>`;
+}
+
+function renderFamilia() {
+  document.getElementById("fam-reqs").innerHTML = FAMILIA_REQS.map(r => `
+    <div class="fam-req ${r.nivel}">
+      <div class="fr-head"><span aria-hidden="true">${r.icon}</span>${r.label}<span class="fr-lvl">${FAM_NIVEL[r.nivel].label}</span></div>
+      <div class="fr-desc">${r.desc}</div>
+    </div>`).join("");
+
+  const table = document.getElementById("fam-table");
+  table.querySelector("thead").innerHTML = `<tr>
+      <th class="sticky-col">Carro</th>
+      <th>Veredito</th>
+      ${FAMILIA_REQS.map(r => `<th>${r.icon} ${r.label}</th>`).join("")}
+    </tr>`;
+  const sorted = [...cars].sort((a, b) =>
+    (b.familia.essencial - a.familia.essencial) || (b.familia.pct - a.familia.pct) || (b.score - a.score));
+  table.querySelector("tbody").innerHTML = sorted.map(c => {
+    const fit = c.familia;
+    return `<tr data-id="${c.id}" class="${fit.essencial ? "" : "fam-out"}">
+      <td class="sticky-col">${TABLE_COLS[0].render(c)}</td>
+      <td><div class="fam-verdict ${fit.essencial ? "ok" : "fail"}"><b>${fit.essencial ? "Serve" : "Não serve"}</b><small>${fit.pct}/100 · ${fit.okCount}/${fit.checks.length} ✓</small></div></td>
+      ${fit.checks.map(k => `<td><div class="fam-cell">${famStatus(k.st)}<span class="fam-txt">${k.txt}</span></div></td>`).join("")}
+    </tr>`;
+  }).join("");
+}
 
 function carFlags(c) {
   const f = [];
@@ -2901,7 +3167,7 @@ function getTipText(c, key) {
       return `Nota ${c.notas.offroad}/100 — calculada\n• ${TRACAO_LABEL[o.tracao]}\n• ${CHASSI_LABEL[o.chassi]}\n• ${o.bloqueios === 0 ? "Sem bloqueios" : o.bloqueios === 1 ? "1 bloqueio (traseiro)" : "2 bloqueios (diant+tras)"}${o.sway ? "\n• Sway-bar disconnect" : ""}\n• Ângulos: ataque ${o.ataque == null ? "n/d" : fmtBR(o.ataque) + "°"} · saída ${o.saida == null ? "n/d" : fmtBR(o.saida) + "°"}\n• Vão livre: ${o.vao == null ? "n/d" : o.vao + " mm"}\n• Vau (água): ${o.vau == null ? "n/d" : "até " + o.vau + " mm"}${[o.ataque, o.saida, o.vao, o.vau].includes(null) ? "\n(n/d = não divulgado, conta 0)" : ""}\n${pesoTxt('off')}`;
     })(),
     retencao: `Retenção ${dep.score}/100\nDepreciação ~${dep.taxa}% ao ano\nFonte: ${dep.fonte || "—"}\nFórmula: 100 − (taxa × 3,5)\n${pesoTxt('desv')}`,
-    pp: `Score final ${(c.score * 10).toFixed(0)}/100\nMédia ponderada (peso/${fmtW(wSum)}):\n• Potência ×${fmtW(w.pot)}\n• Performance ×${fmtW(w.perf)}\n• Segurança ×${fmtW(w.seg)}\n• Autonomia ×${fmtW(w.auto)}\n• Consumo ×${fmtW(w.cons)}\n• Tecnologia ×${fmtW(w.tec)}\n• Off-road ×${fmtW(w.off)}\n• Retenção ×${fmtW(w.desv)}\n• Preço ×${fmtW(w.preco)} (menor preço = mais pontos)`,
+    pp: `Score final ${(c.score * 10).toFixed(0)}/100\nMédia ponderada (peso/${fmtW(wSum)}):\n• Potência ×${fmtW(w.pot)}\n• Performance ×${fmtW(w.perf)}\n• Segurança ×${fmtW(w.seg)}\n• Autonomia ×${fmtW(w.auto)}\n• Consumo ×${fmtW(w.cons)}\n• Tecnologia ×${fmtW(w.tec)}\n• Off-road ×${fmtW(w.off)}\n• Retenção ×${fmtW(w.desv)}\n• Preço ×${fmtW(w.preco)} (menor preço = mais pontos)\n• Família ×${fmtW(w.fam)} (requisitos da família)`,
     preco: `${c.precoFmt}\nPreço sugerido ${getBrand(c)} (out/2026, sem opcionais)\n${c.preco > PRICE_LIMIT ? "⚠ Acima do limite de R$ 350k\n" : ""}Normalizado: cheaper = 100, mais caro = 0\n${pesoTxt('preco')}`,
     performance: (() => {
       const p = PERF_DATA[c.id];
@@ -2974,6 +3240,7 @@ function renderCards() {
             ${c.bev ? `<span class="chip-mini brand" data-tip="${escapeAttr(getTipText(c,'bev'))}">Elétrico</span>` : ''}
             ${c.comprimento > LENGTH_LIMIT ? `<span class="chip-mini danger" data-tip="${escapeAttr(getTipText(c,'comprido'))}">Comprido</span>` : ''}
             <span class="chip-mini" data-tip="${escapeAttr(getTipText(c,'garantia'))}">${c.garantia}</span>
+            ${famChip(c)}
           </div>
 
           <div class="card-foot">
@@ -3062,6 +3329,8 @@ function renderSpotlight() {
           </div>
           <div class="sl-adas">${adasChips}</div>
         </div>
+
+        ${famSpotlightBlock(c)}
 
         <div class="sl-tabs">
           <div class="sl-tabs-head" role="tablist">
@@ -3310,14 +3579,17 @@ const TUNING_METRICS = [
   { key: "perf",  label: "Performance", max: 5 },
   { key: "cons",  label: "Consumo",     max: 5 },
   { key: "preco", label: "Preço",       max: 5 },
+  { key: "fam",   label: "Família",     max: 5 },
 ];
 const PRESETS = {
-  default:   { label: "Mercado BR", weights: { pot: 2,   perf: 1,   seg: 5, auto: 1.5, tec: 3.5, off: 1,   desv: 2.5, cons: 1,   preco: 3.5 } },
-  economia:  { label: "Economia",   weights: { pot: 0,   perf: 0,   seg: 1, auto: 0.5, tec: 1,   off: 0,   desv: 5,   cons: 4,   preco: 5   } },
-  offroad:   { label: "Off-road",   weights: { pot: 1,   perf: 1,   seg: 1, auto: 2,   tec: 1.5, off: 5,   desv: 1.5, cons: 1,   preco: 0.5 } },
-  viagem:    { label: "Viagem",     weights: { pot: 2,   perf: 2,   seg: 5, auto: 5,   tec: 3,   off: 0.5, desv: 1.5, cons: 2,   preco: 1   } },
-  esportivo: { label: "Esportivo",  weights: { pot: 5,   perf: 5,   seg: 2, auto: 1,   tec: 2.5, off: 1,   desv: 1,   cons: 0.5, preco: 0.5 } },
-  familia:   { label: "Família",    weights: { pot: 1,   perf: 0.5, seg: 5, auto: 2,   tec: 3,   off: 1,   desv: 2,   cons: 3,   preco: 1.5 } },
+  default:   { label: "Mercado BR", weights: { pot: 2,   perf: 1,   seg: 5, auto: 1.5, tec: 3.5, off: 1,   desv: 2.5, cons: 1,   preco: 3.5, fam: 0 } },
+  economia:  { label: "Economia",   weights: { pot: 0,   perf: 0,   seg: 1, auto: 0.5, tec: 1,   off: 0,   desv: 5,   cons: 4,   preco: 5,   fam: 0 } },
+  offroad:   { label: "Off-road",   weights: { pot: 1,   perf: 1,   seg: 1, auto: 2,   tec: 1.5, off: 5,   desv: 1.5, cons: 1,   preco: 0.5, fam: 0 } },
+  viagem:    { label: "Viagem",     weights: { pot: 2,   perf: 2,   seg: 5, auto: 5,   tec: 3,   off: 0.5, desv: 1.5, cons: 2,   preco: 1,   fam: 0 } },
+  esportivo: { label: "Esportivo",  weights: { pot: 5,   perf: 5,   seg: 2, auto: 1,   tec: 2.5, off: 1,   desv: 1,   cons: 0.5, preco: 0.5, fam: 0 } },
+  // Família: requisitos da seção #familia (bebês-conforto, carrinho, SP, viagem) com peso máximo;
+  // segurança e retenção (revenda em ~4 anos) logo atrás; off-road e performance não importam
+  familia:   { label: "Família",    weights: { pot: 0.5, perf: 0,   seg: 4, auto: 2,   tec: 2,   off: 0,   desv: 3.5, cons: 2.5, preco: 2,   fam: 5 } },
 };
 const STORAGE_KEY = "car-comp-tuning-v1";
 let activePreset = "default";
@@ -3432,8 +3704,9 @@ function computeFinalScoreDynamic(c, wSum) {
   const desvN  = c.depreciacao.score;
   const consN  = (parseNum(c.consumo) / maxConsVal) * 100;
   const precoN = maxPrecoVal === minPrecoVal ? 50 : (1 - (c.preco - minPrecoVal) / (maxPrecoVal - minPrecoVal)) * 100;
+  const famN   = famScoreN(c);
   const safe   = wSum > 0 ? wSum : 1;
-  const weighted = (potN*w.pot + perfN*w.perf + segN*w.seg + autoN*w.auto + tecN*w.tec + offN*w.off + desvN*w.desv + consN*w.cons + precoN*w.preco) / safe;
+  const weighted = (potN*w.pot + perfN*w.perf + segN*w.seg + autoN*w.auto + tecN*w.tec + offN*w.off + desvN*w.desv + consN*w.cons + precoN*w.preco + famN*w.fam) / safe;
   return weighted / 10;
 }
 
@@ -3516,8 +3789,9 @@ function loadTuning() {
   const m = hash.match(/[?&]?w=([\d.,_-]+)/);
   if (m) {
     const parts = m[1].split(",").map(parseFloat);
-    if (parts.length === TUNING_METRICS.length && parts.every(n => !isNaN(n))) {
-      TUNING_METRICS.forEach((metric, i) => SCORE_WEIGHTS[metric.key] = parts[i]);
+    // Links antigos têm 1 peso a menos (antes da métrica Família): ela fica em 0
+    if ((parts.length === TUNING_METRICS.length || parts.length === TUNING_METRICS.length - 1) && parts.every(n => !isNaN(n))) {
+      TUNING_METRICS.forEach((metric, i) => SCORE_WEIGHTS[metric.key] = parts[i] ?? 0);
       return;
     }
   }
@@ -3531,6 +3805,8 @@ function loadTuning() {
           if (typeof data.weights[k] === "number") SCORE_WEIGHTS[k] = data.weights[k];
         });
         if (data.preset) activePreset = data.preset;
+        // Preset nomeado salvo → usa os pesos atuais dele (presets podem ter sido ajustados desde então)
+        if (PRESETS[data.preset]) Object.assign(SCORE_WEIGHTS, PRESETS[data.preset].weights);
       }
     }
   } catch (e) { /* ignora */ }
@@ -3621,6 +3897,12 @@ document.addEventListener("keydown", (e) => {
 document.getElementById("print-page").addEventListener("click", () => window.print());
 // renderCards e renderTable já foram chamados pelo wire-up do Tuning acima.
 renderProsCons();
+renderFamilia();
+// Click numa linha da tabela Família abre o spotlight do carro
+document.getElementById("fam-table").addEventListener("click", (e) => {
+  const tr = e.target.closest("tbody tr[data-id]");
+  if (tr) openSpotlight(tr.dataset.id);
+});
 </script>
 </body>
 </html>
