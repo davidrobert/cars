@@ -2249,7 +2249,7 @@
         <div class="tuning-foot">
           <div class="tuning-sum">
             <span class="tuning-sum-lab">Σ Total</span>
-            <span class="tuning-sum-val" id="tuning-sum">16,5</span>
+            <span class="tuning-sum-val" id="tuning-sum">21,0</span>
           </div>
         </div>
 
@@ -3333,8 +3333,8 @@ function computePerf(c) {
 }
 
 /* ====== Cálculo do Score Final (0-10, ponderado) ====== */
-const SCORE_WEIGHTS = { pot: 2, perf: 1, seg: 5, auto: 1.5, tec: 3.5, off: 1, desv: 2.5, cons: 1, preco: 1, fam: 0 };
-const SCORE_WSUM = Object.values(SCORE_WEIGHTS).reduce((a, b) => a + b, 0); // 18.5
+const SCORE_WEIGHTS = { pot: 2, perf: 1, seg: 5, auto: 1.5, tec: 3.5, off: 1, desv: 2.5, cons: 1, preco: 3.5, fam: 0 };  // = preset Mercado BR
+const SCORE_WSUM = Object.values(SCORE_WEIGHTS).reduce((a, b) => a + b, 0); // 21
 
 function computeFinalScore(c) {
   const maxCvVal    = Math.max(...cars.map(x => x.cv));
@@ -4351,6 +4351,7 @@ function showSavedMsg(text) {
 }
 
 /* ====== Wire-up do Tuning ====== */
+Object.assign(SCORE_WEIGHTS, PRESETS.default.weights); // 0. parte sempre do preset Mercado BR
 loadTuning();              // 1. carrega pesos de URL hash / localStorage (se houver)
 activePreset = matchPreset();
 buildTuningGrid();         // 2. constrói sliders refletindo SCORE_WEIGHTS atual
