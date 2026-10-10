@@ -1,6 +1,6 @@
 # Comparativo de Carros
 
-Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparando 12 modelos do mercado brasileiro para ajudar uma decisão de compra em família.
+Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparando 13 modelos do mercado brasileiro para ajudar uma decisão de compra em família.
 
 🔗 **Versão online:** https://davidrobert.github.io/cars/
 
@@ -10,6 +10,7 @@ Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparand
 |---|---|---|---|
 | Fiat Toro Ultra T270 MHEV | Picape híbrida leve (4x2) | R$ 206.490 | 176 cv |
 | Caoa Chery Tiggo 8 Pro PHEV | SUV 7 lug. PHEV | R$ 249.990 | 279 cv |
+| Kia Sportage EX Prestige MHEV | SUV híbrido leve | R$ 267.190 | 178 cv |
 | Ram Rampage R/T Flex | Picape compacta 4x4 | R$ 275.990 | 272 cv |
 | GWM Haval H6 GT Flex | SUV coupé PHEV | R$ 326.000 | 393 cv |
 | Jeep Commander Blackhawk Flex | SUV 7 lug. | R$ 329.990 | 272 cv |
