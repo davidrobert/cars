@@ -2674,7 +2674,7 @@ const cars = [
     tracao: "4x4 c/ reduzida + 3 bloqueios",
     consumo: "18,3 km/le elétr. · 7,5/7,6 km/l híbr.",
     bagagem: "863 L",
-    bagagemNota: "porta-malas (medição GWM)",
+    bagagemNota: "porta-malas (medição GWM, provavelmente até o teto; 360 L na Austrália)",
     comprimento: 4760,
     peso: 2680,
     seguranca: { nota: 84, airbags: 6, ncap: "5★ ANCAP 2022 (Tank 300 HEV australiano, com 7 airbags; o PHEV não foi testado)", adas: ["AEB","ACC","LKA","BSM","RCTA","360°","TSR"], destaques: "Estrutura body-on-frame + ADAS nível 2+ (GWM)" },
@@ -3004,6 +3004,8 @@ const SELECAO_DATA = {
   tiggo8: {
     curto: "Tiggo 8 Pro PHEV", versaoCurta: "1.5 TGDI Super Hybrid · linha 2027",
     mini: "Tiggo 8", tracaoCurta: "4×2 (dianteira)",
+    pmComp: "494 L", pmCompFonte: "Chery na Tailândia e no Reino Unido, com a 3ª fileira rebatida",
+    portaMalasDet: "650 L pela Caoa Chery (configuração não informada) · 494 L com a 3ª fileira rebatida pela Chery na Tailândia e no Reino Unido · até 1.930 L com os bancos rebatidos",
     nota: "Versão única, topo de linha da nova geração (jun/2026). R$ 249.990 é o preço na cor preta; cinza ou branco custam R$ 252.990.",
     lugares: 7, isofix: "2 ISOFIX/i-Size (laterais da 2ª fileira) + top tether · nenhum na 3ª",
     largura: 1860, altura: 1705, entreEixos: 2710,
@@ -3031,11 +3033,15 @@ const SELECAO_DATA = {
       { label: "Caoa Chery: lançamento da nova geração Super Hybrid", url: "https://caoachery.com.br/noticia/caoa-chery-assume-protagonismo-nos-eletrificados-com-nova-geracao-super-hybrid" },
       { label: "Euro NCAP: Chery Tiggo 8 (5★, 2025 — carro europeu)", url: "https://www.euroncap.com/en/results/chery/tiggo+8/57630" },
       { label: "ANCAP: Chery Tiggo 8 (2025)", url: "https://www.ancap.com.au/safety-ratings/chery/tiggo-8/60ce71" },
+      { label: "BabyDrive: Tiggo 8 PHEV com carrinho duplo e tandem no porta-malas (10/04/2026)", url: "https://babydrive.com.au/reviews/suvs/2025-chery-tiggo-8-plug-in-hybrid-review/" },
+      { label: "Chery Tailândia: catálogo do Tiggo 8 CSH (494 L com a 3ª fileira rebatida)", url: "https://chery-thailand.com/strapi_prod/aw_T8_Brochure_8_P_ENG_Ver_05_11_25_9de843dc12.pdf" },
     ],
   },
   rampage: {
     curto: "Rampage R/T", versaoCurta: "2.0 Turbo Flex 4x4 · linha 2027",
     mini: "Rampage", tracaoCurta: "4×4 com reduzida",
+    pmComp: "1,05 × 1,05 m", pmCompFonte: "comprimento × largura entre as caixas de roda (ficha Ram); altura de 0,60 m",
+    portaMalasDet: "980 L (979 L pela ISO 3832) · 1,05 m de comprimento × 1,05 m entre as caixas de roda × 0,60 m de altura",
     nota: "Topo da linha. A Laramie 2.2 turbodiesel (R$ 269.990) tem o mesmo pacote de conforto e assistentes, com visual cromado e rodas de 18\".",
     lugares: 5, isofix: "2 (laterais do banco traseiro), cada um com top tether",
     largura: 1886, altura: 1711, entreEixos: 2994,
@@ -3063,11 +3069,14 @@ const SELECAO_DATA = {
       { label: "Ram: manuais do proprietário (Rampage 2026-2027)", url: "https://www.ram.com.br/manuais.html" },
       { label: "Autoentusiastas: Rampage estreia o motor Hurricane 4 flex (abr/2026)", url: "https://autoentusiastas.com.br/2026/04/ram-rampage-estreia-o-motor-hurricane-4-flex/" },
       { label: "Latin NCAP: resultados (a Rampage nunca foi testada)", url: "https://www.latinncap.com/en/results" },
+      { label: "Ram: ficha técnica de lançamento (medidas da caçamba)", url: "https://carroscomcamanzi.com.br/wp-content/uploads/2023/06/Ficha-tecnica-Rampage.pdf" },
     ],
   },
   commander: {
     curto: "Commander Blackhawk", versaoCurta: "2.0 Hurricane Flex 4x4 · linha 2027",
     mini: "Commander", tracaoCurta: "4×4 Active Drive Low",
+    pmComp: "481 L", pmCompFonte: "Jeep na Índia e no Japão, com a 3ª fileira rebatida",
+    portaMalasDet: "661 L com a 3ª fileira rebatida pela Jeep Brasil (método não divulgado) · 481 L pela Jeep na Índia e no Japão · 233 L com 7 lugares · 1.760 L com 2 lugares",
     nota: "Topo da linha 2027, lançada em 30/03/2026. A Overland 2.2 turbodiesel 4x4 (R$ 319.990) tem quase o mesmo pacote, com motor diesel de 200 cv e sem os detalhes Blackhawk.",
     lugares: 7, isofix: "3 posições na 2ª fileira, mas no máximo 2 cadeirinhas ao mesmo tempo; todas com top tether · proibido na 3ª",
     largura: 1859, altura: 1685, entreEixos: 2796,
@@ -3096,6 +3105,8 @@ const SELECAO_DATA = {
       { label: "Jeep: ficha técnica da Blackhawk Hurricane MY27 (PDF)", url: "https://www.jeep.com.br/content/dam/jeep/commander/receptiva/2026/ficha-tecnica/ficha-tecnica-blackhawk-hurricane-commander-my27.pdf" },
       { label: "Jeep: manual de bordo Commander 2026-2027, ed. 04 (ISOFIX, vau, reboque e airbags)", url: "https://document-uploader-service.k8s.fcalatam.com.br/v1/file/download/MANUAL_SERVICE/6aa7fab87309f8108b1feba8?file_name=MANUAIS-DE-BORDO_COMMANDER_2026-2027-ED04-08-09-2026.pdf" },
       { label: "Latin NCAP: resultados (o Commander nunca foi testado)", url: "https://www.latinncap.com/es/resultados" },
+      { label: "Autocar India: Jeep Meridian, a mesma carroceria (481 L com a 3ª fileira rebatida)", url: "https://www.autocarindia.com/car-reviews-amp/2022-jeep-meridian-review-test-drive-424148" },
+      { label: "GetNavi (Japão): Jeep Meridian/Commander (481 L com a 3ª fileira rebatida)", url: "https://getnavi.jp/vehicles/853631/" },
     ],
   },
   h6gt: {
@@ -3134,6 +3145,8 @@ const SELECAO_DATA = {
   tank: {
     curto: "Tank 300 Hi4-T", versaoCurta: "TerraForce · PHEV Flex 4x4",
     mini: "Tank 300", tracaoCurta: "4×4 com reduzida + 3 bloqueios",
+    pmComp: "360 L", pmCompFonte: "GWM Austrália, banco traseiro em uso (a bateria do PHEV fica sob o piso)",
+    portaMalasDet: "863 L pela GWM Brasil (método não divulgado, provavelmente até o teto) · 360 L pela GWM Austrália · 1.520 L com o banco rebatido · 78–80 cm do encosto à porta (medido na versão a gasolina)",
     nota: "Série especial limitada a 300 unidades, à venda desde 20/08/2026 — confirme o estoque. A Hi4-T regular custa R$ 342.000 com a mesma mecânica (sem o rack de teto, 1,90 m de altura).",
     lugares: 5, isofix: "2 (laterais do banco traseiro) + top tether",
     largura: 1930, altura: 1960, entreEixos: 2750,
@@ -3161,12 +3174,15 @@ const SELECAO_DATA = {
       { label: "GWM: lançamento do TerraForce (20/08/2026)", url: "https://www.gwmmotors.com.br/pt/media-center/news/2026/gwm-estreia-submarca-off-road-criada-no-brasil-e-lanca-o-gwm-tank-300-terraforce" },
       { label: "GWM: 12 compromissos (garantia)", url: "https://www.gwmmotors.com.br/pt/experience/12compromissosgwm" },
       { label: "ANCAP: Tank 300 (5★, 2022 — versão HEV australiana)", url: "https://www.ancap.com.au/safety-ratings/great-wall-motors/tank-300/9cd3ff" },
+      { label: "CarExpert: Tank 300 PHEV (360 L com o banco em uso)", url: "https://www.carexpert.com.au/car-reviews/2026-gwm-tank-300-phev-review" },
+      { label: "BabyDrive: Tank 300 a gasolina com carrinhos no porta-malas (14/07/2024)", url: "https://babydrive.com.au/reviews/suvs/2024-gwm-tank-300-ultra-4wd-review/" },
+      { label: "车质网 (China): medidas do porta-malas do Tank 300 a gasolina", url: "https://news.qq.com/rain/a/20230402A01PPC00" },
     ],
   },
 };
 
 const SEL_METODO = `<p><b>Como foi conferido (out/2026):</b> versão, preço e ficha técnica nos sites, configuradores e fichas oficiais das marcas; consumo e autonomia elétrica na <a href="https://www.gov.br/inmetro/pt-br/assuntos/regulamentacao/avaliacao-da-conformidade/programa-brasileiro-de-etiquetagem/tabelas-de-eficiencia-energetica/veiculos-automotivos-pbe-veicular" target="_blank" rel="noopener">tabela PBEV 2026 do Inmetro</a>; crash tests nas páginas oficiais do Latin NCAP, Euro NCAP e ANCAP. Dado que nenhuma fonte oficial confirma aparece como "não divulgado" — nada é estimado.</p>
-<p><b>Método:</b> autonomia = tanque × consumo na estrada (Inmetro, gasolina) + autonomia elétrica do Inmetro · revenda = (1 − depreciação anual FIPE)<sup>4</sup> · as notas de segurança, off-road e família são as mesmas do resto do site. Litros de porta-malas não se comparam direto entre marcas (VDA, SAE ou medição própria).</p>`;
+<p><b>Método:</b> autonomia = tanque × consumo na estrada (Inmetro, gasolina) + autonomia elétrica do Inmetro · revenda = (1 − depreciação anual FIPE)<sup>4</sup> · as notas de segurança, off-road e família são as mesmas do resto do site. Os litros das fichas brasileiras não se comparam (cada marca mede de um jeito; o Tank, por exemplo, diz 863 L aqui e 360 L na Austrália). Por isso a linha do carrinho mostra o número de fábrica que as próprias marcas usam fora do Brasil, no mesmo tipo de medição, e os testes práticos com carrinho da BabyDrive (Austrália) quando existem.</p>`;
 
 /* Helpers de destaque visual */
 const PRICE_LIMIT = 350000;       // R$ 350k
@@ -3364,15 +3380,15 @@ cars.forEach(c => {
 const FAMILIA_DATA = {
   toro:      { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "apertado", adulto: "nao",      carrinho: "ok",       carrinhoNota: "Caçamba de 937 L sob capota rígida de série (trava, mas não é estanque)",
                obs: "2ª fileira com só 1.375 mm nos ombros (a mais estreita do grupo) e bebê-conforto de costas obriga a avançar os bancos da frente. Latin NCAP infantil 2018 (protocolo antigo): 4★, ~75%." },
-  commander: { isofix: 2, isofix3: 0, fileira2: "banco de 3 que desliza", bebes: "ok", adulto: "apertado", carrinho: "ok",   carrinhoNota: "661 L com a 3ª fileira rebatida; com 7 lugares em uso são só 233 L",
+  commander: { isofix: 2, isofix3: 0, fileira2: "banco de 3 que desliza", bebes: "ok", adulto: "apertado", carrinho: "ok",   carrinhoNota: "481 L com a 3ª fileira rebatida pela Jeep na Índia e no Japão (os 661 L daqui usam outro método; com 7 lugares, 233 L): sobra espaço pro duplo, mas não há teste publicado com carrinho",
                obs: "2ª fileira desliza 14 cm — ajuda a afastar o bebê-conforto do banco da frente. Ela tem 3 posições ISOFIX, mas a central divide um engate com a lateral do motorista: no máximo 2 cadeirinhas ISOFIX ao mesmo tempo (use as duas laterais). Na 3ª fileira o manual proíbe ISOFIX. Três adultos atrás \"roçam ombros\" (Quatro Rodas)." },
   wrangler:  { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "apertado", adulto: "nao",      carrinho: "apertado", carrinhoNota: "~500 L com porta lateral: entra atravessado e sobra pouco espaço pra mala",
                obs: "Euro NCAP registrou dificuldade pra instalar cadeirinhas e o bebê-conforto deixa pouco espaço pro passageiro da frente. Cabine alta: colocar o bebê-conforto exige esforço. Infantil Euro NCAP 2018: 69%." },
-  tiggo8:    { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "ok",       adulto: "apertado", carrinho: "ok",       carrinhoNota: "Cabe com a 3ª fileira rebatida; com 7 lugares em uso, não",
+  tiggo8:    { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "ok",       adulto: "apertado", carrinho: "ok",       carrinhoNota: "Com a 3ª fileira rebatida (494 L pela Chery na Tailândia e no Reino Unido), o teste da BabyDrive com o mesmo Tiggo 8 PHEV levou um carrinho duplo deitado (sem as rodas traseiras) + 3 sacolas, ou o tandem + 6 sacolas. Com 7 lugares em uso, não cabe",
                obs: "Euro NCAP 2025 (Tiggo 8 PHEV europeu): 85% na proteção infantil (o detector de criança esquecida do europeu não consta na ficha brasileira). Carroceria de 1,86 m de largura: o adulto no meio vai justo." },
-  tank:      { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "apertado", adulto: "apertado", carrinho: "apertado", carrinhoNota: "863 L pela GWM (método não divulgado); revistas estimam ~360–400 L até o encosto: tandem entra em pé, side-by-side provavelmente não",
+  tank:      { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "apertado", adulto: "apertado", carrinho: "apertado", carrinhoNota: "Porta-malas raso: 78–80 cm do encosto à porta (medido na versão a gasolina) e 360 L no PHEV pela GWM Austrália, com a bateria sob o piso (os 863 L daqui usam outro método). O duplo entra atravessado ou em pé, com pouca sobra",
                obs: "Porta traseira lateral e pesada com o estepe: ruim em vaga apertada. Piso alto pra erguer o bebê-conforto e túnel central incomoda quem vai no meio. ANCAP 2022: 89% infantil (versão HEV)." },
-  rampage:   { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "apertado", adulto: "nao",      carrinho: "apertado", carrinhoNota: "Caçamba de 980 L com capota marítima de lona de série — o manual avisa que ela não garante a caçamba seca, e não protege de roubo",
+  rampage:   { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "apertado", adulto: "nao",      carrinho: "apertado", carrinhoNota: "Caçamba de 1,05 m × 1,05 m entre as caixas de roda: o duplo deita fácil, mas o manual avisa que a capota de lona de série não garante a caçamba seca (e ela não tranca). Há capota rígida Mopar vendida à parte",
                obs: "Banco traseiro é o ponto fraco: pernas justas e encosto muito reto; bebê-conforto de costas obriga a avançar os bancos da frente. Nunca testada por NCAP." },
   t2:        { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "apertado", adulto: "apertado", carrinho: "ok",       carrinhoNota: "580 L, porta-malas quadrado (porta lateral); tandem cabe fácil",
                obs: "Alerta do ASEAN NCAP: um bebê-conforto de referência só coube no lugar central, não nas laterais — teste a cadeirinha de vocês antes. Piso plano e carro largo (2,0 m). ASEAN NCAP: ~80% infantil." },
@@ -4483,16 +4499,17 @@ const SEL_LINHAS = [
       return { v: f.essencial ? `✓ ${f.pct}` : "✕ Não", sub: (f.essencial ? "serve" : "não serve") + (d.lugares ? ` · ${d.lugares} lug.` : "") };
     } },
   { grupo: "espaco", label: "Carrinho duplo", hint: "porta-malas ou caçamba", melhor: "max",
-    tip: "Se o carrinho duplo dobrado vai protegido (porta-malas ou caçamba coberta). Os litros não se comparam direto: cada marca mede de um jeito",
+    tip: "Se o carrinho duplo dobrado vai protegido (porta-malas ou caçamba coberta), com os 2 bebês-conforto na 2ª fileira. Os litros são os de fábrica que as marcas usam fora do Brasil, no mesmo critério: os das fichas daqui são medidos de jeitos diferentes",
     val: c => ({ ok: 2, apertado: 1, nao: 0 })[FAMILIA_DATA[c.id]?.carrinho] ?? null,
     cell: c => {
       const f = FAMILIA_DATA[c.id] || {};
       const v = f.carrinho === "ok" ? "✓ Cabe" : f.carrinho === "apertado" ? "! Apertado" : "✕ Não cabe";
-      return { v, t: true, sub: `${c.bagagem} ${c.bagagemNota}`, title: f.carrinhoNota || "" };
+      const d = SELECAO_DATA[c.id] || {};
+      return { v, t: true, sub: d.pmComp ? `${d.pmComp} · ${d.pmCompFonte}` : `${c.bagagem} ${c.bagagemNota}`, title: f.carrinhoNota || "" };
     },
     cellM: c => {
       const f = FAMILIA_DATA[c.id] || {};
-      return { v: f.carrinho === "ok" ? "✓ Cabe" : f.carrinho === "apertado" ? "! Justo" : "✕ Não", t: true, sub: c.bagagem };
+      return { v: f.carrinho === "ok" ? "✓ Cabe" : f.carrinho === "apertado" ? "! Justo" : "✕ Não", t: true, sub: SELECAO_DATA[c.id]?.pmComp || c.bagagem };
     } },
   { grupo: "espaco", label: "Comprimento", hint: "menor = estaciona mais fácil", melhor: "min",
     tip: "Comprimento total. Em SP, até ~5,11 m cabe sem sofrimento em vaga de prédio e de shopping",
@@ -4620,7 +4637,8 @@ function selFicha(c) {
     ["Autonomia", c.autonomia],
     ["Tanque · bateria", c.tanque],
     ...(c.phev ? [["Recarga", d.recarga ?? null]] : []),
-    [d.cacamba ? "Caçamba" : "Porta-malas", `${c.bagagem} ${c.bagagemNota}`],
+    [d.cacamba ? "Caçamba" : "Porta-malas", d.portaMalasDet || `${c.bagagem} ${c.bagagemNota}`],
+    ["Carrinho duplo", f.carrinhoNota || null],
     ...(d.cargaUtil ? [["Carga útil", d.cargaUtil]] : []),
     ["C × L × A", dims],
     ["Entre-eixos", d.entreEixos ? `${fmtM(d.entreEixos)} m` : null],
