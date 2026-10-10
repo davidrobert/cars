@@ -429,6 +429,11 @@
     border-color: color-mix(in srgb, var(--brand) 40%, transparent);
     background: color-mix(in srgb, var(--brand) 10%, transparent);
   }
+  .chip-mini.sel-chip {
+    color: #ffe2b3;
+    border-color: color-mix(in srgb, var(--brand) 55%, transparent);
+    background: color-mix(in srgb, var(--brand) 18%, transparent);
+  }
   .chip-mini.danger {
     color: var(--bad);
     border-color: color-mix(in srgb, var(--bad) 40%, transparent);
@@ -1466,6 +1471,322 @@
     padding: 0 4px;
   }
 
+  /* ---------- Minha seleção (finalistas) ---------- */
+  .sel-callout {
+    display: inline-flex; align-items: center; gap: 8px 10px; flex-wrap: wrap;
+    padding: 10px 16px; border-radius: 6px;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--brand) 16%, var(--surface)), var(--surface));
+    border: 1px solid color-mix(in srgb, var(--brand) 40%, var(--line));
+    color: var(--text); text-decoration: none; font-size: 13.5px; line-height: 1.4;
+    transition: border-color .2s, transform .2s;
+  }
+  .sel-callout:hover { border-color: var(--brand); transform: translateY(-1px); }
+  .sel-callout b { color: var(--brand); letter-spacing: .02em; }
+  .sel-callout-list { color: var(--muted); }
+  .sel-callout .arrow { color: var(--brand); font-weight: 800; }
+
+  .sel-keys { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0 0 12px; font-size: 12px; color: var(--muted); }
+  .sel-key { display: inline-flex; align-items: center; gap: 6px; }
+  .sel-key .sw { width: 14px; height: 14px; border-radius: 3px; flex: none; }
+  .sel-key .sw.best  { background: color-mix(in srgb, var(--good) 22%, transparent); box-shadow: inset 3px 0 0 var(--good); }
+  .sel-key .sw.worst { background: color-mix(in srgb, var(--bad) 18%, transparent);  box-shadow: inset 3px 0 0 var(--bad); }
+
+  /* Tabela resumida: critérios nas linhas, carros nas colunas */
+  table.sel-table {
+    width: 100%; min-width: 880px;
+    border-collapse: separate; border-spacing: 0;
+    table-layout: fixed; font-size: 13px;
+  }
+  table.sel-table col.c-crit { width: 172px; }
+  table.sel-table th, table.sel-table td {
+    padding: 10px 12px; text-align: left; vertical-align: top;
+    border-bottom: 1px solid var(--line);
+  }
+  table.sel-table td { border-left: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  table.sel-table thead th {
+    background: var(--surface-2);
+    border-bottom: 2px solid var(--line-2);
+    vertical-align: bottom; padding: 12px 10px 10px;
+  }
+  table.sel-table .sel-corner {
+    font-size: 10px; font-weight: 800; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--dim);
+  }
+  /* Coluna de critérios fixa ao rolar pro lado */
+  table.sel-table .sel-crit, table.sel-table .sel-corner {
+    position: sticky; left: 0; z-index: 1;
+    background: var(--surface);
+    border-right: 1px solid var(--line-2);
+    box-shadow: 4px 0 8px -6px rgba(0,0,0,.45);
+  }
+  table.sel-table thead .sel-corner { background: var(--surface-2); z-index: 3; }
+  table.sel-table .sel-crit:hover,
+  table.sel-table .sel-crit:focus-within { z-index: 4; }
+
+  .sel-car-head {
+    appearance: none; border: 0; background: none; padding: 0; margin: 0;
+    width: 100%; text-align: left; cursor: pointer; color: inherit; font: inherit;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .sel-car-thumb {
+    display: block; width: 100%; aspect-ratio: 16/9; border-radius: 6px;
+    background: var(--gunmetal-deep) center/cover no-repeat;
+    border: 1px solid var(--line); margin-bottom: 7px;
+    transition: border-color .2s, transform .2s;
+  }
+  .sel-car-head:hover .sel-car-thumb,
+  .sel-car-head:focus-visible .sel-car-thumb { border-color: var(--brand); transform: translateY(-1px); }
+  .sel-car-brand { font-size: 9.5px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--brand); }
+  .sel-car-name { font-size: 14px; font-weight: 800; color: var(--text); letter-spacing: -.01em; line-height: 1.2; }
+  .sel-car-ver { font-size: 11px; color: var(--dim); font-weight: 500; line-height: 1.3; }
+  .sel-car-more { margin-top: 4px; font-size: 10.5px; font-weight: 700; color: var(--brand); letter-spacing: .04em; }
+
+  table.sel-table tr.sel-group th {
+    padding: 16px 12px 7px;
+    background: color-mix(in srgb, var(--gunmetal-deep) 45%, var(--surface));
+    border-bottom: 1px solid var(--line-2);
+  }
+  table.sel-table tr.sel-group th span {
+    position: sticky; left: 12px; display: inline-block;
+    font-size: 11px; font-weight: 800; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--brand);
+  }
+  table.sel-table .sel-crit { font-weight: 700; font-size: 12.5px; color: var(--text); line-height: 1.3; }
+  table.sel-table .sel-crit small {
+    display: block; margin-top: 3px;
+    font-size: 10.5px; font-weight: 600; color: var(--dim); letter-spacing: .01em;
+  }
+  .sel-tip { border-bottom: 1px dashed var(--dim); cursor: help; }
+  /* Tooltip dos critérios abre alinhado à esquerda (não vaza da tabela) */
+  table.sel-table .sel-crit [data-tip]:hover::after,
+  table.sel-table .sel-crit [data-tip]:focus-visible::after { left: 0; transform: none; animation-name: tipInL; }
+  table.sel-table .sel-crit [data-tip]:hover::before,
+  table.sel-table .sel-crit [data-tip]:focus-visible::before { left: 18px; transform: none; animation-name: tipInL; }
+  @keyframes tipInL {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  table.sel-table td .sel-v { font-size: 14px; font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+  table.sel-table td .sel-t { font-size: 12.5px; font-weight: 700; color: var(--text); line-height: 1.35; }
+  table.sel-table td small { display: block; margin-top: 3px; font-size: 11.5px; line-height: 1.4; color: var(--dim); }
+  table.sel-table td.is-best  { background: color-mix(in srgb, var(--good) 11%, transparent); box-shadow: inset 3px 0 0 var(--good); }
+  table.sel-table td.is-best .sel-v, table.sel-table td.is-best .sel-t { color: #c8f5d4; }
+  table.sel-table td.is-worst { background: color-mix(in srgb, var(--bad) 8%, transparent); box-shadow: inset 3px 0 0 var(--bad); }
+  table.sel-table td.is-worst .sel-v, table.sel-table td.is-worst .sel-t { color: #ffc4c4; }
+  table.sel-table tbody tr:not(.sel-group):hover td:not(.is-best):not(.is-worst) { background: color-mix(in srgb, var(--brand) 4%, transparent); }
+  .sel-mark { font-size: 10px; margin-left: 5px; vertical-align: 1px; }
+  .sel-mark.best  { color: var(--good); }
+  .sel-mark.worst { color: var(--bad); }
+  table.sel-table tr.sel-verdict th, table.sel-table tr.sel-verdict td { border-bottom: none; padding-top: 14px; padding-bottom: 16px; }
+  table.sel-table tr.sel-verdict td {
+    background: color-mix(in srgb, var(--brand) 7%, transparent);
+    color: #ffe2b3; font-size: 12.5px; font-weight: 700; line-height: 1.45;
+  }
+
+  /* Escolha do carro (abas) */
+  .sel-picker {
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px;
+    margin: 28px 0 12px; scroll-margin-top: 80px;
+  }
+  .sel-pick {
+    appearance: none; cursor: pointer; min-width: 0;
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px; text-align: left; font: inherit;
+    background: var(--surface); color: var(--muted);
+    border: 1px solid var(--line); border-radius: 8px;
+    transition: border-color .15s, background .15s, color .15s;
+  }
+  .sel-pick:hover { border-color: var(--line-2); color: var(--text); }
+  .sel-pick.is-active {
+    border-color: var(--brand); color: var(--text);
+    background: color-mix(in srgb, var(--brand) 10%, var(--surface));
+    box-shadow: 0 6px 18px -10px rgba(255,138,0,.6);
+  }
+  .sel-pick-img {
+    flex: 0 0 58px; height: 38px; border-radius: 5px;
+    background: var(--gunmetal-deep) center/cover no-repeat;
+    border: 1px solid var(--line);
+  }
+  .sel-pick-txt { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+  .sel-pick-txt b { font-size: 12.5px; color: inherit; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sel-pick-txt small { font-size: 11px; color: var(--dim); font-weight: 600; }
+  .sel-pick.is-active .sel-pick-txt small { color: var(--brand); }
+
+  /* Painel do carro: galeria + ficha */
+  .sel-detail {
+    display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    background: linear-gradient(180deg, var(--surface) 0%, var(--gunmetal-deep) 100%);
+    border: 1px solid var(--line-2); border-radius: var(--radius);
+    overflow: hidden; box-shadow: var(--shadow-md);
+  }
+  .sel-detail[hidden] { display: none; }
+  .sel-gallery {
+    min-width: 0; background: var(--gunmetal-deep);
+    border-right: 1px solid var(--line);
+  }
+  .sel-stage-wrap { position: relative; }
+  .sel-stage {
+    display: flex; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    aspect-ratio: 3/2; outline: none;
+  }
+  .sel-stage::-webkit-scrollbar { display: none; }
+  .sel-stage:focus-visible { box-shadow: inset 0 0 0 2px var(--brand); }
+  .sel-slide { flex: 0 0 100%; margin: 0; position: relative; scroll-snap-align: start; background: #fff; }
+  .sel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .sel-slide img.contain { object-fit: contain; }
+  .sel-slide figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 28px 14px 10px;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,.8));
+    color: rgba(255,255,255,.9); font-size: 11.5px; line-height: 1.4;
+  }
+  .sel-slide figcaption b {
+    color: #fff; font-size: 10px; font-weight: 800;
+    letter-spacing: .2em; text-transform: uppercase; margin-right: 8px;
+  }
+  .sel-slide figcaption .cred { display: block; margin-top: 2px; font-size: 10.5px; color: rgba(255,255,255,.66); }
+  .sel-slide figcaption a { color: inherit; }
+  .sel-gnav {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid var(--line-2); background: rgba(8,9,26,.72);
+    color: var(--text); font-size: 24px; line-height: 1;
+    cursor: pointer; display: grid; place-items: center;
+    backdrop-filter: blur(8px);
+    transition: background .2s, border-color .2s, opacity .2s;
+  }
+  .sel-gnav:hover { background: var(--brand); color: #1a1404; border-color: var(--brand); }
+  .sel-gnav.prev { left: 10px; }
+  .sel-gnav.next { right: 10px; }
+  .sel-gnav:disabled { opacity: 0; pointer-events: none; }
+  .sel-count-badge {
+    position: absolute; top: 10px; right: 10px; z-index: 2;
+    padding: 4px 9px; border-radius: 3px;
+    background: rgba(8,9,26,.72); border: 1px solid rgba(255,255,255,.14);
+    font-size: 10.5px; font-weight: 700; letter-spacing: .15em; color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+  .sel-thumbs { display: grid; gap: 6px; padding: 8px; }
+  .sel-thumb {
+    appearance: none; padding: 0; position: relative; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 5px; overflow: hidden;
+    background: #fff; aspect-ratio: 3/2; opacity: .6;
+    transition: opacity .15s, border-color .15s, box-shadow .15s;
+  }
+  .sel-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .sel-thumb span {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 10px 3px 3px; text-align: center;
+    font-size: 8.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    color: #fff; background: linear-gradient(180deg, transparent, rgba(0,0,0,.8));
+  }
+  .sel-thumb:hover { opacity: .9; }
+  .sel-thumb.is-active { opacity: 1; border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand); }
+
+  .sel-info { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .sel-info .sl-version .badge { margin-left: 6px; font-size: 8.5px; padding: 2px 7px; letter-spacing: .2em; font-style: normal; vertical-align: 1px; }
+  .sel-price-row {
+    display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap;
+    padding: 10px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .sel-price {
+    font-family: var(--font-display); font-size: 22px; font-weight: 800;
+    color: var(--brand); letter-spacing: -.02em; font-variant-numeric: tabular-nums;
+  }
+  .sel-best-for {
+    font-size: 12px; font-weight: 700; line-height: 1.35; color: #ffe2b3;
+    padding: 5px 10px; border-radius: 4px;
+    background: color-mix(in srgb, var(--brand) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--brand) 35%, transparent);
+  }
+  .sel-ficha { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 18px; margin: 0; }
+  .sel-ficha > div { padding: 7px 0; border-bottom: 1px dashed var(--line); min-width: 0; }
+  .sel-ficha dt { font-size: 9.5px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); }
+  .sel-ficha dd { margin: 2px 0 0; font-size: 12.5px; line-height: 1.4; color: var(--text); overflow-wrap: anywhere; }
+  .sel-ficha dd.nd { color: var(--dim); font-style: italic; }
+  .sel-itens h4 {
+    margin: 0 0 8px; font-size: 10px; font-weight: 800;
+    letter-spacing: .28em; text-transform: uppercase; color: var(--muted);
+  }
+  .sel-itens ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 5px; }
+  .sel-itens li {
+    font-size: 11.5px; line-height: 1.3; padding: 4px 9px; border-radius: 999px;
+    background: var(--surface-2); border: 1px solid var(--line); color: var(--muted);
+  }
+  .sel-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; padding-top: 4px; }
+  .sel-actions .btn { text-decoration: none; }
+
+  /* Glossário + fontes */
+  .sel-glossario {
+    margin-top: 18px; display: grid; gap: 8px 22px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    padding: 14px 16px; background: var(--surface);
+    border: 1px solid var(--line); border-left: 3px solid var(--info);
+    border-radius: var(--radius-sm);
+  }
+  .sel-glossario h4 {
+    grid-column: 1 / -1; margin: 0 0 2px; font-size: 10px; font-weight: 800;
+    letter-spacing: .28em; text-transform: uppercase; color: var(--muted);
+  }
+  .sel-glossario div { font-size: 12px; line-height: 1.45; color: var(--muted); }
+  .sel-glossario b { color: var(--text); }
+  .sel-fontes {
+    margin-top: 12px; background: var(--surface);
+    border: 1px solid var(--line); border-radius: var(--radius-sm);
+  }
+  .sel-fontes summary {
+    cursor: pointer; padding: 12px 16px; list-style: none;
+    font-size: 12.5px; font-weight: 700; color: var(--muted);
+  }
+  .sel-fontes summary::-webkit-details-marker { display: none; }
+  .sel-fontes summary::before { content: "▸ "; color: var(--brand); }
+  .sel-fontes[open] summary::before { content: "▾ "; }
+  .sel-fontes summary:hover { color: var(--text); }
+  .sel-fontes-body { padding: 0 16px 14px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .sel-fontes-body p { margin: 0 0 8px; }
+  .sel-fontes-body h5 { margin: 12px 0 4px; font-size: 12px; color: var(--text); }
+  .sel-fontes-body ul { margin: 0; padding-left: 18px; }
+  .sel-fontes-body a { color: var(--muted); overflow-wrap: anywhere; }
+
+  @media (max-width: 1000px) {
+    .sel-detail { grid-template-columns: 1fr; }
+    .sel-gallery { border-right: none; border-bottom: 1px solid var(--line); }
+    .sel-picker { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 760px) {
+    .sel-callout { font-size: 12.5px; padding: 9px 12px; }
+    .sel-picker {
+      display: flex; overflow-x: auto; scroll-snap-type: x proximity;
+      margin: 22px 0 10px; padding-bottom: 4px; scrollbar-width: thin;
+    }
+    .sel-pick { flex: 0 0 auto; scroll-snap-align: start; padding: 7px; }
+    .sel-pick-img { flex-basis: 50px; height: 34px; }
+    table.sel-table { min-width: 720px; font-size: 12.5px; }
+    table.sel-table col.c-crit { width: 116px; }
+    table.sel-table th, table.sel-table td { padding: 9px 9px; }
+    table.sel-table td .sel-v { font-size: 13px; }
+    table.sel-table td .sel-t { font-size: 12px; }
+    table.sel-table td small { font-size: 11px; }
+    table.sel-table .sel-crit { font-size: 12px; }
+    .sel-car-name { font-size: 12.5px; }
+    .sel-car-ver { font-size: 10.5px; }
+    .sel-info { padding: 16px 16px 18px; gap: 12px; }
+    .sel-price { font-size: 20px; }
+    .sel-ficha { gap: 0 12px; }
+    .sel-gnav { width: 34px; height: 34px; font-size: 20px; }
+    .sel-thumbs { gap: 4px; padding: 6px; }
+    .sel-glossario { padding: 12px 14px; }
+  }
+  @media (max-width: 420px) {
+    .sel-ficha { grid-template-columns: 1fr; }
+    .sel-thumb span { display: none; }
+  }
+  @media print {
+    .sel-detail, .sel-detail[hidden] { display: grid !important; grid-template-columns: 1fr 1fr; break-inside: avoid; margin-bottom: 14px; box-shadow: none; }
+    .sel-picker, .sel-gnav, .sel-callout, .sel-thumbs, .sel-actions { display: none !important; }
+  }
+
   /* ============ TABLET: modal volta ao layout vertical ============ */
   @media (max-width: 1100px) {
     .sl-content {
@@ -1679,6 +2000,7 @@
     </div>
     <nav class="nav">
       <a href="#cars">Modelos</a>
+      <a href="#selecao">Seleção</a>
       <a href="#familia">Família</a>
       <a href="#tabela">Tabela</a>
       <a href="#cenarios">Cenários</a>
@@ -1716,6 +2038,7 @@
         </div>
       </div>
     </div>
+    <a class="sel-callout" href="#selecao">⭐ <b>Minha seleção</b><span class="sel-callout-list" id="sel-callout-list">Tiggo 8 Pro PHEV · Rampage R/T · Commander Blackhawk · Haval H6 GT · Tank 300 Hi4-T</span><span class="arrow">→</span></a>
   </div>
 </section>
 
@@ -1784,6 +2107,38 @@
     </details>
 
     <div class="cars" id="cars-grid"></div>
+  </div>
+</section>
+
+<!-- ========== Minha seleção (finalistas) ========== -->
+<section id="selecao">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>⭐ Minha seleção</h2>
+        <p>Os <b id="sel-n">5</b> carros que estão hoje na nossa lista final, lado a lado e na versão mais completa de cada um. Dados conferidos em <b>out/2026</b> nos sites e fichas oficiais, na tabela PBEV 2026 do Inmetro e nos crash tests (NCAP). <b>Clique no carro</b> pra ver fotos e a ficha completa.</p>
+      </div>
+    </div>
+    <div class="sel-keys" aria-hidden="true">
+      <span class="sel-key"><i class="sw best"></i>★ Melhor da linha</span>
+      <span class="sel-key"><i class="sw worst"></i>▼ Pior da linha</span>
+      <span class="sel-key">Passe o mouse no critério pra ver como ele é medido</span>
+    </div>
+    <div class="table-wrap">
+      <div class="scroll">
+        <table class="sel-table" id="sel-table"><!-- preenchido por JS --></table>
+      </div>
+      <div class="scroll-hint">👆 Arraste pro lado pra ver os outros carros · a coluna de critérios fica fixa</div>
+    </div>
+
+    <div class="sel-picker" id="sel-picker" role="tablist" aria-label="Escolha o carro pra ver fotos e ficha"><!-- preenchido por JS --></div>
+    <div id="sel-details"><!-- preenchido por JS --></div>
+
+    <div class="sel-glossario" id="sel-glossario"><!-- preenchido por JS --></div>
+    <details class="sel-fontes" id="sel-fontes">
+      <summary>Fontes, método e o que foi conferido</summary>
+      <div class="sel-fontes-body" id="sel-fontes-body"><!-- preenchido por JS --></div>
+    </details>
   </div>
 </section>
 
@@ -2477,6 +2832,49 @@ const cars = [
   },
 ];
 
+/* ====== Minha seleção: finalistas atuais ====== */
+// Pra mudar a lista, edite só este array (ids do array `cars`, na ordem em que aparecem)
+const SELECAO = ["tiggo8", "rampage", "commander", "h6gt", "tank"];
+
+/* Dados extras dos finalistas, conferidos em out/2026 (fontes em `fontes`).
+   O resto vem de `cars`, PERF_DATA, OFFROAD_DATA, FAMILIA_DATA e DESVAL_DATA.
+   Medidas em mm; null = o fabricante não divulga (aparece como "não divulgado"). */
+const SELECAO_DATA = {
+  tiggo8: {
+    curto: "Tiggo 8 Pro PHEV", versaoCurta: "1.5 TGDI Super Hybrid",
+    lugares: 7, isofix: null, largura: null, altura: null, entreEixos: null,
+    reboque: null, recarga: null, airbagsDesc: null, ncapCurto: "5★ Euro NCAP 2025",
+    itens: [], melhorPara: "Economia e 7 lugares pelo menor preço", fontes: [],
+  },
+  rampage: {
+    curto: "Rampage R/T", versaoCurta: "2.0 Turbo Flex 4x4",
+    lugares: 5, isofix: null, largura: null, altura: null, entreEixos: null,
+    reboque: null, cacamba: true, cargaUtil: 750, airbagsDesc: null, ncapCurto: "sem crash test",
+    itens: [], melhorPara: "Caçamba, 4x4 com reduzida e revenda", fontes: [],
+  },
+  commander: {
+    curto: "Commander Blackhawk", versaoCurta: "2.0 Hurricane Flex 4x4",
+    lugares: 7, isofix: null, largura: null, altura: null, entreEixos: null,
+    reboque: null, airbagsDesc: null, ncapCurto: "sem crash test",
+    itens: [], melhorPara: "Viagem com 7 lugares e rede Jeep", fontes: [],
+  },
+  h6gt: {
+    curto: "Haval H6 GT", versaoCurta: "Flex PHEV Hi4",
+    lugares: 5, isofix: null, largura: null, altura: null, entreEixos: null,
+    reboque: null, recarga: null, airbagsDesc: null, ncapCurto: "5★ ANCAP 2022",
+    itens: [], melhorPara: "Desempenho e mais km na tomada", fontes: [],
+  },
+  tank: {
+    curto: "Tank 300 Hi4-T", versaoCurta: "2.0 Turbo Flex PHEV 4x4",
+    lugares: 5, isofix: null, largura: null, altura: null, entreEixos: null,
+    reboque: null, recarga: null, airbagsDesc: null, ncapCurto: "5★ ANCAP",
+    itens: [], melhorPara: "Off-road de verdade, com PHEV", fontes: [],
+  },
+};
+
+const SEL_METODO = `<p><b>Como foi conferido (out/2026):</b> versão, preço e ficha técnica nos sites, configuradores e fichas oficiais das marcas; consumo e autonomia elétrica na tabela PBEV 2026 do Inmetro; crash tests nas páginas oficiais do Latin NCAP, Euro NCAP e ANCAP. Dado que nenhuma fonte oficial confirma aparece como "não divulgado" — nada é estimado.</p>
+<p><b>Método:</b> autonomia = tanque × consumo na estrada (Inmetro, gasolina) + autonomia elétrica do Inmetro · revenda = (1 − depreciação anual FIPE)<sup>4</sup> · as notas de segurança, off-road e família são as mesmas do resto do site. Litros de porta-malas não se comparam direto entre marcas (VDA, SAE ou medição própria).</p>`;
+
 /* Helpers de destaque visual */
 const PRICE_LIMIT = 350000;       // R$ 350k
 const LENGTH_LIMIT = 5100;        // 5,1 m
@@ -3046,6 +3444,7 @@ function renderCards() {
           </div>
 
           <div class="chips-row">
+            ${SELECAO.includes(c.id) ? `<span class="chip-mini sel-chip" data-tip="Está na Minha seleção (finalistas)">★ Seleção</span>` : ''}
             <span class="chip-mini" data-tip="${escapeAttr(getTipText(c,'tracao'))}">${c.tracao}</span>
             <span class="chip-mini" data-tip="${escapeAttr(getTipText(c,'cambio'))}">${c.cambio}</span>
             ${c.phev ? `<span class="chip-mini brand" data-tip="${escapeAttr(getTipText(c,'phev'))}">PHEV</span>` : ''}
@@ -3703,6 +4102,384 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") { closeSpotlight(); }
   else if (e.key === "ArrowLeft")  { navSpotlight(-1); }
   else if (e.key === "ArrowRight") { navSpotlight(1); }
+});
+
+/* ====== Minha seleção: tabela resumida + galeria/ficha por carro ====== */
+const ADAS_TODOS = ["AEB", "ACC", "LKA", "BSM", "RCTA", "360°", "DAA", "TSR"];
+const fmtBRL = (n) => "R$ " + Math.round(n).toLocaleString("pt-BR");
+const fmtM = (mm) => (mm / 1000).toFixed(2).replace(".", ",");
+const fmtMil = (n) => Math.round(n).toLocaleString("pt-BR");
+
+function selCars() { return SELECAO.map(id => cars.find(c => c.id === id)).filter(Boolean); }
+function selNome(c) { return SELECAO_DATA[c.id]?.curto || getModel(c); }
+// Consumo Inmetro a partir do texto do card: elétrico (km/le) e combustão cidade/estrada (km/l)
+function consumoPartes(c) {
+  const s = c.consumo || "";
+  const el = s.match(/([\d,]+)\s*km\/le/);
+  const cb = s.match(/([\d,]+)\s*\/\s*([\d,]+)\s*km\/l\b/);
+  const n = (x) => parseFloat(x.replace(",", "."));
+  return { eletrico: el ? n(el[1]) : null, cidade: cb ? n(cb[1]) : null, estrada: cb ? n(cb[2]) : null };
+}
+function autonomiaEletrica(c) {
+  const m = (c.autonomia || "").match(/\((\d+)\s*km\s*elétr/);
+  return m ? +m[1] : 0;
+}
+function revendaPct(c) {
+  const t = c.depreciacao?.taxa;
+  return t == null ? null : Math.round(Math.pow(1 - t / 100, FAM_YEARS) * 100);
+}
+
+const SEL_GRUPOS = [
+  { id: "preco",  label: "💰 Preço e revenda" },
+  { id: "espaco", label: "👨‍👩‍👦‍👦 Espaço e família" },
+  { id: "desemp", label: "⚡ Desempenho" },
+  { id: "econ",   label: "⛽ Economia" },
+  { id: "seg",    label: "🛡️ Segurança" },
+];
+// melhor: "max" | "min" — destaca o melhor (verde) e o pior (vermelho) de cada linha
+const SEL_LINHAS = [
+  { grupo: "preco", label: "Preço", hint: "menor é melhor", melhor: "min",
+    tip: "Preço público sugerido pelo fabricante (out/2026), sem opcionais, frete ou promoção",
+    val: c => c.preco,
+    cell: c => ({ v: fmtBRL(c.preco), sub: c.preco > PRICE_LIMIT ? "acima do teto de R$ 350k" : "dentro do teto de R$ 350k" }) },
+  { grupo: "preco", label: "Revenda em 4 anos", hint: "maior é melhor", melhor: "max",
+    tip: "Quanto do preço volta ao vender em ~4 anos, pela depreciação anual da Tabela FIPE (a fonte de cada carro aparece ao passar o mouse no valor)",
+    val: c => revendaPct(c),
+    cell: c => {
+      const p = revendaPct(c);
+      if (p == null) return { v: "n/d", sub: "sem histórico FIPE" };
+      return { v: `≈ ${p}%`, sub: `≈ R$ ${Math.round(c.preco * p / 100000)}k de volta · −${fmtBR(c.depreciacao.taxa)}%/ano`, title: `Fonte: ${c.depreciacao.fonte}` };
+    } },
+  { grupo: "preco", label: "Garantia", hint: "maior é melhor", melhor: "max",
+    tip: "Garantia de fábrica do carro (e da bateria de alta tensão, nos PHEV)",
+    val: c => parseNum(c.garantia),
+    cell: c => {
+      const [carro, ...resto] = c.garantia.split(" / ");
+      return { v: carro, sub: resto.join(" · ") || "sem bateria de alta tensão" };
+    } },
+
+  { grupo: "espaco", label: "Serve pra família?", hint: "checklist da família", melhor: "max",
+    tip: "Resultado do checklist \"Serve pra nossa família?\": 2 bebês-conforto, carrinho duplo, segurança mínima, revenda, cidade de SP, viagem mensal e adulto entre as cadeirinhas",
+    val: c => c.familia.essencial ? c.familia.pct : 0,
+    cell: c => {
+      const f = c.familia, d = SELECAO_DATA[c.id] || {};
+      return { v: f.essencial ? `✓ Serve · ${f.pct}` : "✕ Não serve", t: true,
+               sub: `${f.okCount}/${f.checks.length} requisitos ok` + (d.lugares ? ` · ${d.lugares} lugares` : ""), title: famTip(c) };
+    } },
+  { grupo: "espaco", label: "Carrinho duplo", hint: "porta-malas ou caçamba", melhor: "max",
+    tip: "Se o carrinho duplo dobrado vai protegido (porta-malas ou caçamba coberta). Os litros não se comparam direto: cada marca mede de um jeito",
+    val: c => ({ ok: 2, apertado: 1, nao: 0 })[FAMILIA_DATA[c.id]?.carrinho] ?? null,
+    cell: c => {
+      const f = FAMILIA_DATA[c.id] || {};
+      const v = f.carrinho === "ok" ? "✓ Cabe" : f.carrinho === "apertado" ? "! Apertado" : "✕ Não cabe";
+      return { v, t: true, sub: `${c.bagagem} ${c.bagagemNota}`, title: f.carrinhoNota || "" };
+    } },
+  { grupo: "espaco", label: "Comprimento", hint: "menor = estaciona mais fácil", melhor: "min",
+    tip: "Comprimento total. Em SP, até ~5,11 m cabe sem sofrimento em vaga de prédio e de shopping",
+    val: c => c.comprimento,
+    cell: c => {
+      const d = SELECAO_DATA[c.id] || {};
+      return { v: `${fmtM(c.comprimento)} m`, sub: d.entreEixos ? `entre-eixos ${fmtM(d.entreEixos)} m` : "" };
+    } },
+
+  { grupo: "desemp", label: "Potência", hint: "maior é melhor", melhor: "max",
+    tip: "Potência máxima. Nos PHEV, a combinada (motor a combustão + elétricos)",
+    val: c => c.cv,
+    cell: c => ({ v: `${c.cv} cv`, sub: `torque ${c.torque}` }) },
+  { grupo: "desemp", label: "0 a 100 km/h", hint: "menor é melhor", melhor: "min",
+    tip: "Aceleração de 0 a 100 km/h informada pelo fabricante (ou teste de revista, quando a marca não divulga)",
+    val: c => PERF_DATA[c.id]?.tempo0_100 ?? null,
+    cell: c => {
+      const t = PERF_DATA[c.id]?.tempo0_100;
+      return t == null ? { v: "n/d" } : { v: `${fmtBR(t)} s`, sub: SELECAO_DATA[c.id]?.zero100Fonte || "" };
+    } },
+  { grupo: "desemp", label: "Tração e off-road", hint: "nota off-road · maior é melhor", melhor: "max",
+    tip: "Tipo de tração e a nota off-road 0-100 do site (reduzida, bloqueios, chassi, ângulos, vão livre e vau)",
+    val: c => c.notas.offroad,
+    cell: c => ({ v: c.tracao, t: true, sub: `off-road ${c.notas.offroad}/100` }) },
+
+  { grupo: "econ", label: "Consumo na cidade", hint: "com gasolina · maior é melhor", melhor: "max",
+    tip: "Inmetro (PBEV 2026), ciclo cidade, com gasolina. Nos PHEV é o modo híbrido com a bateria vazia — carregando na tomada, o gasto cai bastante (km/le)",
+    val: c => consumoPartes(c).cidade,
+    cell: c => {
+      const k = consumoPartes(c);
+      return { v: k.cidade == null ? "n/d" : `${fmtBR(k.cidade)} km/l`, sub: k.eletrico ? `na tomada: ${fmtBR(k.eletrico)} km/le` : "não tem modo elétrico" };
+    } },
+  { grupo: "econ", label: "Autonomia", hint: "maior é melhor", melhor: "max",
+    tip: "Tanque cheio × consumo na estrada (Inmetro) + autonomia elétrica do Inmetro, nos PHEV",
+    val: c => c.autonomiaKm,
+    cell: c => {
+      const e = autonomiaEletrica(c);
+      return { v: `${c.autonomiaKm} km`, sub: e ? `${e} km só na bateria` : "só no tanque" };
+    } },
+
+  { grupo: "seg", label: "Segurança", hint: "nota 0-100 do site", melhor: "max",
+    tip: "Nota do site: crash test (NCAP) quando existe, número de airbags, assistentes de fábrica e estrutura",
+    val: c => c.seguranca.nota,
+    cell: c => {
+      const d = SELECAO_DATA[c.id] || {};
+      return { v: `${c.seguranca.nota}/100`, sub: `${c.seguranca.airbags} airbags · ${d.ncapCurto || c.seguranca.ncap}`, title: `${c.seguranca.ncap}\n${c.seguranca.destaques}` };
+    } },
+  { grupo: "seg", label: "Assistentes (ADAS)", hint: "de série · maior é melhor", melhor: "max",
+    tip: "Quantos dos 8 assistentes de condução do comparativo vêm de série: AEB, ACC, LKA, BSM, RCTA, 360°, DAA e TSR (veja o glossário abaixo)",
+    val: c => c.seguranca.adas.length,
+    cell: c => {
+      const falta = ADAS_TODOS.filter(a => !c.seguranca.adas.includes(a));
+      return { v: `${c.seguranca.adas.length} de ${ADAS_TODOS.length}`, sub: falta.length ? `sem ${falta.join(", ")}` : "todos os 8", title: c.seguranca.adas.join(" · ") };
+    } },
+];
+
+const SEL_GLOSSARIO = [
+  ["PHEV", "Híbrido plug-in: motor a combustão + motor elétrico com bateria grande, que carrega na tomada. Anda dezenas de km só na eletricidade; com a bateria vazia, vira um híbrido comum."],
+  ["MHEV", "Híbrido leve (48V): um motor elétrico pequeno ajuda o motor a combustão, mas o carro nunca anda só na eletricidade (ex.: Toro Ultra)."],
+  ["km/le", "Quilômetros por litro equivalente de gasolina — como o Inmetro compara o gasto de energia elétrica com o de combustível."],
+  ["ADAS", "Assistentes de condução. AEB: freia sozinho pra evitar batida · ACC: piloto automático que mantém distância · LKA: mantém na faixa · BSM: alerta de ponto cego · RCTA: alerta de tráfego cruzado na ré · 360°: câmeras em volta · DAA: alerta de fadiga · TSR: lê as placas."],
+  ["NCAP", "Crash tests independentes (Latin NCAP, Euro NCAP, ANCAP), de 0 a 5★. Protocolos e anos diferentes não se comparam direto, e o teste de um carro de fora vale como referência, não como garantia."],
+  ["ISOFIX", "Engates no banco pra prender a cadeirinha direto na estrutura do carro — o jeito mais seguro e fácil de instalar. O top tether é a cinta de cima, que evita o tombo pra frente."],
+  ["4x4 c/ reduzida", "Tração nas 4 rodas com uma relação extra curta (low) pra subir e descer trilha pesada devagar e com muita força."],
+  ["Bloqueio de diferencial", "Trava que faz as rodas do mesmo eixo girarem juntas — tira o carro do atoleiro quando uma roda perde aderência."],
+  ["DHT", "Câmbio híbrido dedicado: integra os motores elétricos e tem poucas marchas (às vezes nenhuma), no lugar de um câmbio automático tradicional."],
+];
+
+// Fotos da galeria: vêm de window.SELECAO_FOTOS (script no fim da página); sem elas, usa a foto do card
+function selFotos(c) {
+  const lista = (window.SELECAO_FOTOS && window.SELECAO_FOTOS[c.id]) || [];
+  const fotos = lista.map(f => (f.src === "card" ? { ...f, src: c.img } : f));
+  return fotos.length ? fotos : [{ src: c.img, vista: "Frente", credito: "" }];
+}
+
+function selFicha(c) {
+  const d = SELECAO_DATA[c.id] || {};
+  const o = OFFROAD_DATA[c.id] || {};
+  const f = FAMILIA_DATA[c.id] || {};
+  const p = PERF_DATA[c.id] || {};
+  const dims = d.largura && d.altura
+    ? `${fmtM(c.comprimento)} × ${fmtM(d.largura)} × ${fmtM(d.altura)} m` : `${fmtM(c.comprimento)} m de comprimento`;
+  return [
+    ["Motor", c.motor],
+    ["Potência · torque", `${c.cv} cv · ${c.torque}`],
+    ["Câmbio", c.cambio],
+    ["Tração", c.tracao],
+    ["0 a 100 km/h", p.tempo0_100 == null ? null : `${fmtBR(p.tempo0_100)} s`],
+    ["Consumo (Inmetro)", c.consumo],
+    ["Autonomia", c.autonomia],
+    ["Tanque · bateria", c.tanque],
+    ...(c.phev ? [["Recarga", d.recarga ?? null]] : []),
+    [d.cacamba ? "Caçamba" : "Porta-malas", `${c.bagagem} ${c.bagagemNota}`],
+    ...(d.cargaUtil ? [["Carga útil", `${fmtMil(d.cargaUtil)} kg`]] : []),
+    ["C × L × A", dims],
+    ["Entre-eixos", d.entreEixos ? `${fmtM(d.entreEixos)} m` : null],
+    ["Vão livre", o.vao == null ? null : `${o.vao} mm`],
+    ["Peso", `${fmtMil(c.peso)} kg`],
+    ["Reboque", d.reboque ?? null],
+    ["Lugares · ISOFIX", `${d.lugares ? d.lugares + " lugares · " : ""}${d.isofix || (f.isofix ? `${f.isofix} na 2ª fileira` : "n/d")}`],
+    ["Airbags", `${c.seguranca.airbags}${d.airbagsDesc ? ` (${d.airbagsDesc})` : ""}`],
+    ["Crash test", c.seguranca.ncap],
+    ["ADAS de série", c.seguranca.adas.length ? c.seguranca.adas.join(" · ") : null],
+    ["Garantia", c.garantia],
+  ];
+}
+
+let selAtivo = SELECAO[0];
+
+function renderSelTable() {
+  const lista = selCars();
+  const head = `<thead><tr><th class="sel-corner" scope="col">Critério</th>${lista.map(c => `
+    <th scope="col"><button type="button" class="sel-car-head" data-sel="${c.id}" aria-label="Ver fotos e ficha do ${c.nome}">
+      <span class="sel-car-thumb" style="background-image:url('${c.img}')"></span>
+      <span class="sel-car-brand">${getBrand(c)}</span>
+      <span class="sel-car-name">${selNome(c)}</span>
+      <span class="sel-car-ver">${SELECAO_DATA[c.id]?.versaoCurta || c.versao}</span>
+      <span class="sel-car-more">Fotos e ficha ↓</span>
+    </button></th>`).join("")}</tr></thead>`;
+
+  const body = SEL_GRUPOS.map(g => {
+    const linhas = SEL_LINHAS.filter(l => l.grupo === g.id);
+    return `<tr class="sel-group"><th colspan="${lista.length + 1}" scope="colgroup"><span>${g.label}</span></th></tr>` +
+      linhas.map(l => {
+        const vals = lista.map(c => l.val(c));
+        const nums = vals.filter(v => typeof v === "number");
+        const hi = Math.max(...nums), lo = Math.min(...nums);
+        const best = l.melhor === "min" ? lo : hi, worst = l.melhor === "min" ? hi : lo;
+        const diff = nums.length > 1 && hi !== lo;
+        const cells = lista.map((c, i) => {
+          const v = vals[i], cell = l.cell(c);
+          const cls = !diff || typeof v !== "number" ? "" : v === best ? "is-best" : v === worst ? "is-worst" : "";
+          const mark = cls === "is-best" ? '<span class="sel-mark best" aria-label="melhor da linha">★</span>'
+                     : cls === "is-worst" ? '<span class="sel-mark worst" aria-label="pior da linha">▼</span>' : "";
+          const title = cell.title ? ` title="${escapeAttr(cell.title)}"` : "";
+          return `<td class="${cls}"${title}><span class="${cell.t ? "sel-t" : "sel-v"}">${cell.v}</span>${mark}${cell.sub ? `<small>${cell.sub}</small>` : ""}</td>`;
+        }).join("");
+        return `<tr><th scope="row" class="sel-crit"><span class="sel-tip" tabindex="0" data-tip="${escapeAttr(l.tip)}">${l.label}</span><small>${l.hint}</small></th>${cells}</tr>`;
+      }).join("");
+  }).join("");
+
+  const verdict = `<tr class="sel-verdict"><th scope="row" class="sel-crit">🏆 Melhor para</th>${lista.map(c =>
+    `<td>${SELECAO_DATA[c.id]?.melhorPara || "—"}</td>`).join("")}</tr>`;
+
+  document.getElementById("sel-table").innerHTML =
+    `<colgroup><col class="c-crit">${lista.map(() => "<col>").join("")}</colgroup>${head}<tbody>${body}${verdict}</tbody>`;
+}
+
+function renderSelPicker() {
+  document.getElementById("sel-picker").innerHTML = selCars().map(c => {
+    const on = c.id === selAtivo;
+    return `<button type="button" role="tab" class="sel-pick${on ? " is-active" : ""}" id="sel-tab-${c.id}" data-sel="${c.id}"
+        aria-selected="${on}" aria-controls="sel-detail-${c.id}" tabindex="${on ? 0 : -1}">
+      <span class="sel-pick-img" style="background-image:url('${c.img}')"></span>
+      <span class="sel-pick-txt"><b>${selNome(c)}</b><small>${c.precoFmt}</small></span>
+    </button>`;
+  }).join("");
+}
+
+function selDetailHTML(c) {
+  const d = SELECAO_DATA[c.id] || {};
+  const fotos = selFotos(c);
+  const multi = fotos.length > 1;
+  const slides = fotos.map((f, i) => {
+    const cred = f.credito ? `<span class="cred">Foto: ${f.url ? `<a href="${f.url}" target="_blank" rel="noopener">${f.credito}</a>` : f.credito}</span>` : "";
+    return `<figure class="sel-slide">
+        <img src="${f.src}" alt="${c.nome}: ${f.vista.toLowerCase()}"${f.contain ? ' class="contain"' : ""} decoding="async"${i ? ' loading="lazy"' : ""} />
+        <figcaption><b>${f.vista}</b>${f.legenda || ""}${cred}</figcaption>
+      </figure>`;
+  }).join("");
+  const thumbs = multi ? `<div class="sel-thumbs" style="grid-template-columns:repeat(${fotos.length}, minmax(0, 1fr))">${fotos.map((f, i) =>
+    `<button type="button" class="sel-thumb${i ? "" : " is-active"}" data-i="${i}" aria-label="Ver foto ${i + 1}: ${f.vista}"><img src="${f.src}" alt="" decoding="async" /><span>${f.vista}</span></button>`).join("")}</div>` : "";
+  const ficha = selFicha(c).map(([k, v]) =>
+    `<div><dt>${k}</dt><dd${v == null ? ' class="nd"' : ""}>${v ?? "não divulgado"}</dd></div>`).join("");
+  return `<article class="sel-detail" id="sel-detail-${c.id}" role="tabpanel" aria-labelledby="sel-tab-${c.id}"${c.id === selAtivo ? "" : " hidden"}>
+    <div class="sel-gallery">
+      <div class="sel-stage-wrap">
+        <div class="sel-stage" tabindex="0" aria-label="Fotos do ${c.nome} — use as setas do teclado ou arraste">${slides}</div>
+        ${multi ? '<button type="button" class="sel-gnav prev" data-g="-1" aria-label="Foto anterior">‹</button><button type="button" class="sel-gnav next" data-g="1" aria-label="Próxima foto">›</button>' : ""}
+        <span class="sel-count-badge"><b>1</b> / ${fotos.length}</span>
+      </div>
+      ${thumbs}
+    </div>
+    <div class="sel-info">
+      <header class="sl-data-head">
+        <div class="sl-brand">${getBrand(c)}</div>
+        <h3 class="sl-model">${selNome(c)}</h3>
+        <div class="sl-version">${c.versao}<span class="badge ${c.badge}">${c.tipo}</span></div>
+      </header>
+      <div class="sel-price-row">
+        <span class="sel-price">${fmtBRL(c.preco)}</span>
+        ${d.melhorPara ? `<span class="sel-best-for">🏆 ${d.melhorPara}</span>` : ""}
+      </div>
+      <dl class="sel-ficha">${ficha}</dl>
+      ${d.itens?.length ? `<div class="sel-itens"><h4>Itens de série que importam</h4><ul>${d.itens.map(t => `<li>${t}</li>`).join("")}</ul></div>` : ""}
+      <div class="sel-actions">
+        <button type="button" class="btn primary" data-spot="${c.id}">Prós, contras e família →</button>
+        <a class="btn" href="${c.urlOficial}" target="_blank" rel="noopener noreferrer">🔗 Site oficial</a>
+      </div>
+    </div>
+  </article>`;
+}
+
+function wireSelGallery(g) {
+  const stage = g.querySelector(".sel-stage");
+  const thumbs = [...g.querySelectorAll(".sel-thumb")];
+  const count = g.querySelector(".sel-count-badge b");
+  const prev = g.querySelector(".sel-gnav.prev"), next = g.querySelector(".sel-gnav.next");
+  const n = stage.children.length;
+  const idx = () => Math.round(stage.scrollLeft / Math.max(1, stage.clientWidth));
+  const go = (i) => stage.scrollTo({ left: Math.max(0, Math.min(n - 1, i)) * stage.clientWidth, behavior: "smooth" });
+  const sync = () => {
+    const i = Math.max(0, Math.min(n - 1, idx()));
+    thumbs.forEach((t, k) => t.classList.toggle("is-active", k === i));
+    if (count) count.textContent = i + 1;
+    if (prev) prev.disabled = i === 0;
+    if (next) next.disabled = i === n - 1;
+  };
+  let raf = 0;
+  stage.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }, { passive: true });
+  thumbs.forEach((t, k) => t.addEventListener("click", () => go(k)));
+  g.querySelectorAll(".sel-gnav").forEach(b => b.addEventListener("click", () => go(idx() + Number(b.dataset.g))));
+  stage.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") { e.preventDefault(); go(idx() - 1); }
+    else if (e.key === "ArrowRight") { e.preventDefault(); go(idx() + 1); }
+  });
+  g._selSync = sync;
+  sync();
+}
+
+function renderSelDetails() {
+  const el = document.getElementById("sel-details");
+  el.innerHTML = selCars().map(selDetailHTML).join("");
+  el.querySelectorAll(".sel-gallery").forEach(wireSelGallery);
+}
+
+function selectSel(id, scroll) {
+  if (!SELECAO.includes(id)) return;
+  selAtivo = id;
+  document.querySelectorAll("#sel-picker .sel-pick").forEach(b => {
+    const on = b.dataset.sel === id;
+    b.classList.toggle("is-active", on);
+    b.setAttribute("aria-selected", on ? "true" : "false");
+    b.tabIndex = on ? 0 : -1;
+  });
+  document.querySelectorAll("#sel-details .sel-detail").forEach(p => {
+    const on = p.id === `sel-detail-${id}`;
+    p.hidden = !on;
+    if (on) {
+      const g = p.querySelector(".sel-gallery");
+      g.querySelector(".sel-stage").scrollLeft = 0;
+      g._selSync?.();
+    }
+  });
+  if (scroll) document.getElementById("sel-picker").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function renderSelGlossario() {
+  document.getElementById("sel-glossario").innerHTML = `<h4>Glossário</h4>` +
+    SEL_GLOSSARIO.map(([t, d]) => `<div><b>${t}</b> — ${d}</div>`).join("");
+}
+
+function renderSelFontes() {
+  const porCarro = selCars().map(c => {
+    const fs = SELECAO_DATA[c.id]?.fontes || [];
+    return fs.length ? `<h5>${c.nome}</h5><ul>${fs.map(f => `<li><a href="${f.url}" target="_blank" rel="noopener">${f.label}</a></li>`).join("")}</ul>` : "";
+  }).join("");
+  document.getElementById("sel-fontes-body").innerHTML = SEL_METODO + porCarro;
+}
+
+function renderSelCallout() {
+  const el = document.getElementById("sel-callout-list");
+  if (el) el.textContent = selCars().map(selNome).join(" · ");
+}
+
+function renderSelecao() {
+  document.getElementById("sel-n").textContent = selCars().length;
+  renderSelCallout();
+  renderSelTable();
+  renderSelPicker();
+  renderSelDetails();
+  renderSelGlossario();
+  renderSelFontes();
+}
+renderSelecao();
+
+document.getElementById("sel-table").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-sel]");
+  if (b) selectSel(b.dataset.sel, true);
+});
+document.getElementById("sel-picker").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-sel]");
+  if (b) selectSel(b.dataset.sel);
+});
+// Teclado nas abas: ← → trocam de carro
+document.getElementById("sel-picker").addEventListener("keydown", (e) => {
+  if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+  const ids = selCars().map(c => c.id);
+  const i = ids.indexOf(selAtivo) + (e.key === "ArrowRight" ? 1 : -1);
+  const id = ids[(i + ids.length) % ids.length];
+  e.preventDefault();
+  selectSel(id);
+  document.getElementById(`sel-tab-${id}`)?.focus();
+});
+document.getElementById("sel-details").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-spot]");
+  if (b) openSpotlight(b.dataset.spot);
 });
 
 /* ====== Init ====== */
