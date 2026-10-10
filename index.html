@@ -4131,7 +4131,7 @@ function revendaPct(c) {
 
 const SEL_GRUPOS = [
   { id: "preco",  label: "💰 Preço e revenda" },
-  { id: "espaco", label: "👨‍👩‍👦‍👦 Espaço e família" },
+  { id: "espaco", label: "👶 Espaço e família" },
   { id: "desemp", label: "⚡ Desempenho" },
   { id: "econ",   label: "⛽ Economia" },
   { id: "seg",    label: "🛡️ Segurança" },
@@ -4155,7 +4155,7 @@ const SEL_LINHAS = [
     val: c => parseNum(c.garantia),
     cell: c => {
       const [carro, ...resto] = c.garantia.split(" / ");
-      return { v: carro, sub: resto.join(" · ") || "sem bateria de alta tensão" };
+      return { v: carro, sub: resto.join(" · ") || SELECAO_DATA[c.id]?.garantiaNota || "" };
     } },
 
   { grupo: "espaco", label: "Serve pra família?", hint: "checklist da família", melhor: "max",
