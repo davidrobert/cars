@@ -2486,7 +2486,7 @@
     <div class="section-head">
       <div>
         <h2>Tabela comparativa completa</h2>
-        <p>Cada linha é um carro. <b>Clique nos cabeçalhos</b> pra ordenar. Verde = melhor da coluna · Vermelho = pior · Vermelho forte = passou do limite (preço &gt; R$ 350k ou comprimento &gt; 5,10 m).</p>
+        <p>Cada linha é um carro. <b>Clique nos cabeçalhos</b> pra ordenar. Verde = melhor da coluna · Vermelho = pior · Vermelho forte = passou do limite (preço &gt; R$ 300k ou comprimento &gt; 5,10 m).</p>
       </div>
     </div>
 
@@ -2724,6 +2724,7 @@ const cars = [
       "Versatilidade: bagageiro de 661 L com 5 lugares",
     ],
     contras: [
+      "R$ 330k — acima do teto de R$ 300k",
       "Consumo alto (8,2 km/l cidade na gasolina, 5,7 no etanol) — pesa rodando muito",
       "Off-road é leve: o 4x4 Low usa a 1ª marcha, sem reduzida mecânica",
       "Caro pelo conjunto vs. SUVs PHEV chineses do mesmo preço",
@@ -2847,6 +2848,7 @@ const cars = [
       "Garantia longa de 5 anos / 8 anos na bateria",
     ],
     contras: [
+      "R$ 350k — acima do teto de R$ 300k (a Hi4-T regular, de R$ 342k, também passa)",
       "Com a bateria descarregada faz só 7,5/7,6 km/l (Inmetro)",
       "Pesado e grande — sofre na cidade e estacionamento",
       "Rede GWM ainda em expansão fora das capitais",
@@ -2930,6 +2932,7 @@ const cars = [
       "5★ no ASEAN NCAP (jan/2026, com o T2 a gasolina)",
     ],
     contras: [
+      "R$ 350k — acima do teto de R$ 300k (a Advance 4x2, de R$ 289,9k, fica dentro)",
       "Sem reduzida nem bloqueio central: o eixo traseiro é só elétrico, sem cardã",
       "Marca nova no Brasil — rede e revenda ainda em formação",
       "Jetour não divulga a potência combinada (os 597 cv são a soma dos motores)",
@@ -2972,7 +2975,7 @@ const cars = [
       "Pacote ADAS e tela 14,6 pol. + Coffee OS 3",
     ],
     contras: [
-      "Caro: R$ 326k, R$ 76k acima do Tiggo 8 Pro PHEV (R$ 250k)",
+      "R$ 326k — acima do teto de R$ 300k e R$ 76k acima do Tiggo 8 Pro PHEV",
       "Porta-malas menor que o H6 PHEV35 (515 L vs 560 L)",
       "Espaço de cabeça atrás reduzido pela linha do teto",
     ],
@@ -3013,7 +3016,7 @@ const cars = [
       "Garantia 5 anos / sistema híbrido 8 anos + recarga DC 30-80% em 26 min",
     ],
     contras: [
-      "R$ 429k — bem acima do limite de R$ 350k",
+      "R$ 429k — bem acima do teto de R$ 300k",
       "5,16 m de comprimento — acima do limite de 5,10 m, sofre em garagem/estacionamento",
       "Porta-malas de só 239 L com os 6 lugares em uso",
       "Sem teste NCAP divulgado e 6 airbags — menos que rivais de luxo",
@@ -3055,7 +3058,7 @@ const cars = [
       "Luxo de série: som Devialet 18 alto-falantes, HUD, telas de 15,6 pol. + 12,3 pol. do passageiro e 11 airbags",
     ],
     contras: [
-      "R$ 449k — o 2º mais caro do grupo, bem acima do limite de R$ 350k",
+      "R$ 449k — o 2º mais caro do grupo, bem acima do teto de R$ 300k",
       "3.055 kg; no modo híbrido faz 8,4/7,9 km/l e só usa gasolina",
       "Porta-malas de só 470 L para 4,92 m de comprimento",
       "Rede Denza ainda pequena: 14 pontos de venda (set/2026)",
@@ -3096,7 +3099,7 @@ const cars = [
       "Garantia de 6 anos / bateria 8 anos (200 mil km)",
     ],
     contras: [
-      "R$ 400k — acima do limite de R$ 350k",
+      "R$ 400k — acima do teto de R$ 300k",
       "Porta-malas de só 270 L com os 7 lugares em uso; 3ª fileira confortável só p/ crianças",
       "2.625 kg; no modo híbrido faz 11,4/10,8 km/l (Inmetro)",
       "Sem teste Latin NCAP nem Euro NCAP",
@@ -3140,7 +3143,7 @@ const cars = [
     contras: [
       "Marca nova no Brasil (desde mai/2025), com ~60 concessionárias",
       "Porta-malas de só 255 L com as 3 fileiras em uso; 3ª fileira se acessa pelo corredor entre as poltronas",
-      "R$ 380k — acima do limite de R$ 350k",
+      "R$ 380k — acima do teto de R$ 300k",
       "2.365 kg, 10,3/10,6 km/l no modo híbrido (Inmetro) e sem teste NCAP",
     ],
   },
@@ -3467,7 +3470,7 @@ Object.assign(SELECAO_DATA, {
 });
 
 /* Helpers de destaque visual */
-const PRICE_LIMIT = 350000;       // R$ 350k
+const PRICE_LIMIT = 300000;       // R$ 300k (teto de orçamento da família)
 const LENGTH_LIMIT = 5100;        // 5,1 m
 function maxCv() { return Math.max(...cars.map(c => c.cv)); }
 
@@ -3848,7 +3851,7 @@ function renderFamilia() {
 
 function carFlags(c) {
   const f = [];
-  if (c.preco > PRICE_LIMIT)        f.push({ kind: "bad",   label: "💸 Preço alto", title: "Acima de R$ 350k (limite definido)" });
+  if (c.preco > PRICE_LIMIT)        f.push({ kind: "bad",   label: "💸 Preço alto", title: "Acima de R$ 300k (teto definido)" });
   if (c.comprimento > LENGTH_LIMIT) f.push({ kind: "bad",   label: "📏 Comprido",   title: "Acima de 5,10 m (limite definido)" });
   if (c.phev)                       f.push({ kind: "good",  label: "🔌 PHEV",       title: "Plug-in híbrido: carrega na tomada e abastece no posto" });
   if (c.bev)                        f.push({ kind: "good",  label: "🔋 Elétrico",   title: "100% elétrico: só carrega na tomada" });
@@ -3985,7 +3988,7 @@ function getTipText(c, key) {
     })(),
     retencao: `Retenção ${dep.score}/100\nDepreciação ~${dep.taxa}% ao ano\nFonte: ${dep.fonte || "—"}\nFórmula: 100 − (taxa × 3,5)\n${pesoTxt('desv')}`,
     pp: `Score final ${(c.score * 10).toFixed(0)}/100\nMédia ponderada (peso/${fmtW(wSum)}):\n• Potência ×${fmtW(w.pot)}\n• Performance ×${fmtW(w.perf)}\n• Segurança ×${fmtW(w.seg)}\n• Autonomia ×${fmtW(w.auto)}\n• Consumo ×${fmtW(w.cons)}\n• Tecnologia ×${fmtW(w.tec)}\n• Off-road ×${fmtW(w.off)}\n• Retenção ×${fmtW(w.desv)}\n• Preço ×${fmtW(w.preco)} (menor preço = mais pontos)\n• Família ×${fmtW(w.fam)} (requisitos da família)`,
-    preco: `${c.precoFmt}\nPreço sugerido ${getBrand(c)} (out/2026, sem opcionais)\n${c.preco > PRICE_LIMIT ? "⚠ Acima do limite de R$ 350k\n" : ""}Normalizado: cheaper = 100, mais caro = 0\n${pesoTxt('preco')}`,
+    preco: `${c.precoFmt}\nPreço sugerido ${getBrand(c)} (out/2026, sem opcionais)\n${c.preco > PRICE_LIMIT ? "⚠ Acima do teto de R$ 300k\n" : ""}Normalizado: cheaper = 100, mais caro = 0\n${pesoTxt('preco')}`,
     performance: (() => {
       const p = PERF_DATA[c.id];
       if (!p) return `Nota ${c.notas.performance}/100\n${pesoTxt('perf')}`;
@@ -4765,9 +4768,12 @@ const SEL_GRUPOS = [
 // melhor: "max" | "min" — destaca o melhor (verde) e o pior (vermelho) de cada linha
 const SEL_LINHAS = [
   { grupo: "preco", label: "Preço", hint: "menor é melhor", melhor: "min",
-    tip: "Preço público sugerido pelo fabricante (out/2026), sem opcionais, frete ou promoção",
+    tip: `Preço público sugerido pelo fabricante (out/2026), sem opcionais, frete ou promoção. Teto de orçamento: R$ ${PRICE_LIMIT / 1000} mil`,
     val: c => c.preco,
-    cell: c => ({ v: fmtBRL(c.preco), sub: c.preco > PRICE_LIMIT ? "acima do teto de R$ 350k" : c.preco === PRICE_LIMIT ? "no limite do teto de R$ 350k" : "dentro do teto de R$ 350k" }),
+    cell: c => {
+      const teto = `R$ ${PRICE_LIMIT / 1000}k`;
+      return { v: fmtBRL(c.preco), sub: c.preco > PRICE_LIMIT ? `acima do teto de ${teto}` : c.preco === PRICE_LIMIT ? `no limite do teto de ${teto}` : `dentro do teto de ${teto}` };
+    },
     cellM: c => ({ v: selPrecoK(c), sub: Math.round(c.preco).toLocaleString("pt-BR") }) },
   { grupo: "preco", label: "Revenda em 4 anos", hint: "maior é melhor", melhor: "max",
     tip: "Quanto do preço volta ao vender em ~4 anos, pela depreciação anual da Tabela FIPE (a fonte de cada carro aparece ao passar o mouse no valor)",
