@@ -11,9 +11,9 @@ Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparand
 | Fiat Toro Ultra T270 MHEV | Picape híbrida leve (4x2) | R$ 206.490 | 176 cv |
 | Caoa Chery Tiggo 8 Pro PHEV | SUV 7 lug. PHEV | R$ 249.990 | 279 cv |
 | Ram Rampage R/T Flex | Picape compacta 4x4 | R$ 275.990 | 272 cv |
-| Jetour T2 Advance | SUV PHEV | R$ 289.900 | 359 cv (soma dos motores) |
 | GWM Haval H6 GT Flex | SUV coupé PHEV | R$ 326.000 | 393 cv |
 | Jeep Commander Blackhawk Flex | SUV 7 lug. | R$ 329.990 | 272 cv |
+| Jetour T2 XWD 4x4 | SUV PHEV 4x4 | R$ 349.900 | 597 cv (soma dos motores) |
 | GWM Tank 300 Hi4-T TerraForce | SUV off-road PHEV (série especial) | R$ 350.000 | 394 cv |
 | GAC GS9 Ultra | SUV PHEV 6 lug. | R$ 379.990 | 500 cv |
 | BYD Atto 8 | SUV PHEV 7 lug. | R$ 399.990 | 488 cv |
@@ -36,6 +36,6 @@ Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparand
 
 ## Disclaimer
 
-Preços, fichas técnicas e consumos levantados em **outubro/2026** em fontes oficiais: sites, configuradores e fichas técnicas dos fabricantes; consumo e autonomia elétrica da tabela **PBEV 2026 do Inmetro**. A autonomia total é calculada como tanque × consumo na estrada (Inmetro) + autonomia elétrica (PHEV). Confirme tudo na concessionária antes de comprar.
+Preços, fichas técnicas e consumos levantados em **outubro/2026** em fontes oficiais: sites, configuradores e fichas técnicas dos fabricantes; consumo e autonomia elétrica da tabela **PBEV 2026 do Inmetro**; depreciação pela **Tabela FIPE de out/2026**. A autonomia total é calculada como tanque × consumo na estrada (Inmetro) + autonomia elétrica (PHEV). Confirme tudo na concessionária antes de comprar.
 
 Imagens via Wikimedia Commons (CC-BY/CC-BY-SA), sites oficiais e kits de imprensa das marcas — uso ilustrativo. Na Minha seleção, todas as fotos são de divulgação das marcas, com o crédito na legenda.
