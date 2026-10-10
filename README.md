@@ -1,6 +1,6 @@
 # Comparativo de Carros
 
-Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparando 13 modelos do mercado brasileiro para ajudar uma decisão de compra em família.
+Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparando 14 modelos do mercado brasileiro para ajudar uma decisão de compra em família.
 
 🔗 **Versão online:** https://davidrobert.github.io/cars/
 
@@ -10,6 +10,7 @@ Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparand
 |---|---|---|---|
 | Fiat Toro Ultra T270 MHEV | Picape híbrida leve (4x2) | R$ 206.490 | 176 cv |
 | Caoa Chery Tiggo 8 Pro PHEV | SUV 7 lug. PHEV | R$ 249.990 | 279 cv |
+| GWM Haval H7 | SUV PHEV flex 4x4 | R$ 261.000 | 370 cv |
 | Kia Sportage EX Prestige MHEV | SUV híbrido leve | R$ 267.190 | 178 cv |
 | Ram Rampage R/T Flex | Picape compacta 4x4 | R$ 275.990 | 272 cv |
 | GWM Haval H6 GT Flex | SUV coupé PHEV | R$ 326.000 | 393 cv |
@@ -24,7 +25,7 @@ Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparand
 
 ## Funcionalidades
 
-- **Minha seleção** — os finalistas da família (hoje Tiggo 8 Pro PHEV, Rampage R/T, Commander Blackhawk e Tank 300 TerraForce), cada um na versão mais completa à venda. Tem um comparativo resumido com 13 critérios em 5 grupos (preço e revenda, espaço e família, desempenho, economia, segurança), com o melhor e o pior de cada linha destacados e um veredito "melhor para" por carro. No celular ele vira uma grade com os carros lado a lado, sem rolagem lateral. Cada carro tem galeria de 5 fotos oficiais das marcas, com crédito na legenda, e ficha completa conferida em out/2026 (entre-eixos, reboque, ISOFIX, garantia, consumo com etanol, recarga, itens de série). Há também glossário e fontes. Pra mudar a lista, edite o array `SELECAO` no `index.html`
+- **Minha seleção** — os finalistas da família (hoje Tiggo 8 Pro PHEV, Haval H7, Rampage R/T, Commander Blackhawk e Tank 300 TerraForce), cada um na versão mais completa à venda. Tem um comparativo resumido com 13 critérios em 5 grupos (preço e revenda, espaço e família, desempenho, economia, segurança), com o melhor e o pior de cada linha destacados e um veredito "melhor para" por carro. No celular ele vira uma grade com os carros lado a lado, sem rolagem lateral. Cada carro tem galeria de 5 fotos oficiais das marcas, com crédito na legenda, e ficha completa conferida em out/2026 (entre-eixos, reboque, ISOFIX, garantia, consumo com etanol, recarga, itens de série). Há também glossário e fontes. Pra mudar a lista, edite o array `SELECAO` no `index.html`
 - **Celular** — menu "Seções" no topo e painel de pesos (Tuning) começando fechado
 - **Serve pra nossa família?** — checklist por carro com os requisitos da família (2 bebês-conforto simultâneos, carrinho duplo no porta-malas/caçamba coberta, segurança mínima, revenda em 4 anos, uso em SP, viagem mensal e adulto entre as crianças), com veredito, selo no card e bloco no detalhe do carro. Vira a métrica **Família** do score, com peso máximo no preset Família
 - Cards com specs prioritárias (preço, potência, porta-malas, comprimento, autonomia)
