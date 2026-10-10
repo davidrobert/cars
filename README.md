@@ -23,7 +23,8 @@ Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparand
 
 ## Funcionalidades
 
-- **Minha seleção** — os finalistas da família (hoje Tiggo 8 Pro PHEV, Rampage R/T, Commander Blackhawk, Haval H6 GT e Tank 300 TerraForce), cada um na versão mais completa à venda. Tem uma tabela resumida com 13 critérios em 5 grupos (preço e revenda, espaço e família, desempenho, economia, segurança), com o melhor e o pior de cada linha destacados e um veredito "melhor para" por carro. Cada carro tem galeria de 4–5 fotos, com crédito na legenda, e ficha completa conferida em out/2026 (entre-eixos, reboque, ISOFIX, garantia, consumo com etanol, recarga, itens de série). Há também glossário e fontes. Pra mudar a lista, edite o array `SELECAO` no `index.html`
+- **Minha seleção** — os finalistas da família (hoje Tiggo 8 Pro PHEV, Rampage R/T, Commander Blackhawk e Tank 300 TerraForce), cada um na versão mais completa à venda. Tem um comparativo resumido com 13 critérios em 5 grupos (preço e revenda, espaço e família, desempenho, economia, segurança), com o melhor e o pior de cada linha destacados e um veredito "melhor para" por carro. No celular ele vira uma grade com os carros lado a lado, sem rolagem lateral. Cada carro tem galeria de 5 fotos oficiais das marcas, com crédito na legenda, e ficha completa conferida em out/2026 (entre-eixos, reboque, ISOFIX, garantia, consumo com etanol, recarga, itens de série). Há também glossário e fontes. Pra mudar a lista, edite o array `SELECAO` no `index.html`
+- **Celular** — menu "Seções" no topo e painel de pesos (Tuning) começando fechado
 - **Serve pra nossa família?** — checklist por carro com os requisitos da família (2 bebês-conforto simultâneos, carrinho duplo no porta-malas/caçamba coberta, segurança mínima, revenda em 4 anos, uso em SP, viagem mensal e adulto entre as crianças), com veredito, selo no card e bloco no detalhe do carro. Vira a métrica **Família** do score, com peso máximo no preset Família
 - Cards com specs prioritárias (preço, potência, porta-malas, comprimento, autonomia)
 - Filtros por cenário (família, off-road, economia, viagem, etc.)
@@ -37,4 +38,4 @@ Landing page autocontida (HTML + CSS + JS, com fotos inline em base64) comparand
 
 Preços, fichas técnicas e consumos levantados em **outubro/2026** em fontes oficiais: sites, configuradores e fichas técnicas dos fabricantes; consumo e autonomia elétrica da tabela **PBEV 2026 do Inmetro**. A autonomia total é calculada como tanque × consumo na estrada (Inmetro) + autonomia elétrica (PHEV). Confirme tudo na concessionária antes de comprar.
 
-Imagens via Wikimedia Commons (CC-BY/CC-BY-SA), sites oficiais e kits de imprensa das marcas — uso ilustrativo. Na Minha seleção, o autor e a licença de cada foto aparecem na legenda.
+Imagens via Wikimedia Commons (CC-BY/CC-BY-SA), sites oficiais e kits de imprensa das marcas — uso ilustrativo. Na Minha seleção, todas as fotos são de divulgação das marcas, com o crédito na legenda.
