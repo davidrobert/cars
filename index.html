@@ -2393,7 +2393,7 @@
         <h4>Carga, reboque, trabalho</h4>
         <p>Caçamba, capacidade de tração, durabilidade mecânica.</p>
         <span class="winner">🏆 Ram Rampage R/T</span>
-        <div class="alt">Caçamba de 980 L, 750 kg de carga útil e 4x4 c/ reduzida. Vice: Toro Ultra (937 L, 670 kg, capota rígida elétrica de série)</div>
+        <div class="alt">Caçamba de 980 L, 750 kg de carga útil e 4x4 c/ reduzida. Vice: Toro Ultra (937 L, 670 kg, capota rígida de série)</div>
       </div>
       <div class="scene">
         <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 21V8l4-3 4 3v13M13 21V11l4-2 4 2v10"/></svg></div>
@@ -2524,7 +2524,7 @@ const cars = [
     notas: { economia: 78, conforto: 72, espaco: 75, offroad: 88, performance: 60, urbano: 45, tecnologia: 65 },
     pros: [
       "Híbrido leve 48V: 10,5/10,7 km/l na gasolina (Inmetro), classe A entre as picapes",
-      "Caçamba de 937 L com capota rígida elétrica de série",
+      "Caçamba de 937 L com capota rígida de série",
       "Altura do solo de 223 mm e ângulos de 25°/29°, com controle de descida e TC+",
       "Marca consolidada, rede ampla, revenda forte",
       "Itens de série: santo antônio integrado, carregador por indução, ponto cego e tráfego cruzado",
@@ -2595,7 +2595,7 @@ const cars = [
     bagagemNota: "porta-malas",
     comprimento: 4785,
     peso: 2127,
-    seguranca: { nota: 55, airbags: 4, ncap: "1★ Euro NCAP 2018 (expirado) · sem Latin NCAP", adas: ["AEB","ACC","BSM","RCTA"], destaques: "Robustez off-road; tem AEB e ACC, mas sem assistente de faixa (não é ADAS L2) e crash test fraco" },
+    seguranca: { nota: 60, airbags: 6, ncap: "1★ Euro NCAP 2018 e 3★ ANCAP 2019 (ambos expirados) · sem Latin NCAP", adas: ["AEB","ACC","BSM","RCTA"], destaques: "6 airbags (frontais, laterais e de cortina); tem AEB e ACC, mas sem assistente de faixa (não é ADAS L2) e crash test fraco" },
     urlOficial: "https://www.jeep.com.br/wrangler.html",
     garantia: "3 anos",
     tanque: "81 L",
@@ -2760,7 +2760,7 @@ const cars = [
     bagagemNota: "porta-malas (1.494 L rebatido)",
     comprimento: 4785,
     peso: 2362,
-    seguranca: { nota: 84, airbags: 6, ncap: "Sem Latin NCAP · 5★ ASEAN NCAP (jan/2026, T2 2.0 a gasolina; o PHEV não foi testado)", adas: ["AEB","ACC","LKA","BSM","RCTA","360°"], destaques: "6 airbags, ADAS com ACC/LKA/AEB e câmera 540°; 5★ no ASEAN NCAP com o T2 a gasolina" },
+    seguranca: { nota: 84, airbags: 6, ncap: "Sem Latin NCAP · 5★ ASEAN NCAP (jan/2026, T2 2.0 a gasolina; o PHEV não foi testado)", adas: ["AEB","ACC","LKA","BSM","RCTA","360°"], destaques: "ADAS com ACC/LKA/AEB, câmera 540° e sensores de estacionamento dianteiros e traseiros" },
     urlOficial: "https://jetourbr.com/carro/t2-4x4/",
     garantia: "7 anos / bateria 8 anos",
     tanque: "70 L + 43,2 kWh",
@@ -2896,7 +2896,7 @@ const cars = [
     notas: { offroad: 0, performance: 0, tecnologia: 0 },
     pros: [
       "677 cv e 77,5 kgfm combinados, 0-100 em 4,8s",
-      "Off-road sério: chassi body-on-frame, 2 bloqueios de diferencial, modo 4L e vau de 700 mm",
+      "Off-road sério: chassi body-on-frame, 2 bloqueios de diferencial, modo 4L e vau de 790 mm",
       "Suspensão hidráulica DiSus-P: até 310 mm do solo e ângulos de 39°/35°",
       "74 km elétricos (Inmetro), recarga DC até 100 kW, V2L e reboque de 2.500 kg",
       "Luxo de série: som Devialet 18 alto-falantes, HUD, telas de 15,6 pol. + 12,3 pol. do passageiro e 11 airbags",
@@ -3233,16 +3233,16 @@ const DESVAL_DATA = {
    vao:       altura do solo (mm)
    vau:       máxima travessia d'água segura (mm) */
 const OFFROAD_DATA = {
-  toro:      { tracao: "fwd",               chassi: "monobloco-reforcado",   bloqueios: 0, sway: 0, ataque: 25, saida: 29, vao: 223, vau: 500 },
+  toro:      { tracao: "fwd",               chassi: "monobloco-reforcado",   bloqueios: 0, sway: 0, ataque: 25, saida: 29, vao: 223, vau: 480 },  // vau: manual 2026-2027 ("no máximo 48 cm", no capítulo fora de estrada)
   commander: { tracao: "awd-inteligente",   chassi: "monobloco",             bloqueios: 0, sway: 0, ataque: 22.4, saida: 25.4, vao: 202, vau: 480 },  // vau: manual 2026-2027 (água parada)
-  wrangler:  { tracao: "4x4-reduzida-low",  chassi: "body-on-frame",         bloqueios: 2, sway: 1, ataque: 43.9, saida: 37, vao: 274, vau: 760 },
+  wrangler:  { tracao: "4x4-reduzida-low",  chassi: "body-on-frame",         bloqueios: 2, sway: 1, ataque: 43.9, saida: 37, vao: 268, vau: 760 },  // vão: ficha Jeep 2026; vau: a Jeep BR não publica (lançamento de 2020: 76 cm; ficha dos EUA: 762 mm, 800 mm c/ pneus LT285)
   tiggo8:    { tracao: "fwd",               chassi: "monobloco",             bloqueios: 0, sway: 0, ataque: 20.1, saida: 23.5, vao: 142, vau: null },  // Caoa Chery não divulga o vau
   tank:      { tracao: "4x4-reduzida-low",  chassi: "body-on-frame",         bloqueios: 2, central: 1, sway: 0, ataque: 32, saida: 33, vao: 222, vau: 700 },  // + bloqueio central (ficha 2027)
   rampage:   { tracao: "4x4-reduzida",      chassi: "monobloco",             bloqueios: 0, sway: 0, ataque: 26.2, saida: 24.4, vao: 222, vau: 480 },  // vau: manual 2026-2027 (água parada)
   t2:        { tracao: "awd-inteligente",   chassi: "monobloco",             bloqueios: 1, sway: 0, ataque: 28, saida: 30, vao: 205, vau: 700 },  // XWD: ficha 2027 (o manual diz 170 mm de vão e 28° de saída, e não dá número de vau)
   h6gt:      { tracao: "awd-inteligente",   chassi: "monobloco",             bloqueios: 0, sway: 0, ataque: 22, saida: 25, vao: 198, vau: null },  // GWM Brasil não divulga o vau
   wey07:     { tracao: "awd-inteligente",   chassi: "monobloco",             bloqueios: 0, sway: 0, ataque: null, saida: null, vao: 180, vau: null },  // GWM não divulga ângulos nem vau no BR
-  b5:        { tracao: "awd-inteligente",   chassi: "body-on-frame",         bloqueios: 2, sway: 0, ataque: 39, saida: 35, vao: 310, vau: 700 },  // GS c/ suspensão DiSus-P elevada (altura normal: 35°/32°/220 mm); modo 4L sem reduzida mecânica
+  b5:        { tracao: "awd-inteligente",   chassi: "body-on-frame",         bloqueios: 2, sway: 0, ataque: 39, saida: 35, vao: 310, vau: 790 },  // GS c/ suspensão DiSus-P elevada (altura normal: 35°/32°/220 mm); modo 4L sem reduzida mecânica; vau: manual BR (790 mm no GS, 700 mm no GL)
   atto8:     { tracao: "awd-inteligente",   chassi: "monobloco",             bloqueios: 0, sway: 0, ataque: null, saida: null, vao: 184, vau: null },  // BYD Brasil não divulga ângulos nem vau; vão da ficha v2 (jul/2026) — a ficha anterior dizia 165 mm em ordem de marcha
   gs9:       { tracao: "awd-inteligente",   chassi: "monobloco",             bloqueios: 0, sway: 0, ataque: null, saida: null, vao: null, vau: null },  // GAC Brasil não divulga ângulos, vão livre nem vau
 };
@@ -3379,12 +3379,12 @@ cars.forEach(c => {
    carrinho: carrinho duplo dobrado (~85×60×40 cm) protegido de chuva: "ok" | "apertado" | "nao"
    Fontes: manuais e fichas técnicas oficiais, reviews (Autoesporte, Quatro Rodas, Motor1) e protocolos NCAP — out/2026 */
 const FAMILIA_DATA = {
-  toro:      { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "apertado", adulto: "nao",      carrinho: "ok",       carrinhoNota: "Caçamba de 937 L sob capota rígida de série (trava, mas não é estanque)",
-               obs: "2ª fileira com só 1.375 mm nos ombros (a mais estreita do grupo) e bebê-conforto de costas obriga a avançar os bancos da frente. Latin NCAP infantil 2018 (protocolo antigo): 4★, ~75%." },
+  toro:      { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "apertado", adulto: "nao",      carrinho: "apertado", carrinhoNota: "Caçamba de 1,33 m × 1,09 m entre as caixas de roda: o duplo deita fácil, mas o manual avisa que a capota rígida de série não é estanque. Ela só abre com o carro destravado",
+               obs: "Banco traseiro estreito pra picape do tamanho: com dois bebês-conforto, o adulto não vai no meio. Pelo manual, só a cadeirinha de costas grande (classe C) pede avançar o banco da frente; o bebê-conforto, não. Latin NCAP 2018 (protocolo antigo, carro com 2 airbags): 4★ infantil, 75%." },
   commander: { isofix: 2, isofix3: 0, fileira2: "banco de 3 que desliza", bebes: "ok", adulto: "apertado", carrinho: "ok",   carrinhoNota: "481 L com a 3ª fileira rebatida pela Jeep na Índia e no Japão (os 661 L daqui usam outro método; com 7 lugares, 233 L): sobra espaço pro duplo, mas não há teste publicado com carrinho",
                obs: "2ª fileira desliza 14 cm — ajuda a afastar o bebê-conforto do banco da frente. Ela tem 3 posições ISOFIX, mas a central divide um engate com a lateral do motorista: no máximo 2 cadeirinhas ISOFIX ao mesmo tempo (use as duas laterais). Na 3ª fileira o manual proíbe ISOFIX. Três adultos atrás \"roçam ombros\" (Quatro Rodas)." },
-  wrangler:  { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "apertado", adulto: "nao",      carrinho: "apertado", carrinhoNota: "~500 L com porta lateral: entra atravessado e sobra pouco espaço pra mala",
-               obs: "Euro NCAP registrou dificuldade pra instalar cadeirinhas e o bebê-conforto deixa pouco espaço pro passageiro da frente. Cabine alta: colocar o bebê-conforto exige esforço. Infantil Euro NCAP 2018: 69%." },
+  wrangler:  { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "apertado", adulto: "ok",       carrinho: "ok",       carrinhoNota: "548 L pela Jeep (533 L até o encosto no Reino Unido), com porta lateral. No teste da BabyDrive com o Wrangler 4 portas, o tandem coube + 5 sacolas e o side-by-side em pé + 3",
+               obs: "Euro NCAP 2018: algumas cadeirinhas ISOFIX não encaixaram nas laterais (as i-Size sim): testem a de vocês. BabyDrive (2024): cabem 3 cadeirinhas lado a lado, um adulto vai \"bem confortável\" entre duas e um motorista de 1,80 m cabe na frente de uma de costas. Cabine alta pra subir. Infantil Euro NCAP 2018: 69%." },
   tiggo8:    { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "ok",       adulto: "apertado", carrinho: "ok",       carrinhoNota: "Com a 3ª fileira rebatida (494 L pela Chery na Tailândia e no Reino Unido), o teste da BabyDrive com o mesmo Tiggo 8 PHEV levou um carrinho duplo deitado (sem as rodas traseiras) + 3 sacolas, ou o tandem + 6 sacolas. Com 7 lugares em uso, não cabe",
                obs: "Euro NCAP 2025 (Tiggo 8 PHEV europeu): 85% na proteção infantil (o detector de criança esquecida do europeu não consta na ficha brasileira). Carroceria de 1,86 m de largura: o adulto no meio vai justo." },
   tank:      { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "apertado", adulto: "apertado", carrinho: "apertado", carrinhoNota: "Porta-malas raso: 78–80 cm do encosto à porta (medido na versão a gasolina) e 360 L no PHEV pela GWM Austrália, com a bateria sob o piso (os 863 L daqui usam outro método). O duplo entra atravessado ou em pé, com pouca sobra",
@@ -3401,8 +3401,8 @@ const FAMILIA_DATA = {
                obs: "Teste prático (BabyDrive): adulto senta no meio de 2 cadeirinhas com folga. Detector de criança esquecida. ANCAP 2025: 87% infantil. Com bebê-conforto de costas, motorista até ~1,82 m." },
   tan:       { isofix: 2, isofix3: 0, fileira2: "banco 60/40", bebes: "ok",       adulto: "apertado", carrinho: "ok",       carrinhoNota: "940 L com a 3ª fileira rebatida (cabe carrinho duplo grande + mala); 235 L com 7 lugares",
                obs: "Euro NCAP 2023 (Tang): 87% infantil, com nota máxima em instalação de cadeirinhas. O Tang europeu tem ISOFIX na 3ª fileira, não confirmado no Tan brasileiro. Elétrico: viagens pedem parada pra recarga." },
-  b5:        { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "ok",       adulto: "ok",       carrinho: "ok",       carrinhoNota: "470 L — testado com carrinho duplo side-by-side + sacola (BabyDrive)",
-               obs: "Teste prático (BabyDrive): cabem 3 cadeirinhas lado a lado e um adulto entre duas. ANCAP 2025: 95% infantil, a melhor do grupo. Porta traseira lateral com estepe e carro alto (1,92 m) pra erguer o bebê-conforto." },
+  b5:        { isofix: 2, isofix3: 0, fileira2: "banco de 3", bebes: "ok",       adulto: "ok",       carrinho: "ok",       carrinhoNota: "470 L. No teste da BabyDrive, o duplo side-by-side entrou em pé + 1 sacola e o tandem + 3: cabe, mas fica justo com o side-by-side",
+               obs: "Teste prático (BabyDrive): cabem 3 cadeirinhas lado a lado e um adulto entre duas. ANCAP 2025: 95% infantil, a melhor do grupo. Porta traseira lateral com estepe e carro alto (1,93 m) pra erguer o bebê-conforto." },
   atto8:     { isofix: 2, isofix3: 2, fileira2: "banco 60/40 que desliza", bebes: "ok", adulto: "ok",   carrinho: "ok",       carrinhoNota: "Teste da BabyDrive com o mesmo carro (Sealion 8 australiano): com a 3ª rebatida, o duplo side-by-side entrou com as rodas + 3 sacolas e o tandem + 6 a 8. Com 7 lugares, só carrinho simples",
                obs: "Teste prático (BabyDrive, Sealion 8): adulto senta \"confortavelmente\" entre um bebê-conforto e uma cadeirinha. A 3ª fileira tem 2 ISOFIX, mas o manual BR só libera cadeirinha virada pra frente lá; de costas, só nas laterais da 2ª." },
   gs9:       { isofix: 2, isofix3: 0, fileira2: "2 poltronas capitão", bebes: "ok", adulto: "3a",     carrinho: "ok",       carrinhoNota: "1.005 L com a 3ª rebatida (255 L com 6 lugares) pela GAC, sem método informado; não há medida nem teste com carrinho. Pelo porte do carro deve caber, mas levem o de vocês ao test drive",
