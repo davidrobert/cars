@@ -29,6 +29,7 @@ Landing page em um arquivo só (HTML + CSS + JS, com as fotos dos cards inline e
 - **Celular** — menu "Seções" no topo e painel de pesos (Tuning) começando fechado
 - **Serve pra nossa família?** — checklist por carro com os requisitos da família (2 bebês-conforto simultâneos, carrinho duplo no porta-malas/caçamba coberta, segurança mínima, revenda em 4 anos, uso em SP, viagem mensal e adulto entre as crianças), com veredito, selo no card e bloco no detalhe do carro. Vira a métrica **Família** do score, com peso máximo no preset Família
 - Cards com specs prioritárias (preço, potência, porta-malas, comprimento, autonomia)
+- **Teto de orçamento de R$ 300 mil** — carro acima dele fica com o preço em vermelho (cards, tabela e Favoritos) e o selo "Preço alto". Pra mudar, edite `PRICE_LIMIT` no `index.html`
 - Filtros por cenário (família, off-road, economia, viagem, etc.)
 - Tabela comparativa completa com destaque pro melhor/pior em cada critério
 - Recomendações por uso real (off-road, performance, família, etc.)
