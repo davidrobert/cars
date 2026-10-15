@@ -2330,7 +2330,7 @@
         </div>
       </div>
     </div>
-    <a class="sel-callout" href="#favoritos">★ <b>Favoritos</b><span class="sel-callout-list" id="sel-callout-list">Tiggo 8 Pro PHEV · Haval H7 · Rampage R/T · Commander Blackhawk · Tank 300 TerraForce</span><span class="arrow">→</span></a>
+    <a class="sel-callout" href="#favoritos">★ <b>Favoritos</b><span class="sel-callout-list" id="sel-callout-list">Tiggo 8 Pro PHEV · Haval H7 · Rampage R/T · Commander Blackhawk · Tank 300 TerraForce · S08 PHEV</span><span class="arrow">→</span></a>
   </div>
 </section>
 
@@ -3365,8 +3365,10 @@ const cars = [
 
 /* ====== Favoritos (antiga "Minha seleção") ====== */
 // Lista padrão (primeira visita ou "Restaurar padrão"), na ordem das colunas.
-const FAV_PADRAO = ["tiggo8", "h7", "rampage", "commander", "tank"];
+const FAV_PADRAO = ["tiggo8", "h7", "rampage", "commander", "tank", "s08"];
 const FAV_MAX = 6;
+// Carros que entraram no padrão depois: vão uma vez só pras listas já salvas (se couber), e não voltam se a pessoa tirar.
+const FAV_NOVIDADES = ["s08"];
 const FAV_KEY = "car-comp-favoritos-v1";
 // Lista atual: vem do link (#favoritos=a,b,c), senão do navegador, senão do padrão.
 // É sempre o mesmo array (mutado no lugar): o card da garagem e a seção leem daqui.
@@ -3382,19 +3384,30 @@ function favDoLink() {
   return ids.length || !m[1] ? ids : null;   // link só com ids desconhecidos: ignora
 }
 function favSalvar() {
-  try { localStorage.setItem(FAV_KEY, JSON.stringify({ ids: SELECAO })); } catch (e) { /* armazenamento bloqueado: segue só nesta visita */ }
+  try { localStorage.setItem(FAV_KEY, JSON.stringify({ ids: SELECAO, novidades: FAV_NOVIDADES })); } catch (e) { /* armazenamento bloqueado: segue só nesta visita */ }
 }
 (function favCarregar() {
   const doLink = favDoLink();
-  let ids = doLink;
+  let ids = doLink, novos = false;
   if (!ids) {
     try {
       const raw = localStorage.getItem(FAV_KEY);
-      if (raw) { const d = JSON.parse(raw); if (Array.isArray(d.ids)) ids = favValidos(d.ids); }
+      if (raw) {
+        const d = JSON.parse(raw);
+        if (Array.isArray(d.ids)) {
+          ids = favValidos(d.ids);
+          const vistas = Array.isArray(d.novidades) ? d.novidades : [];
+          for (const id of FAV_NOVIDADES) {
+            if (vistas.includes(id)) continue;
+            novos = true;   // marca como vista mesmo se a lista estiver cheia
+            if (!ids.includes(id) && ids.length < FAV_MAX && cars.some(c => c.id === id)) ids.push(id);
+          }
+        }
+      }
     } catch (e) { /* ignora */ }
   }
   SELECAO.push(...(ids ?? favValidos(FAV_PADRAO)));
-  if (doLink) favSalvar();   // quem abre o link fica com essa lista
+  if (doLink || novos) favSalvar();   // quem abre o link fica com essa lista; novidades ficam registradas
 })();
 
 /* Ficha extra de cada carro, conferida em out/2026 (fontes em `fontes`). Carro sem ficha aqui aparece com "dados resumidos".
