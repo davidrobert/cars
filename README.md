@@ -1,6 +1,6 @@
 # Comparativo de Carros
 
-Landing page em um arquivo só (HTML + CSS + JS, com as fotos dos cards inline em base64; as galerias dos Favoritos ficam em `fotos/` e só baixam quando o carro é aberto) comparando 16 versões de 14 modelos (o T2 e o Tank 300 aparecem em duas versões) do mercado brasileiro para ajudar uma decisão de compra em família.
+Landing page em um arquivo só (HTML + CSS + JS, com as fotos dos cards inline em base64; as galerias dos Favoritos ficam em `fotos/` e só baixam quando o carro é aberto) comparando 17 versões de 15 modelos (o T2 e o Tank 300 aparecem em duas versões) do mercado brasileiro para ajudar uma decisão de compra em família.
 
 🔗 **Versão online:** https://davidrobert.github.io/cars/
 
@@ -10,6 +10,7 @@ Landing page em um arquivo só (HTML + CSS + JS, com as fotos dos cards inline e
 |---|---|---|---|
 | Fiat Toro Ultra T270 MHEV | Picape híbrida leve (4x2) | R$ 206.490 | 176 cv |
 | Caoa Chery Tiggo 8 Pro PHEV | SUV 7 lug. PHEV | R$ 249.990 | 279 cv |
+| Jetour S08 Premium | SUV 7 lug. PHEV | R$ 259.900 | 339 cv (soma dos motores) |
 | GWM Haval H7 | SUV PHEV flex 4x4 | R$ 261.000 | 370 cv |
 | Kia Sportage EX Prestige MHEV | SUV híbrido leve | R$ 267.190 | 178 cv |
 | Jetour T2 Advance | SUV PHEV (4x2) | R$ 289.900 | 359 cv (soma dos motores) |
@@ -27,7 +28,7 @@ Landing page em um arquivo só (HTML + CSS + JS, com as fotos dos cards inline e
 
 ## Funcionalidades
 
-- **Favoritos** — a lista de carros da família, que já vem com Tiggo 8 Pro PHEV, Haval H7, Rampage R/T, Commander Blackhawk e Tank 300 TerraForce. Dá pra adicionar e remover pela estrela (☆/★) dos cards e do detalhe do carro, ou pelo botão "+ Adicionar carro" (até 6), com "Desfazer". As colunas trocam de lugar arrastando o nome (computador), pelas setas ◀ ▶ ou pelo painel "Organizar" (celular). A lista fica salva no aparelho; "Copiar link" gera um endereço `#favoritos=...` pra mandar pra outra pessoa, e "Restaurar padrão" volta à lista inicial. O comparativo tem 13 critérios em 5 grupos (preço e revenda, espaço e família, desempenho, economia, segurança), com o melhor e o pior de cada linha e um veredito "melhor para". No celular vira uma grade com os carros lado a lado: até 5 cabem sem rolagem lateral, e com 6 só a grade rola, com os nomes fixos. As 16 versões têm galeria de 5 fotos, com crédito na legenda, e ficha conferida em out/2026 (versão, medidas, ISOFIX, airbags, NCAP, reboque, recarga, porta-malas em número comparável, garantia, itens de série e fontes); um carro que entrar sem ficha aparece com "dados resumidos". Há também glossário e fontes
+- **Favoritos** — a lista de carros da família, que já vem com Tiggo 8 Pro PHEV, Haval H7, Rampage R/T, Commander Blackhawk e Tank 300 TerraForce. Dá pra adicionar e remover pela estrela (☆/★) dos cards e do detalhe do carro, ou pelo botão "+ Adicionar carro" (até 6), com "Desfazer". As colunas trocam de lugar arrastando o nome (computador), pelas setas ◀ ▶ ou pelo painel "Organizar" (celular). A lista fica salva no aparelho; "Copiar link" gera um endereço `#favoritos=...` pra mandar pra outra pessoa, e "Restaurar padrão" volta à lista inicial. O comparativo tem 13 critérios em 5 grupos (preço e revenda, espaço e família, desempenho, economia, segurança), com o melhor e o pior de cada linha e um veredito "melhor para". No celular vira uma grade com os carros lado a lado: até 5 cabem sem rolagem lateral, e com 6 só a grade rola, com os nomes fixos. As 17 versões têm galeria de 5 fotos, com crédito na legenda, e ficha conferida em out/2026 (versão, medidas, ISOFIX, airbags, NCAP, reboque, recarga, porta-malas em número comparável, garantia, itens de série e fontes); um carro que entrar sem ficha aparece com "dados resumidos". Há também glossário e fontes
 - **Celular** — menu "Seções" no topo e painel de pesos (Tuning) começando fechado
 - **Serve pra nossa família?** — checklist por carro com os requisitos da família (2 bebês-conforto simultâneos, carrinho duplo no porta-malas/caçamba coberta, segurança mínima, revenda em 4 anos, uso em SP, viagem mensal e adulto entre as crianças), com veredito, selo no card e bloco no detalhe do carro. Vira a métrica **Família** do score, com peso máximo no preset Família
 - Cards com specs prioritárias (preço, potência, porta-malas, comprimento, autonomia)
